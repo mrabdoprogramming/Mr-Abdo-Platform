@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="مستر عبدو برمجة — منصة تعليمية للبرمجة والذكاء الاصطناعي">
+<meta name="theme-color" content="#0b0b14">
+<title>مستر عبدو برمجة | From Logic to Innovation</title>
+
+<!-- Optional external fonts/icon library. The app remains functional without them. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@1"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<a class="skip-link" href="#main">تخطي إلى المحتوى</a>
+
+<!-- =========================
+     PUBLIC LANDING
+     ========================= -->
+<div id="publicView">
+  <header class="public-header">
+    <div class="container header-inner">
+      <a class="brand" href="#home" aria-label="مستر عبدو برمجة - الرئيسية">
+        <div class="brand-mark"><img class="brand-mark-img" alt=""><span class="brand-mark-letter">م</span></div>
+        <div class="brand-copy">
+          <strong>مستر عبدو برمجة</strong>
+          <span>From Logic to Innovation</span>
+        </div>
+      </a>
+
+      <nav class="public-nav" aria-label="التنقل الرئيسي">
+        <a href="#home">الرئيسية</a>
+        <a href="#about">عن مستر عبدو</a>
+        <a href="#features">المميزات</a>
+        <a href="#contact">تواصل معنا</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn theme-btn" id="publicThemeBtn" aria-label="تغيير المظهر" title="تغيير المظهر">
+          <i data-lucide="moon"></i>
+        </button>
+        <button class="icon-btn mobile-menu-btn" id="mobilePublicMenu" aria-label="فتح القائمة" aria-expanded="false" aria-controls="publicNavMobile">
+          <i data-lucide="menu"></i>
+        </button>
+        <button class="btn btn-primary btn-small" data-action="login">
+          <i data-lucide="log-in"></i>
+          دخول الطلاب
+        </button>
+      </div>
+    </div>
+    <nav class="public-nav-mobile" id="publicNavMobile" aria-label="التنقل على الهاتف">
+      <a href="#home">الرئيسية</a>
+      <a href="#about">عن مستر عبدو</a>
+      <a href="#features">المميزات</a>
+      <a href="#contact">تواصل معنا</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><i data-lucide="sparkles" size="15"></i> مساحة التعلم الخاصة بطلاب مستر عبدو</div>
+          <h1>اتعلم البرمجة...<br><span>من المنطق للابتكار.</span></h1>
+          <p class="hero-lead">
+            منصة تعليمية منظمة تساعدك على الوصول إلى دروس البرمجة والذكاء الاصطناعي
+            وملفاتك التعليمية من مكان واحد، بتجربة بسيطة ومناسبة للموبايل والكمبيوتر.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-action="login">
+              دخول المنصة <i data-lucide="arrow-left"></i>
+            </button>
+            <a class="btn btn-secondary" href="#about">
+              اعرف أكتر <i data-lucide="info"></i>
+            </a>
+          </div>
+          <div class="slogan">FROM LOGIC TO INNOVATION</div>
+        </div>
+
+        <div class="hero-visual" aria-label="الصورة التعريفية لمستر عبدو">
+          <div class="hero-orb"></div>
+          <div class="visual-card card-code">
+            <code>
+              <span class="code-line c1">const</span> <span class="code-line c2">idea</span> = <span class="code-line c3">logic</span>;
+            </code>
+          </div>
+          <div class="visual-card card-node">
+            <code>&lt;/&gt; build()</code>
+          </div>
+          <div class="visual-card card-progress">
+            <strong>Learning Journey</strong><br>
+            <span class="muted">Logic → Code → Innovation</span>
+          </div>
+
+          <!-- Replace only this source later with assets/teacher.png -->
+          <div class="teacher-frame">
+            <img id="heroTeacherImage" src="teacher.png" alt="م. عبدالرحمن فتحي - مستر عبدو برمجة">
+            <div class="teacher-fallback" id="heroTeacherFallback">
+              <div class="silhouette" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">ABOUT</div>
+          <h2 class="section-title">عبدالرحمن فتحي — مستر عبدو برمجة</h2>
+          <p class="section-subtitle">مساحة تعريفية قابلة للتعديل لاحقًا دون إضافة أي ادعاءات أو بيانات غير مؤكدة.</p>
+        </div>
+        <div class="about-grid">
+          <div class="panel">
+            <h3>منطق قبل الكود</h3>
+            <p class="muted">
+              مستر عبدو برمجة يقدم محتوى تعليميًا في البرمجة ومفاهيم مرتبطة بالذكاء الاصطناعي
+              للطلاب. الهدف من المنصة هو تنظيم الرحلة التعليمية، من الصف والترم والوحدة
+              وصولًا إلى الدرس والملفات المرتبطة به.
+            </p>
+            <p class="muted">
+              يمكن تعديل هذا النص مستقبلًا ليعكس أسلوب التدريس والمعلومات التعريفية الفعلية.
+            </p>
+            <div class="eyebrow">From Logic to Innovation</div>
+          </div>
+          <div class="about-photo">
+            <img id="aboutTeacherImage" src="teacher.png" alt="صورة مستر عبدو برمجة">
+            <div class="teacher-fallback" id="aboutTeacherFallback">
+              <div class="silhouette" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">YOUR JOURNEY</div>
+          <h2 class="section-title">مميزات الاشتراك مع مستر عيدو</h2>
+          <p class="section-subtitle">مش مجرد حصة شرح... ده نظام متكامل يساعدك تفهم، تتدرب، وتثبت المعلومة.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="messages-square"></i></div>
+            <h3>تسميع تفاعلي</h3>
+            <p>في بداية كل حصة بناخد تسميع شفوي تفاعلي على الحصة اللي فاتت، عشان نتأكد إنك فاهم ومثبت المعلومة.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="presentation"></i></div>
+            <h3>شرح الحصة</h3>
+            <p>شرح الحصة بيكون بشكل واضح ومفصل، ومدة الشرح بتتراوح من ساعة إلى ساعة ونصف حسب محتوى الدرس.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="list-checks"></i></div>
+            <h3>تدريب بعد الشرح</h3>
+            <p>بعد الحصة بنحل على اللي أخدناه من خلال أسئلة من الأسئلة اللي الوزارة منزلاها، عشان تطبق وتختبر فهمك.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="file-check-2"></i></div>
+            <h3>واجب ومتابعة</h3>
+            <p>هتاخد واجب في ملف PDF، تحله وتبعته للمستر باسمك والكود الخاص بيك عشان يتم متابعة شغلك.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="monitor-play"></i></div>
+            <h3>ماتريال الحصة</h3>
+            <p>بيفتحلك Access على المنصة تلاقي عليها الماتريال اللي المستر بيشرح منها، وتقدر تذاكر منها في أي وقت لو معاك لابتوب.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="headphones"></i></div>
+            <h3>شرح صوتي ممتع</h3>
+            <p>هتلاقي ملف صوتي لشرح الدرس تقدر تسمعه في أي وقت، في صورة قصة مسلية بين شخصين بدل الشرح التقليدي الممل.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="book-open"></i></div>
+            <h3>الدرس في صورة رواية</h3>
+            <p>الدرس بيتحول لرواية خيالية ممتعة تقدر تقرأها في أي وقت فاضي، عشان تراجع وتثبت المعلومات بطريقة مختلفة.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="brain"></i></div>
+            <h3>عشان تفهم وتحفظ</h3>
+            <p>كل ده معمول عشان يساعدك تفهم وتحفظ بسهولة، خصوصًا إن امتحانك بيجمع بين الأسئلة الاختيارية والأسئلة المقالية.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="public-footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand">
+            <div class="brand-mark"><img class="brand-mark-img" alt=""><span class="brand-mark-letter">م</span></div>
+            <div class="brand-copy">
+              <strong>مستر عبدو برمجة</strong>
+              <span>From Logic to Innovation</span>
+            </div>
+          </div>
+          <p class="muted" style="font-size:.8rem;max-width:420px">
+            مساحة تعليمية منظمة لطلاب البرمجة والذكاء الاصطناعي.
+          </p>
+        </div>
+        <div>
+          <strong style="font-size:.82rem">روابط</strong>
+          <div class="footer-links" style="margin-top:9px">
+            <a href="#home">الرئيسية</a>
+            <a href="#about">عن مستر عبدو</a>
+            <a href="#features">المميزات</a>
+          </div>
+        </div>
+        <div>
+          <strong style="font-size:.82rem">تواصل معنا</strong>
+          <div class="footer-links social-links" id="socialLinks" style="margin-top:9px"></div>
+        </div>
+      </div>
+      <div class="copyright">© 2026 مستر عبدو برمجة</div>
+    </div>
+  </footer>
+</div>
+
+<!-- =========================
+     AUTH VIEW
+     ========================= -->
+<div id="authView" class="auth-view hidden">
+  <div class="auth-card">
+    <div class="auth-top">
+      <button class="back-link" id="authBackBtn"><i data-lucide="arrow-right"></i> العودة للموقع</button>
+      <button class="icon-btn" id="authThemeBtn" aria-label="تغيير المظهر"><i data-lucide="moon"></i></button>
+    </div>
+    <div class="auth-logo">
+      <div class="brand-mark"><img class="brand-mark-img" alt=""><span class="brand-mark-letter">م</span></div>
+      <h1>دخول الطلاب</h1>
+      <p>مستر عبدو برمجة</p>
+    </div>
+
+    <div id="loginError" class="error-box hidden" role="alert"></div>
+
+    <form id="loginForm" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="username">اسم المستخدم</label>
+        <input class="form-input" id="username" name="username" autocomplete="username" required placeholder="اكتب اسم المستخدم">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">كلمة المرور</label>
+        <div class="input-wrap">
+          <input class="form-input" id="password" name="password" type="password" autocomplete="current-password" required placeholder="اكتب كلمة المرور">
+          <button type="button" class="password-toggle" id="passwordToggle" aria-label="إظهار كلمة المرور">
+            <i data-lucide="eye"></i>
+          </button>
+        </div>
+      </div>
+      <div class="remember-row">
+        <label class="check"><input type="checkbox" id="rememberSession" checked> تذكر دخولي على هذا الجهاز</label>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">
+        دخول المنصة <i data-lucide="log-in"></i>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- =========================
+     APP VIEW
+     ========================= -->
+<div id="appView" class="app-shell hidden">
+  <aside class="app-sidebar" id="appSidebar" aria-label="قائمة المنصة">
+    <div class="app-brand">
+      <a class="brand" href="#dashboard" data-route="dashboard">
+        <div class="brand-mark"><img class="brand-mark-img" alt=""><span class="brand-mark-letter">م</span></div>
+        <div class="brand-copy">
+          <strong>مستر عبدو</strong>
+          <span>برمجة</span>
+        </div>
+      </a>
+    </div>
+    <nav class="app-nav">
+      <a class="nav-item" href="#dashboard" data-route="dashboard"><i data-lucide="layout-dashboard"></i> الرئيسية</a>
+      <a class="nav-item" href="#courses" data-route="courses"><i data-lucide="book-open"></i> دروسي</a>
+      <a class="nav-item" href="#last" data-route="last"><i data-lucide="history"></i> آخر ما درست</a>
+      <a class="nav-item" href="#announcements" data-route="announcements"><i data-lucide="bell"></i> الإعلانات</a>
+      <a class="nav-item" href="#profile" data-route="profile"><i data-lucide="user-round"></i> الملف الشخصي</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="user-mini" id="sidebarUser"></div>
+      <button class="btn btn-danger btn-small btn-block" id="logoutBtn"><i data-lucide="log-out"></i> تسجيل الخروج</button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <button class="icon-btn mobile-sidebar-btn" id="mobileSidebarBtn" aria-label="فتح القائمة"><i data-lucide="menu"></i></button>
+      <div class="topbar-spacer"></div>
+      <button class="icon-btn" id="appThemeBtn" aria-label="تغيير المظهر"><i data-lucide="moon"></i></button>
+      <div class="student-chip" id="topStudent"></div>
+    </header>
+    <main class="app-content" id="appMain">
+      <div class="content-container" id="pageContent"></div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom" aria-label="التنقل على الهاتف">
+    <div class="mobile-bottom-inner">
+      <button data-route="dashboard"><i data-lucide="layout-dashboard"></i><span>الرئيسية</span></button>
+      <button data-route="courses"><i data-lucide="book-open"></i><span>دروسي</span></button>
+      <button data-route="announcements"><i data-lucide="bell"></i><span>الإعلانات</span></button>
+      <button data-route="profile"><i data-lucide="user-round"></i><span>حسابي</span></button>
+    </div>
+  </nav>
+</div>
+
+<!-- =========================
+     TOAST
+     ========================= -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <div class="toast-content" id="toastContent"></div>
+</div>
+
+<!-- =========================
+     GENERIC MODAL
+     ========================= -->
+<div class="modal-backdrop hidden" id="modalBackdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h2 id="modalTitle">تنبيه</h2>
+      <button class="close-btn" id="modalClose" aria-label="إغلاق"><i data-lucide="x"></i></button>
+    </div>
+    <div id="modalBody" style="margin-top:15px"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

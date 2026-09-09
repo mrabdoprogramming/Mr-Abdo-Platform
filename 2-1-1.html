@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستر عبدو برمجة - تطور تكنولوجيا المعلومات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #e8ecf1;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 1366px;
+            max-width: 98vw;
+            height: 768px;
+            max-height: 98vh;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cover-decoration {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.04;
+            font-family: 'Cairo', sans-serif;
+            color: #1e293b;
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        .cover-decoration.top-right {
+            top: 30px;
+            right: 40px;
+            text-align: right;
+            font-size: 13px;
+            opacity: 0.05;
+        }
+
+        .cover-decoration.bottom-left {
+            bottom: 30px;
+            left: 40px;
+            font-size: 13px;
+            opacity: 0.05;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            padding: 28px 48px 20px 48px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .trainer-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+            border-bottom: 3px solid #f0f2f5;
+            flex-shrink: 0;
+        }
+
+        .trainer-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .trainer-avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1e293b, #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            font-weight: 900;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+            border: 3px solid #f59e0b;
+        }
+
+        .trainer-details h4 {
+            color: #1e293b;
+            font-size: 22px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        .trainer-details h4 span {
+            color: #f59e0b;
+        }
+
+        .trainer-details .sub {
+            color: #6b7280;
+            font-size: 16px;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .trainer-details .sub i {
+            color: #f59e0b;
+            margin-left: 6px;
+        }
+
+        .slide-counter {
+            color: #9ca3af;
+            font-size: 18px;
+            font-weight: 700;
+            background: #f3f4f6;
+            padding: 6px 22px;
+            border-radius: 24px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 6px 0;
+        }
+
+        .slide-title {
+            font-size: 40px;
+            font-weight: 900;
+            color: #1e293b;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .slide-title .icon {
+            font-size: 38px;
+        }
+
+        .slide-title .highlight {
+            color: #f59e0b;
+        }
+
+        .slide-title .subtitle-line {
+            font-size: 18px;
+            font-weight: 400;
+            color: #9ca3af;
+            margin-right: 14px;
+        }
+
+        .divider {
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(90deg, #f59e0b, #1e293b);
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 26px 32px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f2f5;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 40px rgba(245, 158, 11, 0.08);
+            transform: translateY(-2px);
+            border-color: #f59e0b;
+        }
+
+        .card p,
+        .card li {
+            color: #1f2937;
+            font-size: 24px;
+            line-height: 2;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card ul li {
+            padding: 6px 0;
+            padding-right: 34px;
+            position: relative;
+            font-size: 23px;
+        }
+
+        .card ul li::before {
+            content: "▸";
+            position: absolute;
+            right: 0;
+            color: #f59e0b;
+            font-weight: 700;
+            font-size: 26px;
+        }
+
+        .example-box {
+            background: #fffbeb;
+            border-radius: 16px;
+            padding: 18px 24px;
+            margin-top: 14px;
+            border-right: 5px solid #f59e0b;
+        }
+
+        .example-box .label {
+            color: #6b7280;
+            font-size: 18px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .example-box .content {
+            color: #1f2937;
+            font-size: 22px;
+            line-height: 1.8;
+        }
+
+        .punchline {
+            margin-top: 16px;
+            padding: 14px 22px;
+            background: #fffbeb;
+            border-radius: 14px;
+            border-right: 5px solid #f59e0b;
+            font-size: 24px;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .punchline i {
+            color: #f59e0b;
+            margin-left: 12px;
+            font-size: 26px;
+        }
+
+        .concept-map {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 10px 0;
+        }
+
+        .concept-map .node {
+            background: #fffbeb;
+            padding: 10px 30px;
+            border-radius: 14px;
+            border: 2px solid #fde68a;
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .concept-map .node:hover {
+            border-color: #f59e0b;
+            background: #fde68a;
+        }
+
+        .concept-map .node.highlight {
+            border-color: #f59e0b;
+            background: #fde68a;
+        }
+
+        .concept-map .arrow {
+            color: #f59e0b;
+            font-size: 28px;
+            opacity: 0.6;
+        }
+
+        .concept-map .row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== TABLE STYLES ===== */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 12px;
+            border-radius: 14px;
+            border: 1px solid #f0f2f5;
+        }
+
+        .table-wrapper table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 20px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .table-wrapper thead {
+            background: #f59e0b;
+            color: #fff;
+        }
+
+        .table-wrapper th {
+            padding: 14px 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 800;
+            border: 1px solid #f59e0b;
+        }
+
+        .table-wrapper td {
+            padding: 12px 18px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            color: #1f2937;
+            font-size: 19px;
+            line-height: 1.6;
+        }
+
+        .table-wrapper tr:nth-child(even) {
+            background: #fffbeb;
+        }
+
+        .table-wrapper tr:hover {
+            background: #fde68a;
+        }
+
+        .table-wrapper .highlight-cell {
+            font-weight: 700;
+            color: #f59e0b;
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .timeline-item {
+            background: #fffbeb;
+            padding: 16px 20px;
+            border-radius: 14px;
+            border-right: 4px solid #f59e0b;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            background: #fde68a;
+            transform: translateX(-3px);
+        }
+
+        .timeline-item .period {
+            font-size: 18px;
+            font-weight: 800;
+            color: #f59e0b;
+        }
+
+        .timeline-item .title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-top: 2px;
+        }
+
+        .timeline-item .desc {
+            font-size: 16px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        /* ===== SOCIAL CHANGE GRID ===== */
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .social-item {
+            background: #fffbeb;
+            padding: 16px 14px;
+            border-radius: 14px;
+            text-align: center;
+            border: 1px solid #fde68a;
+            transition: all 0.3s ease;
+        }
+
+        .social-item:hover {
+            transform: translateY(-3px);
+            background: #fde68a;
+            border-color: #f59e0b;
+        }
+
+        .social-item .emoji {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .social-item .name {
+            font-size: 16px;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .social-item .desc {
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        /* ===== TECH GRID ===== */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .tech-item {
+            background: #fffbeb;
+            padding: 18px 20px;
+            border-radius: 14px;
+            border-top: 4px solid #f59e0b;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-3px);
+            background: #fde68a;
+        }
+
+        .tech-item .name {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1e293b;
+            text-align: center;
+        }
+
+        .tech-item .desc {
+            font-size: 16px;
+            color: #6b7280;
+            margin-top: 6px;
+        }
+
+        /* ===== MOORE'S LAW ===== */
+        .moore-box {
+            background: #fffbeb;
+            padding: 18px 24px;
+            border-radius: 14px;
+            border-right: 5px solid #f59e0b;
+            margin-top: 10px;
+        }
+
+        .moore-box .title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .moore-box .desc {
+            font-size: 18px;
+            color: #1f2937;
+            margin-top: 4px;
+        }
+
+        .moore-box .challenges {
+            font-size: 16px;
+            color: #6b7280;
+            margin-top: 6px;
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 3px solid #f0f2f5;
+            flex-shrink: 0;
+        }
+
+        .dots {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #d1d5db;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: #f59e0b;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+            width: 36px;
+            border-radius: 8px;
+        }
+
+        .dot:hover {
+            background: #f59e0b;
+            opacity: 0.6;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            color: #374151;
+            padding: 10px 22px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background: #e5e7eb;
+            border-color: #f59e0b;
+            color: #1e293b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-primary {
+            background: #1e293b;
+            border: none;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #f59e0b;
+            color: #fff;
+            box-shadow: 0 6px 24px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-icon {
+            width: 48px;
+            height: 48px;
+            padding: 0;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 18px;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-enter {
+            animation: slideEnter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes slideEnter {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-content::-webkit-scrollbar {
+            width: 5px;
+        }
+        .slide-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .slide-content::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+
+        /* Quiz Styles */
+        .quiz-section-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .quiz-section-title .icon {
+            font-size: 36px;
+        }
+
+        .quiz-section-title .sub {
+            font-size: 18px;
+            color: #6b7280;
+            font-weight: 400;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .quiz-item {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 20px 26px;
+            margin-bottom: 16px;
+            border: 2px solid #eef2f6;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .quiz-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .quiz-item:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.08);
+        }
+
+        .quiz-item .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .quiz-item .question-text {
+            font-size: 20px;
+            color: #1e293b;
+            font-weight: 700;
+            line-height: 1.8;
+            flex: 1;
+        }
+
+        .quiz-item .question-text .q-num {
+            color: #f59e0b;
+            font-weight: 900;
+            margin-left: 8px;
+        }
+
+        .quiz-item .question-text .sub-q {
+            font-weight: 400;
+            color: #4b5563;
+            font-size: 18px;
+            display: block;
+            padding-right: 30px;
+            margin-top: 4px;
+        }
+
+        .quiz-item .question-text .sub-q .letter {
+            color: #f59e0b;
+            font-weight: 700;
+        }
+
+        .btn-show-answer {
+            background: #1e293b;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .btn-show-answer:hover {
+            background: #f59e0b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-show-answer.showing {
+            background: #f59e0b;
+        }
+
+        .btn-show-answer.showing:hover {
+            background: #d97706;
+        }
+
+        .answer-box {
+            margin-top: 12px;
+            padding: 14px 20px;
+            background: #fffbeb;
+            border-radius: 12px;
+            border-right: 4px solid #f59e0b;
+            display: none;
+            font-size: 18px;
+            color: #1f2937;
+            line-height: 1.8;
+        }
+
+        .answer-box.show {
+            display: block;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .answer-box .ans-label {
+            color: #f59e0b;
+            font-weight: 700;
+        }
+
+        .answer-box .explanation {
+            color: #6b7280;
+            font-size: 17px;
+            margin-top: 4px;
+        }
+
+        .answer-box .explanation i {
+            color: #f59e0b;
+            margin-left: 6px;
+        }
+
+        .quiz-divider {
+            border: none;
+            border-top: 2px dashed #fde68a;
+            margin: 18px 0;
+        }
+
+        @media (max-width: 1024px) {
+            .slide-title {
+                font-size: 32px;
+            }
+            .card p,
+            .card li {
+                font-size: 20px;
+            }
+            .concept-map .node {
+                font-size: 18px;
+                padding: 8px 20px;
+                min-width: 150px;
+            }
+            .social-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .tech-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .timeline-grid {
+                grid-template-columns: 1fr;
+            }
+            .table-wrapper table {
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .presentation-container {
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+                max-width: 100vw;
+            }
+            .slide-content {
+                padding: 14px 16px 10px 16px;
+            }
+            .slide-title {
+                font-size: 24px;
+            }
+            .card p,
+            .card li {
+                font-size: 17px;
+            }
+            .card ul li {
+                font-size: 17px;
+                padding-right: 24px;
+            }
+            .social-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            .timeline-grid {
+                grid-template-columns: 1fr;
+            }
+            .trainer-avatar {
+                width: 42px;
+                height: 42px;
+                font-size: 18px;
+            }
+            .trainer-details h4 {
+                font-size: 17px;
+            }
+            .trainer-details .sub {
+                font-size: 13px;
+            }
+            .btn span {
+                display: none;
+            }
+            .cover-decoration {
+                display: none;
+            }
+            .concept-map .node {
+                font-size: 15px;
+                padding: 6px 14px;
+                min-width: 120px;
+            }
+            .concept-map .arrow {
+                font-size: 20px;
+            }
+            .punchline {
+                font-size: 18px;
+            }
+            .slide-counter {
+                font-size: 14px;
+                padding: 4px 14px;
+            }
+            .quiz-item .question-text {
+                font-size: 16px;
+            }
+            .quiz-item .question-text .sub-q {
+                font-size: 15px;
+                padding-right: 0;
+            }
+            .btn-show-answer {
+                font-size: 13px;
+                padding: 6px 14px;
+            }
+            .answer-box {
+                font-size: 16px;
+                padding: 10px 14px;
+            }
+            .quiz-section-title {
+                font-size: 24px;
+            }
+            .table-wrapper table {
+                font-size: 15px;
+            }
+            .table-wrapper th,
+            .table-wrapper td {
+                padding: 8px 10px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide-title {
+                font-size: 20px;
+            }
+            .card {
+                padding: 14px 16px;
+            }
+            .card p,
+            .card li {
+                font-size: 15px;
+            }
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+            .quiz-item .question-text {
+                font-size: 15px;
+            }
+            .answer-box {
+                font-size: 14px;
+            }
+            .table-wrapper table {
+                font-size: 13px;
+            }
+            .table-wrapper th,
+            .table-wrapper td {
+                padding: 6px 8px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container" id="app">
+        <!-- Decorative Elements -->
+        <div class="cover-decoration top-right">
+            // مستر عبدو برمجة<br>
+            // From Logic to Innovation
+        </div>
+        <div class="cover-decoration bottom-left">
+            📚 تطور تكنولوجيا المعلومات<br>
+            📊 قانون مور<br>
+            🌐 التحول الاجتماعي<br>
+            🚀 تقنيات ناشئة
+        </div>
+
+        <div class="slide-content" id="slideContent">
+            <!-- Trainer Bar -->
+            <div class="trainer-bar">
+                <div class="trainer-info">
+                    <div class="trainer-avatar">ع</div>
+                    <div class="trainer-details">
+                        <h4>مستر <span>عبدو</span> برمجة</h4>
+                        <div class="sub"><i class="fas fa-code"></i> تطور تكنولوجيا المعلومات · الصف الثاني الثانوي · الوحدة الأولى · الدرس الأول</div>
+                    </div>
+                </div>
+                <div class="slide-counter" id="slideCounter">٠١ / ٠٧</div>
+            </div>
+
+            <!-- Slide Body -->
+            <div class="slide-body" id="slideBody"></div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <div class="dots" id="dotsContainer"></div>
+                <div class="btn-group">
+                    <button class="btn btn-icon" id="prevBtn" title="السابق"><i class="fas fa-chevron-right"></i></button>
+                    <button class="btn btn-icon" id="nextBtn" title="التالي"><i class="fas fa-chevron-left"></i></button>
+                    <button class="btn" id="autoBtn" title="تشغيل تلقائي"><i class="fas fa-play"></i> <span>تلقائي</span></button>
+                    <button class="btn btn-primary btn-icon" id="fullscreenBtn" title="عرض كامل"><i class="fas fa-expand"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  DATA - تطور تكنولوجيا المعلومات والتحول الاجتماعي
+        // ============================================================
+        const slides = [{
+            id: 0,
+            title: 'تطور تكنولوجيا المعلومات والتحول الاجتماعي',
+            icon: '📚',
+            content: `
+                <div style="text-align:center;padding:4px 0;">
+                    <div style="font-size:52px;margin-bottom:4px;">🔄</div>
+                    <div style="font-family:'Cairo',sans-serif;color:#f59e0b;font-size:22px;font-weight:700;letter-spacing:2px;">
+                        IT Evolution & Social Transformation
+                    </div>
+                    <div style="width:100px;height:4px;background:linear-gradient(90deg,#f59e0b,#1e293b);margin:12px auto;"></div>
+                    <div style="font-size:20px;color:#6b7280;margin-bottom:8px;">الوحدة الأولى · الدرس الأول · الصف الثاني الثانوي</div>
+
+                    <!-- الخريطة المفاهيمية -->
+                    <div class="concept-map">
+                        <div class="row">
+                            <div class="node highlight">📚 تاريخ تطور تكنولوجيا المعلومات</div>
+                            <div class="arrow">⬇</div>
+                            <div class="node">📊 قانون مور</div>
+                        </div>
+                        <div class="row" style="margin-top:6px;">
+                            <div class="node">🌐 التحول الاجتماعي</div>
+                            <div class="arrow">⬇</div>
+                            <div class="node">🚀 تقنيات ناشئة</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px;display:flex;justify-content:center;gap:30px;flex-wrap:wrap;">
+                        <div style="background:#f8fafc;padding:12px 28px;border-radius:14px;border:1px solid #eef2f6;">
+                            <span style="color:#6b7280;font-size:15px;">المادة</span>
+                            <h3 style="color:#1e293b;font-size:20px;">تطور تكنولوجيا المعلومات</h3>
+                        </div>
+                        <div style="background:#f8fafc;padding:12px 28px;border-radius:14px;border:1px solid #eef2f6;">
+                            <span style="color:#6b7280;font-size:15px;">المقدم</span>
+                            <h3 style="color:#1e293b;font-size:20px;">مستر عبدو برمجة</h3>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px;color:#9ca3af;font-size:16px;">
+                        <i class="fas fa-arrow-left" style="color:#f59e0b;"></i> اضغط "التالي" للبدء
+                    </div>
+                </div>
+            `
+        }, {
+            id: 1,
+            title: 'تاريخ تطور تكنولوجيا المعلومات',
+            icon: '📚',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:8px;">📌 ملخص مراحل تطور تكنولوجيا المعلومات</div>
+                    <div style="color:#6b7280;font-size:17px;margin-bottom:10px;">
+                        تطورت تقنيات المعلومات عبر مراحل متتابعة، وأصبحت الأجهزة أصغر حجمًا وأكثر ترابطًا
+                    </div>
+
+                    <div class="timeline-grid">
+                        <div class="timeline-item">
+                            <div class="period">🟠 1940s - 1960s</div>
+                            <div class="title">ظهور الحواسيب الإلكترونية</div>
+                            <div class="desc">استخدام الصمامات المفرغة، حواسب تملأ غرفة بأكملها (مثل ENIAC) — استخدامات عسكرية وعلمية</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="period">🟢 1970s - 1980s</div>
+                            <div class="title">انتشار الحواسب الشخصية (PCs)</div>
+                            <div class="desc">بداية استخدام الأفراد للحاسب الآلي</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="period">🔵 1990s</div>
+                            <div class="title">إتاحة الإنترنت للاستخدام التجاري</div>
+                            <div class="desc">ظهور شبكة الويب، انتشار الوصول العالمي إلى المعلومات والبريد الإلكتروني</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="period">📱 2000 - 2010</div>
+                            <div class="title">ظهور الهواتف الذكية</div>
+                            <div class="desc">انتشار سريع للإنترنت عبر الهواتف المحمولة (مثل الآيفون)</div>
+                        </div>
+                        <div class="timeline-item" style="grid-column: 1 / -1; border-right-color:#f59e0b;">
+                            <div class="period">☁️ 2010 فصاعداً</div>
+                            <div class="title">انتشار الحوسبة السحابية</div>
+                            <div class="desc">تحليل البيانات الضخمة (Big Data)، الذكاء الاصطناعي، تقديم موارد تكنولوجيا المعلومات كخدمات عبر الإنترنت</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "في كل مرحلة، أضافت تكنولوجيا المعلومات جهازًا جديدًا، وغيّرت معه طريقة تواصل المجتمع وعمله وتجارته"</div>
+            `
+        }, {
+            id: 2,
+            title: 'قانون مور (Moore\'s Law)',
+            icon: '📊',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:8px;">📊 قانون مور (Moore's Law)</div>
+
+                    <div class="moore-box">
+                        <div class="title">📌 التعريف</div>
+                        <div class="desc">هو ملاحظة تجريبية (وليست قانوناً فيزيائياً ثابتاً) تنص على أن <span style="color:#f59e0b;font-weight:700;">عدد الترانزستورات في الدوائر المتكاملة يتضاعف تقريبًا كل عامين</span></div>
+                        <div class="challenges" style="margin-top:8px;">
+                            <span style="font-weight:700;">✅ التأثير:</span> أسهم هذا الاتجاه لعقود في زيادة قدرات الحوسبة وتحسين أداء المعالجات
+                        </div>
+                        <div class="challenges" style="margin-top:4px;">
+                            <span style="font-weight:700;color:#ef4444;">⚠️ التحديات:</span> يواجه استمرار تصغير مكونات الدوائر تحديات هندسية وفيزيائية (تيارات التسرب، تأثيرات كمومية مثل النفق الكمومي)
+                        </div>
+                        <div class="challenges" style="margin-top:4px;color:#f59e0b;">
+                            <span style="font-weight:700;">🔄 الحلول:</span> تحسين الأداء يعتمد حالياً على "تعدد الأنوية"، "المعالجة المتوازية"، تصميمات متخصصة، والاتجاه نحو "الحوسبة الكمومية"
+                        </div>
+                    </div>
+
+                    <div style="background:#fef3c7;padding:12px 18px;border-radius:12px;border-right:4px solid #f59e0b;margin-top:10px;">
+                        <span style="color:#92400e;font-weight:700;">💡 خلاصة:</span>
+                        <span style="color:#1f2937;font-size:18px;">قانون مور هو محرك تطور التكنولوجيا لعقود، لكنه يواجه تحديات فيزيائية تدفع نحو حلول جديدة</span>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "قانون مور هو نبض تطور التكنولوجيا، لكن التحديات الجديدة تفتح آفاقاً جديدة"</div>
+            `
+        }, {
+            id: 3,
+            title: 'التغيرات الاجتماعية الناتجة عن تكنولوجيا المعلومات',
+            icon: '🌐',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:8px;">🌐 التغيرات الاجتماعية الناتجة عن تكنولوجيا المعلومات</div>
+                    <div style="color:#6b7280;font-size:17px;margin-bottom:10px;">
+                        أحدثت تكنولوجيا المعلومات <span style="color:#f59e0b;font-weight:700;">5 تحولات مجتمعية رئيسية</span>
+                    </div>
+
+                    <div class="social-grid">
+                        <div class="social-item">
+                            <span class="emoji">💬</span>
+                            <div class="name">شبكات التواصل الاجتماعي</div>
+                            <div class="desc">منصات تتيح التواصل ونشر المحتوى ومشاركته بسرعة</div>
+                        </div>
+                        <div class="social-item">
+                            <span class="emoji">🛒</span>
+                            <div class="name">التجارة الإلكترونية</div>
+                            <div class="desc">بيع وشراء السلع والخدمات عبر الإنترنت (مثل أمازون، إيباي)</div>
+                        </div>
+                        <div class="social-item">
+                            <span class="emoji">🏠</span>
+                            <div class="name">العمل عن بُعد</div>
+                            <div class="desc">أداء المهام من المنزل أو موقع بعيد باستخدام الإنترنت</div>
+                        </div>
+                        <div class="social-item">
+                            <span class="emoji">🎓</span>
+                            <div class="name">التعلم عبر الإنترنت</div>
+                            <div class="desc">تقديم الدروس والمواد التعليمية عبر الإنترنت</div>
+                        </div>
+                        <div class="social-item">
+                            <span class="emoji">💳</span>
+                            <div class="name">الدفع غير النقدي</div>
+                            <div class="desc">دفع قيمة السلع بوسائل غير نقدية (بطاقات، تطبيقات، QR)</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:12px;background:#fffbeb;padding:12px 18px;border-radius:12px;border-right:4px solid #f59e0b;">
+                        <span style="color:#6b7280;font-size:17px;">📌 هذه التحولات غيرت طريقة عيشنا وعملنا وتواصلنا</span>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "التكنولوجيا لم تغير أدواتنا فقط، بل غيرت طريقة حياتنا بالكامل"</div>
+            `
+        }, {
+            id: 4,
+            title: 'تقنيات ناشئة بارزة',
+            icon: '🚀',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:8px;">🚀 تقنيات ناشئة بارزة</div>
+
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <div class="name">🚗 القيادة الذاتية</div>
+                            <div class="desc">تستخدم الذكاء الاصطناعي والكاميرات والمستشعرات. تُعالج البيانات محلياً بـ <span style="color:#f59e0b;font-weight:700;">الحوسبة الطرفية</span> لتقليل زمن الاستجابة</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="name">🥽 الواقع المعزز (AR) والواقع الافتراضي (VR)</div>
+                            <div class="desc"><span style="font-weight:700;">AR:</span> تُضيف عناصر رقمية إلى العالم الحقيقي<br>
+                            <span style="font-weight:700;">VR:</span> تضع المستخدم داخل بيئة افتراضية مُولّدة حاسوبياً</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="name">⚛️ الحوسبة الكمومية</div>
+                            <div class="desc">تستخدم خصائص ميكانيكا الكم. تعتمد على <span style="color:#f59e0b;font-weight:700;">الكيوبت (Qubit)</span> الذي يحمل مزيجاً من 0 و 1 معاً، متفوقة في مسائل محددة</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:12px;background:#fef3c7;padding:12px 18px;border-radius:12px;border-right:4px solid #f59e0b;">
+                        <span style="color:#92400e;font-weight:700;">📌 المصطلحات الأساسية:</span>
+                        <span style="color:#1f2937;font-size:17px;">
+                            <span style="font-weight:700;color:#f59e0b;">الحوسبة الطرفية (Edge Computing):</span> معالجة البيانات على الجهاز نفسه فوراً بدلاً من إرسالها للسحابة
+                        </span>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "التقنيات الناشئة ترسم ملامح المستقبل الذي نعيشه اليوم"</div>
+            `
+        }, {
+            id: 5,
+            title: '📝 اختبر تركيزك - الجزء الأول',
+            icon: '📝',
+            content: `
+                <div class="quiz-section-title">
+                    <span class="icon">📝</span> اختبر تركيزك - الجزء الأول
+                    <span class="sub">اضغط على زر "إظهار الإجابة" بجانب كل سؤال لمعرفة الإجابة</span>
+                </div>
+
+                <!-- السؤال 1 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">1.</span> ما اسم الملاحظة التجريبية القائلة إن "عدد الترانزستورات في الدائرة المتكاملة يتضاعف تقريبًا كل عامين"؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> قانون مور (Moore's Law)
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> قانون مور هو ملاحظة تجريبية وليست قانوناً فيزيائياً ثابتاً</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 2 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">2.</span> ما المصطلح الذي يشير إلى بيع السلع والخدمات وشرائها عبر الإنترنت؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> التجارة الإلكترونية (E-commerce)
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> مثل أمازون وإيباي</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 3 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">3.</span> ما المصطلح الذي يصف أداء الشخص عمله من المنزل أو من موقع بعيد عبر الإنترنت؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> العمل عن بُعد (Remote Work)
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> نمط عمل يقلل من الحاجة إلى التنقل اليومي</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 4 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">4.</span> ما المصطلح الذي يشير إلى نظام إجراء المدفوعات بالنقود الإلكترونية ورموز QR وغيرها، دون استخدام النقد؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> الدفع غير النقدي (Cashless Payment)
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> يعتمد على البطاقات المصرفية وتطبيقات الهاتف</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 5 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">5.</span> ما المصطلح الذي يشير إلى التقنية التي تستخدم الذكاء الاصطناعي لقيادة مركبة بأقل تدخل بشري؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> القيادة الذاتية (Self-driving)
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> تستخدم كاميرات ومستشعرات لإدراك محيطها</div>
+                    </div>
+                </div>
+
+                <hr class="quiz-divider">
+
+                <div style="text-align:center;color:#6b7280;font-size:16px;margin-top:8px;">
+                    <i class="fas fa-lightbulb" style="color:#f59e0b;"></i> حاول الإجابة بنفسك قبل الضغط على زر الإجابة
+                </div>
+            `
+        }, {
+            id: 6,
+            title: '📝 اختبر تركيزك - الجزء الثاني',
+            icon: '📝',
+            content: `
+                <div class="quiz-section-title">
+                    <span class="icon">📝</span> اختبر تركيزك - الجزء الثاني
+                    <span class="sub">اضغط على زر "إظهار الإجابة" بجانب كل سؤال لمعرفة الإجابة</span>
+                </div>
+
+                <!-- السؤال 6 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">6.</span> صنّف كل مثال من (1 - 4) ضمن الفئة الأنسب: (أ) تغيرات في الحياة اليومية، (ب) تغيرات في الصناعة والاقتصاد، (ج) تغيرات في الرعاية الصحية والتعليم:
+                            <span class="sub-q">1. شراء منتجات عبر التسوق الإلكتروني.</span>
+                            <span class="sub-q">2. الدفع مقابل المشتريات بتطبيق دفع على الهاتف الذكي.</span>
+                            <span class="sub-q">3. مشاركة الصور مع الأصدقاء على شبكات التواصل الاجتماعي.</span>
+                            <span class="sub-q">4. شركة تُطبّق نظام العمل من المنزل.</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        1. (ب) تغيرات في الصناعة والاقتصاد — يغير شكل حركة البيع والشراء<br>
+                        2. (أ) تغيرات في الحياة اليومية — يسهل المعاملات اليومية للأفراد<br>
+                        3. (أ) تغيرات في الحياة اليومية — يغير طريقة تواصل الأفراد اجتماعياً<br>
+                        4. (ب) تغيرات في الصناعة والاقتصاد — يغير هيكل بيئة العمل
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> بعض التغيرات تمس أكثر من مجال</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 7 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">7.</span> من بين الخيارات التالية (أ - د)، اختر الخيار الذي لا يُعد وصفاً مناسباً لتقنية ناشئة:
+                            <span class="sub-q"><span class="letter">(أ)</span> القيادة الذاتية تستخدم الذكاء الاصطناعي للمساعدة على قيادة المركبة.</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> الواقع المعزز تقنية تُضيف معلومات رقمية فوق صور من العالم الحقيقي.</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> الواقع الافتراضي تقنية تُحسّن بشكل كبير سرعة معالجة الحاسب.</span>
+                            <span class="sub-q"><span class="letter">(د)</span> يُتوقع أن تسرع الحوسبة الكمومية الحسابات الصعبة على الحواسب التقليدية.</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> (ج)
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> الواقع الافتراضي هو بيئة محاكاة ولا علاقة له بتحسين سرعة معالجة الحاسب بحد ذاته</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 8 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">8.</span> اقرأ الفقرة التالية وأجب عن كل سؤال:
+                            <span class="sub-q">"ظهرت الحواسيب الإلكترونية في أربعينيات القرن العشرين، واستُخدمت أولاً في أغراض عسكرية وحسابات علمية. ثم انتشرت (1) في السبعينيات والثمانينيات، فبدأ استخدامها على نطاق أوسع بين الأفراد. وفي التسعينيات أُتيح (2) للاستخدام التجاري وانتشر الويب، فتوسع الوصول العالمي إلى المعلومات. وفي العقد الأول من الألفية ظهرت (3)، فانتشر الإنترنت عبر الهواتف المحمولة بسرعة."</span>
+                            <span class="sub-q">• املأ الفراغات (1 - 3).</span>
+                            <span class="sub-q">• ما التقنية التي انتشرت من العقد الثاني من الألفية فصاعداً، والتي تدعم تحليل البيانات الضخمة واستخدام الذكاء الاصطناعي؟</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        (1) الحواسب الشخصية (PCs)<br>
+                        (2) الإنترنت<br>
+                        (3) الهواتف الذكية<br><br>
+                        التقنية التي انتشرت من العقد الثاني: <span style="font-weight:700;color:#f59e0b;">الحوسبة السحابية</span>
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> الحوسبة السحابية دعمت تحليل البيانات الضخمة والذكاء الاصطناعي</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 9 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">9.</span> من بين الخيارات التالية (أ - و)، اختر كل ما يُعد من التقنيات الناشئة:
+                            <span class="sub-q">(أ) البريد الإلكتروني - (ب) القيادة الذاتية - (ج) الحواسب الشخصية - (د) الواقع المعزز - (هـ) الواقع الافتراضي - (و) الحوسبة الكمومية</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        (ب) القيادة الذاتية · (د) الواقع المعزز · (هـ) الواقع الافتراضي · (و) الحوسبة الكمومية
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> البريد الإلكتروني والحواسب الشخصية من التقنيات القديمة وليست ناشئة</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 10 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">10.</span> من بين الخيارات التالية (أ - د)، اختر الخيار الذي يصف بشكل أنسب خصائص شبكات التواصل الاجتماعي:
+                            <span class="sub-q"><span class="letter">(أ)</span> خدمة تتيح للمستخدمين التواصل فيما بينهم ونشر المعلومات ومشاركتها، وهي فعالة جداً في نشر المعلومات بسرعة.</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> خدمة لبيع السلع والخدمات وشرائها عبر الإنترنت.</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> أسلوب يعمل فيه الشخص من المنزل أو من مواقع بعيدة أخرى.</span>
+                            <span class="sub-q"><span class="letter">(د)</span> نظام لإجراء المدفوعات بالنقود الإلكترونية أو رموز QR دون استخدام النقد.</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> (أ)
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> شبكات التواصل الاجتماعي تتيح التواصل ونشر المعلومات ومشاركتها بسرعة</div>
+                    </div>
+                </div>
+
+                <hr class="quiz-divider">
+
+                <div style="text-align:center;color:#6b7280;font-size:16px;margin-top:8px;">
+                    <i class="fas fa-lightbulb" style="color:#f59e0b;"></i> حاول الإجابة بنفسك قبل الضغط على زر الإجابة
+                </div>
+            `
+        }];
+
+        // ============================================================
+        //  STATE
+        // ============================================================
+        let currentSlide = 0;
+        let autoPlay = false;
+        let autoInterval = null;
+
+        // ============================================================
+        //  DOM REFS
+        // ============================================================
+        const slideBody = document.getElementById('slideBody');
+        const dotsContainer = document.getElementById('dotsContainer');
+        const slideCounter = document.getElementById('slideCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const autoBtn = document.getElementById('autoBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        // ============================================================
+        //  TOGGLE ANSWER FUNCTION
+        // ============================================================
+        function toggleAnswer(button) {
+            const answerBox = button.closest('.quiz-item').querySelector('.answer-box');
+            const isShowing = answerBox.classList.contains('show');
+
+            if (isShowing) {
+                answerBox.classList.remove('show');
+                button.textContent = 'إظهار الإجابة';
+                button.classList.remove('showing');
+            } else {
+                answerBox.classList.add('show');
+                button.textContent = 'إخفاء الإجابة';
+                button.classList.add('showing');
+            }
+        }
+
+        // ============================================================
+        //  RENDER
+        // ============================================================
+        function renderSlide(index) {
+            const slide = slides[index];
+            if (!slide) return;
+
+            let html = `
+                <div class="slide-title slide-enter">
+                    <span class="icon">${slide.icon}</span>
+                    ${slide.title}
+                    <span class="subtitle-line">// ${String(index + 1).padStart(2, '0')}</span>
+                </div>
+                <div class="divider"></div>
+                <div class="fade-in" style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+                    ${slide.content}
+                </div>
+            `;
+            slideBody.innerHTML = html;
+
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            slideCounter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+
+            prevBtn.disabled = index === 0;
+            prevBtn.style.opacity = index === 0 ? '0.3' : '1';
+        }
+
+        function renderDots() {
+            dotsContainer.innerHTML = '';
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === currentSlide ? ' active' : '');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        // ============================================================
+        //  NAVIGATION
+        // ============================================================
+        function goToSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            currentSlide = index;
+            renderSlide(currentSlide);
+            renderDots();
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                goToSlide(currentSlide + 1);
+            } else if (autoPlay) {
+                goToSlide(0);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) goToSlide(currentSlide - 1);
+        }
+
+        // ============================================================
+        //  AUTOPLAY
+        // ============================================================
+        function toggleAutoPlay() {
+            autoPlay = !autoPlay;
+            if (autoPlay) {
+                autoInterval = setInterval(nextSlide, 6000);
+                autoBtn.innerHTML = '<i class="fas fa-pause"></i> <span>إيقاف</span>';
+                autoBtn.classList.add('btn-primary');
+            } else {
+                clearInterval(autoInterval);
+                autoBtn.innerHTML = '<i class="fas fa-play"></i> <span>تلقائي</span>';
+                autoBtn.classList.remove('btn-primary');
+            }
+        }
+
+        // ============================================================
+        //  FULLSCREEN
+        // ============================================================
+        function toggleFullscreen() {
+            const container = document.querySelector('.presentation-container');
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {});
+            } else {
+                document.exitFullscreen().catch(err => {});
+            }
+        }
+
+        // ============================================================
+        //  KEYBOARD SHORTCUTS
+        // ============================================================
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === ' ' || e.key === 'Space') {
+                e.preventDefault();
+                toggleAutoPlay();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+
+        // ============================================================
+        //  EVENT LISTENERS
+        // ============================================================
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+        autoBtn.addEventListener('click', toggleAutoPlay);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        // ============================================================
+        //  INIT
+        // ============================================================
+        renderDots();
+        renderSlide(0);
+    </script>
+
+</body>
+</html>
