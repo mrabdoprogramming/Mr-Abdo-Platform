@@ -1,0 +1,2724 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="مستر عبدو برمجة — منصة تعليمية للبرمجة والذكاء الاصطناعي">
+<meta name="theme-color" content="#0b0b14">
+<title>مستر عبدو برمجة | From Logic to Innovation</title>
+
+<!-- Optional external fonts/icon library. The app remains functional without them. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+/* =========================================================
+   MASTER ABDo PROGRAMMING — SINGLE FILE MVP
+   =========================================================
+   HOW TO MANAGE THE PLATFORM
+   1. Add students inside the students array.
+   2. Add courses inside the courses object.
+   3. Add units inside each term.
+   4. Add lessons inside each unit.
+   5. Add Google Drive links inside lesson.driveUrl.
+   6. Update announcements inside the announcements array.
+   7. Replace assets/logo.png and assets/teacher.png with real assets.
+   8. Upload the updated index.html to GitHub Pages.
+
+   SECURITY NOTE:
+   This is intentionally a client-side access-control simulation.
+   Credentials are visible in client-side JavaScript and therefore
+   this is NOT secure authentication. It is appropriate only for
+   a lightweight private educational MVP. A future backend should
+   replace the authentication/session layer without requiring a
+   complete UI rebuild.
+*/
+
+/* =========================
+   RESET / TOKENS
+   ========================= */
+:root{
+  --bg:#080811;
+  --bg-2:#0d0d19;
+  --surface:#11111e;
+  --surface-2:#171727;
+  --surface-3:#1d1d30;
+  --text:#f7f7fb;
+  --muted:#a6a6ba;
+  --muted-2:#77778f;
+  --border:rgba(255,255,255,.09);
+  --border-strong:rgba(255,255,255,.15);
+  --purple:#8b5cf6;
+  --purple-2:#a78bfa;
+  --violet:#6d28d9;
+  --blue:#60a5fa;
+  --red:#ef4444;
+  --gold:#f5b942;
+  --green:#34d399;
+  --shadow:0 24px 70px rgba(0,0,0,.35);
+  --radius:22px;
+  --radius-sm:14px;
+  --container:1180px;
+  --sidebar:250px;
+  --font:"Cairo","IBM Plex Sans Arabic",system-ui,sans-serif;
+}
+
+[data-theme="light"]{
+  --bg:#f6f6fb;
+  --bg-2:#ffffff;
+  --surface:#ffffff;
+  --surface-2:#f2f1f8;
+  --surface-3:#e9e7f2;
+  --text:#151521;
+  --muted:#626276;
+  --muted-2:#858599;
+  --border:rgba(20,20,40,.09);
+  --border-strong:rgba(20,20,40,.15);
+  --shadow:0 24px 70px rgba(45,35,80,.12);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  margin:0;overflow-x:hidden;
+  min-width:320px;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  line-height:1.7;
+  transition:background .25s,color .25s;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+::selection{background:rgba(139,92,246,.35)}
+.container{width:min(calc(100% - 40px),var(--container));margin-inline:auto}
+.hidden{display:none!important}
+.muted{color:var(--muted)}
+.center{text-align:center}
+.ltr{direction:ltr;text-align:left}
+
+/* =========================
+   ACCESSIBILITY
+   ========================= */
+:focus-visible{
+  outline:3px solid rgba(167,139,250,.75);
+  outline-offset:3px;
+}
+.skip-link{
+  position:fixed;top:-100px;right:20px;z-index:9999;
+  background:var(--purple);color:white;padding:10px 16px;border-radius:10px;
+}
+.skip-link:focus{top:20px}
+
+/* =========================
+   BUTTONS
+   ========================= */
+.btn{
+  border:1px solid transparent;
+  border-radius:13px;
+  padding:11px 17px;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:700;
+  transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{
+  color:#fff;
+  background:linear-gradient(135deg,var(--purple),var(--violet));
+  box-shadow:0 12px 30px rgba(109,40,217,.24);
+}
+.btn-secondary{background:var(--surface-2);border-color:var(--border);color:var(--text)}
+.btn-ghost{background:transparent;border-color:var(--border);color:var(--text)}
+.btn-danger{background:rgba(239,68,68,.11);border-color:rgba(239,68,68,.2);color:#f87171}
+.btn-small{padding:8px 12px;font-size:.88rem}
+.btn-block{width:100%}
+
+/* =========================
+   HEADER / LANDING
+   ========================= */
+.public-header{
+  position:sticky;top:0;z-index:1000;
+  background:color-mix(in srgb,var(--bg) 82%,transparent);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.header-inner{
+  min-height:76px;display:flex;align-items:center;gap:22px;
+}
+.brand{display:flex;align-items:center;gap:11px;min-width:max-content}
+.brand-mark{
+  width:44px;height:44px;border-radius:13px;
+  display:grid;place-items:center;
+  color:#fff;font-weight:800;
+  background:linear-gradient(145deg,var(--purple),#32106e);
+  box-shadow:0 10px 30px rgba(139,92,246,.25);
+  overflow:hidden;
+}
+.brand-logo{width:100%;height:100%;object-fit:contain;padding:7px}
+.brand-copy strong{display:block;font-size:1rem;line-height:1.15}
+.brand-copy span{display:block;color:var(--muted);font-size:.72rem;line-height:1.2}
+.public-nav{display:flex;align-items:center;gap:20px;margin-inline:auto}
+.public-nav a{font-size:.9rem;color:var(--muted);transition:color .2s}
+.public-nav a:hover{color:var(--text)}
+.header-actions{display:flex;align-items:center;gap:8px}
+.icon-btn{
+  width:42px;height:42px;border-radius:12px;
+  border:1px solid var(--border);background:var(--surface-2);color:var(--text);
+  display:grid;place-items:center;
+}
+.mobile-menu-btn{display:none}
+
+.hero{
+  position:relative;overflow:hidden;
+  padding:92px 0 75px;
+  min-height:680px;
+}
+.hero::before{
+  content:"";position:absolute;inset:-30% -10%;
+  background:
+    radial-gradient(circle at 75% 30%,rgba(139,92,246,.18),transparent 28%),
+    radial-gradient(circle at 20% 80%,rgba(96,165,250,.08),transparent 24%);
+  pointer-events:none;
+}
+.hero-grid{
+  position:relative;display:grid;grid-template-columns:1.03fr .97fr;
+  align-items:center;gap:55px;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 11px;border:1px solid rgba(167,139,250,.2);
+  background:rgba(139,92,246,.07);border-radius:999px;
+  color:var(--purple-2);font-size:.8rem;font-weight:700;
+}
+.hero h1{
+  margin:18px 0 13px;
+  font-size:clamp(2.7rem,6vw,5.2rem);
+  line-height:1.08;letter-spacing:-2px;
+}
+.hero h1 span{
+  background:linear-gradient(90deg,#fff,var(--purple-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-lead{max-width:650px;color:var(--muted);font-size:1.05rem}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:27px}
+.slogan{margin-top:20px;color:var(--muted-2);font-size:.83rem;letter-spacing:.5px;direction:ltr;text-align:right}
+
+.hero-visual{position:relative;min-height:510px;display:grid;place-items:center}
+.hero-orb{
+  position:absolute;width:380px;height:380px;border-radius:50%;
+  background:radial-gradient(circle,rgba(139,92,246,.22),rgba(139,92,246,.04) 55%,transparent 70%);
+  filter:blur(4px);
+}
+.teacher-frame{
+  position:relative;width:min(360px,78vw);height:450px;
+  border-radius:180px 180px 30px 30px;
+  overflow:hidden;
+  border:1px solid rgba(167,139,250,.22);
+  background:linear-gradient(160deg,#17142a,#0d0d17);
+  box-shadow:0 35px 100px rgba(0,0,0,.48),0 0 70px rgba(139,92,246,.12);
+}
+.teacher-frame img{width:100%;height:100%;object-fit:cover}
+.teacher-fallback{
+  width:100%;height:100%;display:grid;place-items:center;
+  background:
+    radial-gradient(circle at 50% 35%,rgba(167,139,250,.18),transparent 24%),
+    linear-gradient(145deg,#19152d,#090910);
+}
+.silhouette{
+  width:150px;height:150px;border-radius:50%;
+  background:linear-gradient(145deg,#5d4a8e,#211a37);
+  position:relative;
+  box-shadow:0 0 70px rgba(139,92,246,.22);
+}
+.silhouette::after{
+  content:"";position:absolute;width:245px;height:190px;
+  background:linear-gradient(145deg,#5d4a8e,#211a37);
+  border-radius:130px 130px 30px 30px;top:125px;left:50%;transform:translateX(-50%);
+}
+.visual-card{
+  position:absolute;padding:12px 15px;border:1px solid var(--border);
+  background:rgba(17,17,30,.88);backdrop-filter:blur(14px);
+  border-radius:15px;box-shadow:var(--shadow);font-size:.78rem;
+}
+[data-theme="light"] .visual-card{background:rgba(255,255,255,.9)}
+.visual-card code{font-family:ui-monospace,SFMono-Regular,monospace;color:var(--purple-2)}
+.card-code{top:65px;right:0}
+.card-progress{bottom:65px;left:0}
+.card-node{top:185px;left:0}
+.code-line{display:block;white-space:nowrap}
+.c1{color:#a78bfa}.c2{color:#60a5fa}.c3{color:#34d399}
+
+.section{padding:85px 0}
+.section-head{max-width:700px;margin-bottom:35px}
+.section-kicker{color:var(--purple-2);font-size:.8rem;font-weight:800;letter-spacing:.5px}
+.section-title{font-size:clamp(1.8rem,3vw,2.7rem);margin:7px 0}
+.section-subtitle{color:var(--muted);margin:0}
+
+.about-grid,.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.panel{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:28px;
+  box-shadow:var(--shadow);
+}
+.about-photo{
+  min-height:280px;border-radius:18px;overflow:hidden;
+  background:linear-gradient(145deg,#151127,#0c0c14);
+}
+.about-photo img{width:100%;height:100%;object-fit:cover}
+.feature-grid{grid-template-columns:repeat(3,1fr)}
+.feature-card{padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:18px}
+.feature-icon{
+  width:48px;height:48px;border-radius:14px;display:grid;place-items:center;
+  background:rgba(139,92,246,.1);color:var(--purple-2);margin-bottom:15px;
+}
+.feature-card h3{margin:0 0 7px;font-size:1rem}
+.feature-card p{margin:0;color:var(--muted);font-size:.9rem}
+
+.public-footer{
+  padding:35px 0;border-top:1px solid var(--border);
+}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:35px}
+.footer-links{display:grid;gap:7px;color:var(--muted);font-size:.88rem}
+.footer-links a{display:inline-flex;align-items:center;gap:7px}.footer-links a:hover{color:var(--text)}
+.copyright{margin-top:30px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted-2);font-size:.78rem}
+
+/* =========================
+   AUTH
+   ========================= */
+.auth-view{
+  min-height:100vh;display:grid;place-items:center;padding:30px;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(139,92,246,.15),transparent 30%),
+    radial-gradient(circle at 85% 80%,rgba(96,165,250,.08),transparent 28%),
+    var(--bg);
+}
+.auth-card{
+  width:min(470px,100%);padding:34px;border:1px solid var(--border);
+  border-radius:25px;background:var(--surface);box-shadow:var(--shadow);
+}
+.auth-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+.back-link{color:var(--muted);font-size:.86rem}
+.auth-logo{text-align:center;margin-bottom:25px}
+.auth-logo .brand-mark{margin:auto}
+.auth-logo h1{font-size:1.35rem;margin:13px 0 2px}
+.auth-logo p{color:var(--muted);font-size:.8rem;margin:0}
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:.82rem;font-weight:700;margin-bottom:7px}
+.input-wrap{position:relative}
+.form-input{
+  width:100%;height:50px;border-radius:13px;border:1px solid var(--border);
+  background:var(--surface-2);color:var(--text);padding:0 14px;
+}
+.form-input::placeholder{color:var(--muted-2);opacity:1}
+.input-wrap .form-input{padding-left:48px}
+.password-toggle{
+  position:absolute;left:5px;top:5px;width:40px;height:40px;border:0;
+  background:transparent;color:var(--muted);display:grid;place-items:center;
+}
+.remember-row{display:flex;justify-content:space-between;align-items:center;margin:5px 0 20px;font-size:.8rem;color:var(--muted)}
+.check{display:flex;align-items:center;gap:7px}
+.error-box{
+  padding:11px 13px;border-radius:12px;background:rgba(239,68,68,.1);
+  border:1px solid rgba(239,68,68,.2);color:#fca5a5;font-size:.82rem;margin-bottom:15px;
+}
+.auth-note{
+  margin-top:18px;padding:12px;border-radius:12px;background:var(--surface-2);
+  color:var(--muted-2);font-size:.72rem;text-align:center;
+}
+
+/* =========================
+   APP SHELL / DASHBOARD
+   ========================= */
+.app-shell{min-height:100vh;background:var(--bg)}
+.app-sidebar{
+  position:fixed;z-index:900;right:0;top:0;bottom:0;width:var(--sidebar);
+  padding:20px 14px;border-left:1px solid var(--border);
+  background:var(--surface);display:flex;flex-direction:column;
+  overflow-y:auto;overflow-x:hidden;
+  transition:transform .25s;
+}
+.app-sidebar .app-nav,
+.app-sidebar .sidebar-bottom{flex-shrink:0}
+.app-brand{padding:6px 8px 22px;border-bottom:1px solid var(--border);margin-bottom:15px}
+.app-nav{display:grid;gap:5px}
+.nav-item{
+  display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:12px;
+  color:var(--muted);font-size:.86rem;border:1px solid transparent;
+}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}
+.nav-item.active{background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.14);color:var(--purple-2)}
+.sidebar-bottom{margin-top:auto;display:grid;gap:10px}
+.user-mini{padding:12px;border:1px solid var(--border);border-radius:14px;background:var(--surface-2)}
+.user-mini strong{display:block;font-size:.8rem}
+.user-mini span{display:block;color:var(--muted);font-size:.7rem}
+.app-main{margin-right:var(--sidebar);min-height:100vh}
+.app-topbar{
+  height:72px;position:sticky;top:0;z-index:800;
+  background:color-mix(in srgb,var(--bg) 84%,transparent);
+  backdrop-filter:blur(18px);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 28px;gap:12px;
+}
+.mobile-sidebar-btn{display:none}
+.topbar-spacer{margin-inline:auto}
+.student-chip{display:flex;align-items:center;gap:9px;font-size:.78rem}
+.avatar{
+  width:38px;height:38px;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(145deg,var(--purple),var(--violet));color:white;font-weight:800;
+}
+.app-content{padding:34px 28px}
+.content-container{max-width:1120px;margin:auto}
+
+.welcome{
+  display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:25px;
+}
+.welcome h1{font-size:clamp(1.5rem,3vw,2.2rem);margin:0 0 5px}
+.welcome p{margin:0;color:var(--muted);font-size:.9rem}
+.grade-badge{
+  display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;
+  font-size:.73rem;font-weight:800;border:1px solid var(--border);background:var(--surface-2);
+}
+.grade-red{--grade:#ef4444}.grade-gold{--grade:#f5b942}.grade-blue{--grade:#60a5fa}
+.grade-green{--grade:#34d399}.grade-purple{--grade:#a78bfa}
+.grade-badge i{width:7px;height:7px;border-radius:50%;background:var(--grade)}
+
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:25px}
+.stat-card{padding:18px;border:1px solid var(--border);background:var(--surface);border-radius:17px}
+.stat-top{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:.72rem}
+.stat-icon{color:var(--purple-2)}
+.stat-value{font-size:1.55rem;font-weight:800;margin-top:6px}
+.stat-desc{font-size:.7rem;color:var(--muted-2)}
+
+.progress-card{
+  padding:22px;border:1px solid var(--border);background:var(--surface);
+  border-radius:18px;margin-bottom:25px;
+}
+.progress-head{display:flex;justify-content:space-between;gap:15px;align-items:center}
+.progress-head strong{font-size:.9rem}
+.progress-head span{font-size:.8rem;color:var(--purple-2);font-weight:800}
+.progress-track{height:9px;background:var(--surface-3);border-radius:99px;overflow:hidden;margin-top:13px}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--violet),var(--purple-2));border-radius:99px;transition:width .6s ease}
+.progress-caption{margin-top:9px;color:var(--muted);font-size:.73rem}
+
+.section-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:23px;margin-bottom:20px;
+}
+.section-card-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}
+.section-card-head h2{font-size:1rem;margin:0}
+.section-card-head p{font-size:.73rem;color:var(--muted);margin:3px 0 0}
+
+.course-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.course-card{
+  border:1px solid var(--border);background:var(--surface-2);border-radius:16px;
+  padding:18px;transition:transform .2s,border-color .2s;
+}
+.course-card:hover{transform:translateY(-3px);border-color:rgba(139,92,246,.28)}
+.course-top{display:flex;justify-content:space-between;align-items:center}
+.course-card h3{font-size:.95rem;margin:12px 0 3px}
+.course-card p{color:var(--muted);font-size:.73rem;margin:0}
+.course-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.meta-pill{font-size:.68rem;color:var(--muted);padding:5px 8px;border-radius:8px;background:var(--surface-3)}
+.unit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.unit-card{
+  border:1px solid var(--border);border-radius:16px;background:var(--surface-2);
+  padding:18px;cursor:pointer;transition:.2s;
+}
+.unit-card:hover{transform:translateY(-3px);border-color:rgba(139,92,246,.28)}
+.unit-num{font-size:.7rem;color:var(--purple-2);font-weight:800}
+.unit-card h3{margin:5px 0;font-size:.95rem}
+.unit-card p{font-size:.72rem;color:var(--muted);margin:0}
+.lesson-list{display:grid;gap:10px}
+.lesson-card{
+  display:flex;align-items:center;gap:13px;padding:14px;border:1px solid var(--border);
+  border-radius:15px;background:var(--surface-2);transition:.2s;
+}
+.lesson-card:hover{border-color:rgba(139,92,246,.28);transform:translateY(-1px)}
+.lesson-number{
+  width:43px;height:43px;flex:0 0 43px;border-radius:12px;display:grid;place-items:center;
+  background:rgba(139,92,246,.1);color:var(--purple-2);font-size:.72rem;font-weight:800;
+}
+.lesson-main{min-width:0;flex:1}
+.lesson-main h3{font-size:.86rem;margin:0 0 2px}
+.lesson-main p{font-size:.68rem;color:var(--muted);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lesson-side{display:flex;align-items:center;gap:8px}
+.completed-dot{color:var(--green)}
+.lesson-actions{display:flex;gap:7px}
+
+.search-box{position:relative;max-width:480px}
+.search-box input{padding-right:42px}
+.search-box .search-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.search-clear{position:absolute;left:5px;top:5px;width:40px;height:40px;border:0;background:transparent;color:var(--muted)}
+
+.announcement-list{display:grid;gap:10px}
+.announcement{
+  display:flex;gap:13px;padding:15px;border:1px solid var(--border);border-radius:14px;background:var(--surface-2)
+}
+.announcement-icon{
+  width:40px;height:40px;border-radius:11px;display:grid;place-items:center;flex:0 0 40px;
+  background:rgba(139,92,246,.1);color:var(--purple-2)
+}
+.announcement h3{margin:0;font-size:.83rem}
+.announcement p{margin:3px 0;color:var(--muted);font-size:.72rem}
+.announcement small{color:var(--muted-2);font-size:.65rem}
+.announcement.important .announcement-icon{color:#f87171;background:rgba(239,68,68,.1)}
+.announcement.update .announcement-icon{color:#60a5fa;background:rgba(96,165,250,.1)}
+
+.empty-state{
+  padding:45px 20px;text-align:center;color:var(--muted);
+  border:1px dashed var(--border-strong);border-radius:15px;
+}
+.empty-state .empty-icon{color:var(--muted-2);margin-bottom:8px}
+.empty-state strong{display:block;color:var(--text);font-size:.88rem}
+.empty-state span{font-size:.72rem}
+
+/* =========================
+   LESSON VIEW
+   ========================= */
+.breadcrumb{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;color:var(--muted);
+  font-size:.72rem;margin-bottom:20px;
+}
+.breadcrumb button{border:0;background:none;color:var(--muted);padding:0}
+.breadcrumb button:hover{color:var(--text)}
+.lesson-hero{
+  padding:27px;border-radius:20px;border:1px solid var(--border);
+  background:
+    radial-gradient(circle at 10% 0%,rgba(139,92,246,.13),transparent 35%),
+    var(--surface);
+  margin-bottom:17px;
+}
+.lesson-title-row{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+.lesson-title-row h1{font-size:clamp(1.5rem,3vw,2.35rem);margin:8px 0}
+.lesson-title-row p{color:var(--muted);max-width:750px;margin:0}
+.lesson-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.lesson-resource{
+  padding:22px;border:1px solid var(--border);border-radius:18px;background:var(--surface);
+  margin-bottom:17px;
+}
+.resource-box{
+  display:flex;justify-content:space-between;align-items:center;gap:18px;
+  padding:17px;border-radius:15px;background:var(--surface-2)
+}
+.resource-box h3{font-size:.9rem;margin:0 0 3px}
+.resource-box p{font-size:.7rem;color:var(--muted);margin:0}
+.lesson-bottom{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.lesson-nav{display:flex;gap:8px;flex-wrap:wrap}
+.completed-message{font-size:.76rem;color:var(--green);display:flex;align-items:center;gap:6px}
+
+/* =========================
+   PROFILE
+   ========================= */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.profile-photo-card{display:flex;align-items:center;gap:16px;padding:16px;border:1px solid var(--border);background:var(--surface-2);border-radius:16px;margin-bottom:16px}
+.profile-photo{width:72px;height:72px;flex:0 0 72px;border-radius:16px;object-fit:cover;border:1px solid var(--border-strong);background:var(--surface-3)}
+.profile-photo-placeholder{width:72px;height:72px;flex:0 0 72px;border-radius:16px;display:grid;place-items:center;background:var(--surface-3);border:1px solid var(--border);color:var(--muted-2)}
+.profile-photo-copy{min-width:0}
+.profile-photo-copy strong{display:block;font-size:.86rem}
+.profile-photo-copy span{display:block;color:var(--muted);font-size:.7rem;margin-top:2px}
+.profile-row{
+  display:flex;justify-content:space-between;gap:20px;padding:13px 0;
+  border-bottom:1px solid var(--border);font-size:.8rem
+}
+.profile-row:last-child{border-bottom:0}
+.profile-row span:first-child{color:var(--muted)}
+
+/* =========================
+   MOBILE NAV / TOAST / MODAL
+   ========================= */
+.mobile-bottom{
+  display:none;position:fixed;bottom:0;right:0;left:0;z-index:1000;
+  padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+  background:color-mix(in srgb,var(--surface) 94%,transparent);
+  backdrop-filter:blur(16px);border-top:1px solid var(--border);
+}
+.mobile-bottom-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.mobile-bottom button{border:0;background:transparent;color:var(--muted);font-size:.62rem;display:grid;gap:2px;place-items:center;padding:6px}
+.mobile-bottom button.active{color:var(--purple-2)}
+.toast{
+  position:fixed;z-index:2000;bottom:25px;left:25px;
+  min-width:250px;max-width:360px;padding:13px 15px;border-radius:14px;
+  background:var(--surface);border:1px solid var(--border-strong);box-shadow:var(--shadow);
+  transform:translateY(25px);opacity:0;pointer-events:none;transition:.25s;
+  font-size:.78rem;
+}
+.toast.show{transform:none;opacity:1}
+.toast.success{border-color:rgba(52,211,153,.25)}
+.toast.error{border-color:rgba(239,68,68,.25)}
+.toast-content{display:flex;align-items:center;gap:9px}
+.modal-backdrop{
+  position:fixed;inset:0;z-index:1500;background:rgba(0,0,0,.62);
+  backdrop-filter:blur(7px);display:grid;place-items:center;padding:20px;
+}
+.modal{
+  width:min(470px,100%);background:var(--surface);border:1px solid var(--border);
+  border-radius:22px;padding:25px;box-shadow:var(--shadow);
+}
+.modal-head{display:flex;justify-content:space-between;align-items:center}
+.modal-head h2{margin:0;font-size:1rem}
+.close-btn{border:0;background:var(--surface-2);color:var(--muted);width:36px;height:36px;border-radius:10px}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media(max-width:1050px){
+  .public-nav{display:none}
+  .mobile-menu-btn{display:grid}
+  .hero-grid{grid-template-columns:1fr;gap:30px}
+  .hero-copy{text-align:center}
+  .hero-lead{margin-inline:auto}
+  .hero-actions{justify-content:center}
+  .slogan{text-align:center}
+  .hero-visual{min-height:450px}
+  .feature-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:850px){
+  :root{--sidebar:270px}
+  .app-sidebar{transform:translateX(100%);box-shadow:-25px 0 80px rgba(0,0,0,.25)}
+  .app-sidebar.open{transform:translateX(0)}
+  .app-main{margin-right:0}
+  .mobile-sidebar-btn{display:grid}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .profile-grid,.course-grid,.unit-grid{grid-template-columns:1fr}
+  .mobile-bottom{display:block}
+  .app-content{padding-bottom:100px}
+}
+@media(max-width:620px){
+  .container{width:min(calc(100% - 28px),var(--container))}
+  .header-inner{min-height:66px}
+  .brand-mark{width:40px;height:40px}
+  .header-actions .theme-btn{display:none}
+  .header-actions .btn{padding:8px 10px;font-size:.75rem}
+  .hero{padding:55px 0 45px;min-height:auto}
+  .hero h1{letter-spacing:-1px}
+  .hero-visual{min-height:400px}
+  .teacher-frame{height:390px;width:290px}
+  .visual-card{font-size:.68rem;padding:9px 10px}
+  .card-code{top:35px;right:-2px}.card-node{left:-2px;top:145px}.card-progress{bottom:35px;left:-2px}
+  .section{padding:60px 0}
+  .about-grid,.feature-grid,.footer-grid{grid-template-columns:1fr}
+  .about-photo{min-height:220px}
+  .app-topbar{padding:0 14px}
+  .app-content{padding:25px 14px 100px}
+  .welcome{align-items:flex-start;flex-direction:column}
+  .stat-grid{gap:8px}
+  .stat-card{padding:14px}
+  .stat-value{font-size:1.25rem}
+  .section-card{padding:17px}
+  .lesson-card{align-items:flex-start;min-width:0}
+  .lesson-main{min-width:0}
+  .lesson-side{max-width:100%}
+  .lesson-side{flex-direction:column;align-items:flex-end}
+  .lesson-actions .btn{padding:7px 9px;font-size:.68rem}
+  .lesson-title-row{flex-direction:column}
+  .lesson-follow-actions{width:100%;margin-top:14px}
+  .lesson-follow-actions .btn{flex:1;min-width:150px}
+  .resource-box{flex-direction:column;align-items:flex-start}
+  .profile-photo-card{padding:13px}
+  .profile-photo,.profile-photo-placeholder{width:60px;height:60px;flex-basis:60px}
+  .toast{left:14px;right:14px;bottom:82px;min-width:0}
+}
+@media(max-width:390px){
+  .hero h1{font-size:2.35rem}
+  .btn{padding:10px 12px}
+  .lesson-follow-actions{display:grid;grid-template-columns:1fr}
+  .lesson-follow-actions .btn{width:100%;min-width:0}
+}
+
+/* =========================
+   REDUCED MOTION
+   ========================= */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main">تخطي إلى المحتوى</a>
+
+<!-- =========================
+     PUBLIC LANDING
+     ========================= -->
+<div id="publicView">
+  <header class="public-header">
+    <div class="container header-inner">
+      <a class="brand" href="#home" aria-label="مستر عبدو برمجة - الرئيسية">
+        <div class="brand-mark"><img data-brand-logo src="assets/logo.png" alt="" class="brand-logo"></div>
+        <div class="brand-copy">
+          <strong>مستر عبدو برمجة</strong>
+          <span>From Logic to Innovation</span>
+        </div>
+      </a>
+
+      <nav class="public-nav" aria-label="التنقل الرئيسي">
+        <a href="#home">الرئيسية</a>
+        <a href="#about">عن مستر عبدو</a>
+        <a href="#features">المميزات</a>
+        <a href="#contact">تواصل معنا</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn theme-btn" id="publicThemeBtn" aria-label="تغيير المظهر" title="تغيير المظهر">
+          <i data-lucide="moon"></i>
+        </button>
+        <button class="icon-btn mobile-menu-btn" id="mobilePublicMenu" aria-label="فتح القائمة">
+          <i data-lucide="menu"></i>
+        </button>
+        <button class="btn btn-primary btn-small" data-action="login">
+          <i data-lucide="log-in"></i>
+          دخول الطلاب
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><i data-lucide="sparkles" size="15"></i> مساحة التعلم الخاصة بطلاب مستر عبدو</div>
+          <h1>اتعلم البرمجة...<br><span>من المنطق للابتكار.</span></h1>
+          <p class="hero-lead">
+            منصة تعليمية منظمة تساعدك على الوصول إلى دروس البرمجة والذكاء الاصطناعي
+            وملفاتك التعليمية من مكان واحد، بتجربة بسيطة ومناسبة للموبايل والكمبيوتر.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-action="login">
+              دخول المنصة <i data-lucide="arrow-left"></i>
+            </button>
+            <a class="btn btn-secondary" href="#about">
+              اعرف أكتر <i data-lucide="info"></i>
+            </a>
+          </div>
+          <div class="slogan">FROM LOGIC TO INNOVATION</div>
+        </div>
+
+        <div class="hero-visual" aria-label="الصورة التعريفية لمستر عبدو">
+          <div class="hero-orb"></div>
+          <div class="visual-card card-code">
+            <code>
+              <span class="code-line c1">const</span> <span class="code-line c2">idea</span> = <span class="code-line c3">logic</span>;
+            </code>
+          </div>
+          <div class="visual-card card-node">
+            <code>&lt;/&gt; build()</code>
+          </div>
+          <div class="visual-card card-progress">
+            <strong>Learning Journey</strong><br>
+            <span class="muted">Logic → Code → Innovation</span>
+          </div>
+
+          <!-- Replace only this source later with assets/teacher.png -->
+          <div class="teacher-frame">
+            <img id="heroTeacherImage" src="assets/teacher.png" alt="م. عبدالرحمن فتحي - مستر عبدو برمجة">
+            <div class="teacher-fallback" id="heroTeacherFallback">
+              <div class="silhouette" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">ABOUT</div>
+          <h2 class="section-title">عبدالرحمن فتحي — مستر عبدو برمجة</h2>
+          <p class="section-subtitle">مساحة تعريفية قابلة للتعديل لاحقًا دون إضافة أي ادعاءات أو بيانات غير مؤكدة.</p>
+        </div>
+        <div class="about-grid">
+          <div class="panel">
+            <h3>منطق قبل الكود</h3>
+            <p class="muted">
+              مستر عبدو برمجة يقدم محتوى تعليميًا في البرمجة ومفاهيم مرتبطة بالذكاء الاصطناعي
+              للطلاب. الهدف من المنصة هو تنظيم الرحلة التعليمية، من الصف والترم والوحدة
+              وصولًا إلى الدرس والملفات المرتبطة به.
+            </p>
+            <p class="muted">
+              يمكن تعديل هذا النص مستقبلًا ليعكس أسلوب التدريس والمعلومات التعريفية الفعلية.
+            </p>
+            <div class="eyebrow">From Logic to Innovation</div>
+          </div>
+          <div class="about-photo">
+            <img id="aboutTeacherImage" src="assets/teacher.png" alt="صورة مستر عبدو برمجة">
+            <div class="teacher-fallback" id="aboutTeacherFallback">
+              <div class="silhouette" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">YOUR JOURNEY</div>
+          <h2 class="section-title">مميزات الاشتراك مع مستر عيدو</h2>
+          <p class="section-subtitle">مش مجرد حصة شرح... ده نظام متكامل يساعدك تفهم، تتدرب، وتثبت المعلومة.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="messages-square"></i></div>
+            <h3>تسميع تفاعلي</h3>
+            <p>في بداية كل حصة بناخد تسميع شفوي تفاعلي على الحصة اللي فاتت، عشان نتأكد إنك فاهم ومثبت المعلومة.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="presentation"></i></div>
+            <h3>شرح الحصة</h3>
+            <p>شرح الحصة بيكون بشكل واضح ومفصل، ومدة الشرح بتتراوح من ساعة إلى ساعة ونصف حسب محتوى الدرس.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="list-checks"></i></div>
+            <h3>تدريب بعد الشرح</h3>
+            <p>بعد الحصة بنحل على اللي أخدناه من خلال أسئلة من الأسئلة اللي الوزارة منزلاها، عشان تطبق وتختبر فهمك.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="file-check-2"></i></div>
+            <h3>واجب ومتابعة</h3>
+            <p>هتاخد واجب في ملف PDF، تحله وتبعته للمستر باسمك والكود الخاص بيك عشان يتم متابعة شغلك.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="monitor-play"></i></div>
+            <h3>ماتريال الحصة</h3>
+            <p>بيفتحلك Access على المنصة تلاقي عليها الماتريال اللي المستر بيشرح منها، وتقدر تذاكر منها في أي وقت لو معاك لابتوب.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="headphones"></i></div>
+            <h3>شرح صوتي ممتع</h3>
+            <p>هتلاقي ملف صوتي لشرح الدرس تقدر تسمعه في أي وقت، في صورة قصة مسلية بين شخصين بدل الشرح التقليدي الممل.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="book-open"></i></div>
+            <h3>الدرس في صورة رواية</h3>
+            <p>الدرس بيتحول لرواية خيالية ممتعة تقدر تقرأها في أي وقت فاضي، عشان تراجع وتثبت المعلومات بطريقة مختلفة.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i data-lucide="brain"></i></div>
+            <h3>عشان تفهم وتحفظ</h3>
+            <p>كل ده معمول عشان يساعدك تفهم وتحفظ بسهولة، خصوصًا إن امتحانك بيجمع بين الأسئلة الاختيارية والأسئلة المقالية.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="public-footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand">
+            <div class="brand-mark"><img data-brand-logo src="assets/logo.png" alt="" class="brand-logo"></div>
+            <div class="brand-copy">
+              <strong>مستر عبدو برمجة</strong>
+              <span>From Logic to Innovation</span>
+            </div>
+          </div>
+          <p class="muted" style="font-size:.8rem;max-width:420px">
+            مساحة تعليمية منظمة لطلاب البرمجة والذكاء الاصطناعي.
+          </p>
+        </div>
+        <div>
+          <strong style="font-size:.82rem">روابط</strong>
+          <div class="footer-links" style="margin-top:9px">
+            <a href="#home">الرئيسية</a>
+            <a href="#about">عن مستر عبدو</a>
+            <a href="#features">المميزات</a>
+          </div>
+        </div>
+        <div>
+          <strong style="font-size:.82rem">تواصل معنا</strong>
+          <div class="footer-links" style="margin-top:9px">
+            <a href="https://wa.me/1020086224" data-placeholder-contact="whatsapp">${icon("message-circle",15)} Whatsapp</a>
+            <a href="https://www.facebook.com/mrabdoprogramming" data-placeholder-contact="facebook">${icon("facebook",15)} Facebook</a>
+            <a href="https://www.instagram.com/mrabdoprogramming/" data-placeholder-contact="instagram">${icon("instagram",15)} Instagram</a>
+            <a href="https://www.tiktok.com/@mrabdoprogramming" data-placeholder-contact="tiktok">${icon("music-2",15)} TikTok</a>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">© 2026 مستر عبدو برمجة</div>
+    </div>
+  </footer>
+</div>
+
+<!-- =========================
+     AUTH VIEW
+     ========================= -->
+<div id="authView" class="auth-view hidden">
+  <div class="auth-card">
+    <div class="auth-top">
+      <button class="back-link" id="authBackBtn"><i data-lucide="arrow-right"></i> العودة للموقع</button>
+      <button class="icon-btn" id="authThemeBtn" aria-label="تغيير المظهر"><i data-lucide="moon"></i></button>
+    </div>
+    <div class="auth-logo">
+      <div class="brand-mark"><img data-brand-logo src="assets/logo.png" alt="" class="brand-logo"></div>
+      <h1>دخول الطلاب</h1>
+      <p>مستر عبدو برمجة</p>
+    </div>
+
+    <div id="loginError" class="error-box hidden" role="alert"></div>
+
+    <form id="loginForm" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="username">اسم المستخدم</label>
+        <input class="form-input" id="username" name="username" autocomplete="username" required placeholder="اكتب اسم المستخدم">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">كلمة المرور</label>
+        <div class="input-wrap">
+          <input class="form-input" id="password" name="password" type="password" autocomplete="current-password" required placeholder="اكتب كلمة المرور">
+          <button type="button" class="password-toggle" id="passwordToggle" aria-label="إظهار كلمة المرور">
+            <i data-lucide="eye"></i>
+          </button>
+        </div>
+      </div>
+      <div class="remember-row">
+        <label class="check"><input type="checkbox" id="rememberSession" checked> تذكر دخولي على هذا الجهاز</label>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">
+        دخول المنصة <i data-lucide="log-in"></i>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- =========================
+     APP VIEW
+     ========================= -->
+<div id="appView" class="app-shell hidden">
+  <aside class="app-sidebar" id="appSidebar" aria-label="قائمة المنصة">
+    <div class="app-brand">
+      <a class="brand" href="#dashboard" data-route="dashboard">
+        <div class="brand-mark"><img data-brand-logo src="assets/logo.png" alt="" class="brand-logo"></div>
+        <div class="brand-copy">
+          <strong>مستر عبدو</strong>
+          <span>برمجة</span>
+        </div>
+      </a>
+    </div>
+    <nav class="app-nav">
+      <a class="nav-item" href="#dashboard" data-route="dashboard"><i data-lucide="layout-dashboard"></i> الرئيسية</a>
+      <a class="nav-item" href="#courses" data-route="courses"><i data-lucide="book-open"></i> دروسي</a>
+      <a class="nav-item" href="#last" data-route="last"><i data-lucide="history"></i> آخر ما درست</a>
+      <a class="nav-item" href="#announcements" data-route="announcements"><i data-lucide="bell"></i> الإعلانات</a>
+      <a class="nav-item" href="#profile" data-route="profile"><i data-lucide="user-round"></i> الملف الشخصي</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="user-mini" id="sidebarUser"></div>
+      <button class="btn btn-danger btn-small btn-block" id="logoutBtn"><i data-lucide="log-out"></i> تسجيل الخروج</button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <button class="icon-btn mobile-sidebar-btn" id="mobileSidebarBtn" aria-label="فتح القائمة"><i data-lucide="menu"></i></button>
+      <div class="topbar-spacer"></div>
+      <button class="icon-btn" id="appThemeBtn" aria-label="تغيير المظهر"><i data-lucide="moon"></i></button>
+      <div class="student-chip" id="topStudent"></div>
+    </header>
+    <main class="app-content" id="appMain">
+      <div class="content-container" id="pageContent"></div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom" aria-label="التنقل على الهاتف">
+    <div class="mobile-bottom-inner">
+      <button data-route="dashboard"><i data-lucide="layout-dashboard"></i><span>الرئيسية</span></button>
+      <button data-route="courses"><i data-lucide="book-open"></i><span>دروسي</span></button>
+      <button data-route="announcements"><i data-lucide="bell"></i><span>الإعلانات</span></button>
+      <button data-route="profile"><i data-lucide="user-round"></i><span>حسابي</span></button>
+    </div>
+  </nav>
+</div>
+
+<!-- =========================
+     TOAST
+     ========================= -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <div class="toast-content" id="toastContent"></div>
+</div>
+
+<!-- =========================
+     GENERIC MODAL
+     ========================= -->
+<div class="modal-backdrop hidden" id="modalBackdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h2 id="modalTitle">تنبيه</h2>
+      <button class="close-btn" id="modalClose" aria-label="إغلاق"><i data-lucide="x"></i></button>
+    </div>
+    <div id="modalBody" style="margin-top:15px"></div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* =========================================================
+   CONFIGURATION
+   ========================================================= */
+// =========================================================
+// EASY ASSET CONFIGURATION
+// Change this path when you want to use a different logo.
+// Example: "images/logo.png"
+// =========================================================
+const LOGO_PATH = "assets/logo.png";
+
+const config = {
+  brandName: "مستر عبدو برمجة",
+  teacherName: "م. عبدالرحمن فتحي",
+  slogan: "يرى مالا يُكتب، يبحث عما لا يظهر",
+  logo: LOGO_PATH,
+  profileImage: "",
+  teacherImage: "assets/teacher.png",
+  contact: {
+    whatsapp: "https://wa.me/1020086224",
+    facebook: "https://www.facebook.com/mrabdoprogramming",
+    instagram: "https://www.instagram.com/mrabdoprogramming/",
+    tiktok: "https://www.tiktok.com/@mrabdoprogramming"
+  },
+  storage: {
+    session: "maabdo_session",
+    theme: "maabdo_theme",
+    progressPrefix: "maabdo_progress_",
+    lastLessonPrefix: "maabdo_last_lesson_"
+  }
+};
+
+/* =========================================================
+   STUDENT ACCOUNTS
+   =========================================================
+   DEMO DATA — duplicate one object to add a student.
+   Change only:
+   id / username / password / name / grade / active
+*/
+const students = [
+  {
+    id: "student001",
+    username: "abdelrahman-ibrahim",
+    password: "7706",
+    name: "عبدالرحمن ابراهيم",
+    phone: "01067497706",
+    profileImage: "",
+    grade: "secondSecondary",
+    active: true
+  },
+  {
+    id: "student001",
+    username: "mahmoud",
+    password: "6970",
+    name: "محمود",
+    phone: "01273796970",
+    profileImage: "",
+    grade: "secondSecondary",
+    active: true
+  },
+  {
+    id: "student003",
+    username: "hamza-ahmed",
+    password: "9859",
+    name: "حمزة احمد",
+    profileImage: "",
+    grade: "firstSecondary",
+    active: true
+  },
+  {
+    id: "student004",
+    username: "faisal",
+    password: "1111",
+    name: "فيصل",
+    profileImage: "",
+    grade: "firstSecondary",
+    active: true
+  },
+  {
+    id: "student004",
+    username: "student004",
+    password: "222222",
+    name: "نور خالد",
+    profileImage: "",
+    grade: "thirdSecondary",
+    active: false
+  }
+];
+
+/* =========================================================
+   COURSE CONTENT
+   =========================================================
+   DEMO DATA — replace titles/descriptions/Drive links with
+   the teacher's real curriculum.
+*/
+const courses = {
+  firstPreparatory: {
+    name: "الصف الأول الإعدادي",
+    shortName: "أولى إعدادي",
+    colorClass: "grade-blue",
+    terms: {
+      first: {
+        name: "الترم الأول",
+        units: [
+          {
+            id: "unit1",
+            title: "الوحدة الأولى",
+            description: "مقدمة تجريبية قابلة للاستبدال بمحتوى المنهج الفعلي.",
+            lessons: [
+              { id: "lesson1", title: "مقدمة في البرمجة", description: "تعرف على أساسيات التفكير البرمجي.", duration: "25 دقيقة", driveUrl: "https://drive.google.com/" },
+              { id: "lesson2", title: "الخوارزميات", description: "مدخل مبسط لفكرة الخوارزمية.", duration: "30 دقيقة", driveUrl: "https://drive.google.com/" }
+            ]
+          }
+        ]
+      },
+      second: {
+        name: "الترم الثاني",
+        units: [
+          {
+            id: "unit1",
+            title: "الوحدة الأولى",
+            description: "محتوى تجريبي.",
+            lessons: [
+              { id: "lesson1", title: "حل المشكلات", description: "خطوات منظمة للتفكير في المشكلة.", duration: "28 دقيقة", driveUrl: "" }
+            ]
+          }
+        ]
+      }
+    }
+  },
+
+  secondPreparatory: {
+    name: "الصف الثاني الإعدادي",
+    shortName: "ثانية إعدادي",
+    colorClass: "grade-green",
+    terms: {
+      first: {
+        name: "الترم الأول",
+        units: [
+          {
+            id: "unit1",
+            title: "الوحدة الأولى",
+            description: "محتوى تجريبي قابل للتعديل.",
+            lessons: [
+              { id: "lesson1", title: "التفكير الحاسوبي", description: "مفاهيم أولية في التفكير الحاسوبي.", duration: "24 دقيقة", driveUrl: "https://drive.google.com/" },
+              { id: "lesson2", title: "تمثيل البيانات", description: "كيف تمثل الحواسيب المعلومات.", duration: "32 دقيقة", driveUrl: "" }
+            ]
+          }
+        ]
+      },
+      second: {
+        name: "الترم الثاني",
+        units: []
+      }
+    }
+  },
+
+  thirdPreparatory: {
+    name: "الصف الثالث الإعدادي",
+    shortName: "ثالثة إعدادي",
+    colorClass: "grade-purple",
+    terms: {
+      first: {
+        name: "الترم الأول",
+        units: [
+          {
+            id: "unit1",
+            title: "الوحدة الأولى",
+            description: "محتوى تجريبي.",
+            lessons: [
+              { id: "lesson1", title: "مقدمة إلى Python", description: "بداية عملية مع لغة Python.", duration: "35 دقيقة", driveUrl: "https://drive.google.com/" },
+              { id: "lesson2", title: "المتغيرات", description: "فهم المتغيرات واستخدامها.", duration: "30 دقيقة", driveUrl: "https://drive.google.com/" }
+            ]
+          }
+        ]
+      },
+      second: {
+        name: "الترم الثاني",
+        units: []
+      }
+    }
+  },
+
+ firstSecondary: {
+
+    name: "الصف الأول الثانوي",
+
+    shortName: "أولى ثانوي",
+
+    colorClass: "grade-red",
+
+    terms: {
+
+        first: {
+
+            name: "الترم الأول",
+
+            units: [
+
+                {
+                    id: "unit1",
+                    title: "الوحدة الأولى: ما هي المعلومات ؟",
+                    description: "التعرف على مفهوم المعلومات والوسائط وأخلاقيات المعلومات.",
+                    lessons: [
+
+                        {
+                            id: "lesson1",
+                            title: "المعلومات والوسائط",
+                            description: "التعرف على مفهوم المعلومات والوسائط وأنواعها.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson2",
+                            title: "أخلاقيات المعلومات",
+                            description: "التعرف على أخلاقيات التعامل مع المعلومات واستخدامها.",
+                            duration: "",
+                            driveUrl: ""
+                        }
+
+                    ]
+                },
+
+                {
+                    id: "unit2",
+                    title: "الوحدة الثانية: القوانين والحقوق في مجتمع المعلومات",
+                    description: "التعرف على القوانين والحقوق المرتبطة بالمعلومات والبيانات في مجتمع المعلومات.",
+                    lessons: [
+
+                        {
+                            id: "lesson1",
+                            title: "البيانات الشخصية",
+                            description: "التعرف على البيانات الشخصية وأهمية حمايتها.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson2",
+                            title: "حقوق الملكية الفكرية",
+                            description: "التعرف على مفهوم حقوق الملكية الفكرية وأهميتها.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson3",
+                            title: "استخدام المعلومات والكشف عنها",
+                            description: "التعرف على ضوابط استخدام المعلومات والكشف عنها.",
+                            duration: "",
+                            driveUrl: ""
+                        }
+
+                    ]
+                },
+
+                {
+                    id: "unit3",
+                    title: "الوحدة الثالثة: أمن المعلومات",
+                    description: "التعرف على تهديدات أمن المعلومات ووسائل الحماية والتدابير المضادة.",
+                    lessons: [
+
+                        {
+                            id: "lesson1",
+                            title: "تهديدات وإجراءات مواجهة أمن المعلومات 1",
+                            description: "التعرف على تهديدات أمن المعلومات وإجراءات مواجهتها.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson2",
+                            title: "التهديدات والتدابير المضادة في أمن المعلومات 2",
+                            description: "التعرف على التهديدات والتدابير المضادة في أمن المعلومات.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson3",
+                            title: "التهديدات والتدابير المضادة فى أمن المعلومات 3",
+                            description: "استكمال التعرف على تهديدات أمن المعلومات والتدابير المضادة.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson4",
+                            title: "تقنيات المعلومات للسلامة 4",
+                            description: "التعرف على تقنيات المعلومات المستخدمة لتحقيق السلامة.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson5",
+                            title: "تكنولوجيا المعلومات للسلامة 2",
+                            description: "التعرف على دور تكنولوجيا المعلومات في تحقيق السلامة.",
+                            duration: "",
+                            driveUrl: ""
+                        }
+
+                    ]
+                },
+
+                {
+                    id: "unit4",
+                    title: "الوحدة الرابعة: تكنولوجيا المعلومات والمجتمع",
+                    description: "التعرف على تطور تكنولوجيا المعلومات وتأثيرها في المجتمع.",
+                    lessons: [
+
+                        {
+                            id: "lesson1",
+                            title: "تطور تكنولوجيا المعلومات",
+                            description: "التعرف على مراحل وتطور تكنولوجيا المعلومات.",
+                            duration: "",
+                            driveUrl: ""
+                        }
+
+                    ]
+                },
+
+                {
+                    id: "unit5",
+                    title: "الوحدة الخامسة: الاتصالات",
+                    description: "التعرف على تطور وسائل الاتصال وأشكاله وعلاقته بالإنترنت.",
+                    lessons: [
+
+                        {
+                            id: "lesson1",
+                            title: "تطوير وسائل الاتصال",
+                            description: "التعرف على تطور وسائل الاتصال عبر الزمن.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson2",
+                            title: "الاتصال وأشكاله",
+                            description: "التعرف على مفهوم الاتصال وأشكاله المختلفة.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson3",
+                            title: "الإنترنت والاتصالات",
+                            description: "التعرف على دور الإنترنت في الاتصالات وتطورها.",
+                            duration: "",
+                            driveUrl: ""
+                        }
+
+                    ]
+                },
+
+                {
+                    id: "unit6",
+                    title: "الوحدة السادسة: تصميم المعلومات",
+                    description: "التعرف على التمثيل الرقمي للبيانات وطرق تصميمها ومعالجتها.",
+                    lessons: [
+
+                        {
+                            id: "lesson1",
+                            title: "التناظري والرقمي",
+                            description: "التعرف على الفرق بين الأنظمة التناظرية والرقمية.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson2",
+                            title: "النظام الثنائي وكمية البيانات",
+                            description: "التعرف على النظام الثنائي وعلاقته بكمية البيانات.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson3",
+                            title: "النظام السادس عشر (Hexadecimal)",
+                            description: "التعرف على النظام السادس عشر واستخداماته في تمثيل البيانات.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson4",
+                            title: "التمثيل الرقمي للأحرف",
+                            description: "التعرف على كيفية تمثيل الأحرف بصورة رقمية.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson5",
+                            title: "العمليات الحسابات العددية [1]",
+                            description: "التعرف على العمليات الحسابية العددية في الأنظمة الرقمية.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson6",
+                            title: "العمليات الحسابات العددية [2]",
+                            description: "استكمال العمليات الحسابية العددية في الأنظمة الرقمية.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson7",
+                            title: "رقمنة الصوت",
+                            description: "التعرف على كيفية تحويل الصوت إلى صورة رقمية.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson8",
+                            title: "رقمنة الصور",
+                            description: "التعرف على كيفية تمثيل الصور بصورة رقمية.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson9",
+                            title: "التمثيل الرقمي وضغط الفيديو",
+                            description: "التعرف على التمثيل الرقمي للفيديو وطرق ضغطه.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson10",
+                            title: "تصميم البيانات",
+                            description: "التعرف على مبادئ تصميم البيانات وتنظيمها.",
+                            duration: "",
+                            driveUrl: ""
+                        }
+
+                    ]
+                },
+
+                {
+                    id: "unit7",
+                    title: "الوحدة السابعة: الكمبيوترات",
+                    description: "التعرف على بنية الكمبيوتر وبرامجه والدوائر المنطقية.",
+                    lessons: [
+
+                        {
+                            id: "lesson1",
+                            title: "بنية الكمبيوتر",
+                            description: "التعرف على مكونات الكمبيوتر وبنيته الأساسية.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson2",
+                            title: "برامج الكمبيوتر",
+                            description: "التعرف على برامج الكمبيوتر وأنواعها ووظائفها.",
+                            duration: "",
+                            driveUrl: ""
+                        },
+
+                        {
+                            id: "lesson3",
+                            title: "الدوائر المنطقية",
+                            description: "التعرف على الدوائر المنطقية ودورها في عمل الكمبيوتر.",
+                            duration: "",
+                            driveUrl: ""
+                        }
+
+                    ]
+                }
+
+            ]
+
+        }
+
+    }
+
+},
+  //     second: {
+  //       name: "الترم الثاني",
+  //       units: [
+  //         {
+  //           id: "unit1",
+  //           title: "الوحدة الأولى",
+  //           description: "محتوى تجريبي للعرض.",
+  //           lessons: [
+  //             { id: "lesson1", title: "التطبيق العملي", description: "درس تجريبي يمكن استبداله لاحقًا.", duration: "30 دقيقة", driveUrl: "" }
+  //           ]
+  //         }
+  //       ]
+  //     }
+  //   }
+  // },
+
+  secondSecondary: {
+    name: "الصف الثاني الثانوي",
+    shortName: "ثانية ثانوي",
+    colorClass: "grade-gold",
+    terms: {
+    first: {
+      name: "الترم الأول",
+      units: [
+        {
+          id: "unit1",
+          title: "الفصل الأول: تكنولوجيا المعلومات والمجتمع",
+          description: "التعرف على تطور تكنولوجيا المعلومات والذكاء الاصطناعي وتأثيرهما في المجتمع والحياة اليومية.",
+          lessons: [
+            {
+              id: "lesson1",
+              title: "تطور تكنولوجيا المعلومات والتحول الاجتماعي",
+              description: "التعرف على تطور تكنولوجيا المعلومات ودورها في التحول الاجتماعي.",
+              duration: "",
+              driveUrl: "https://drive.google.com/drive/folders/10sriGL4UoTBBaaAMK8zGA5NcYD1cuL73?usp=drive_link",
+              htmlUrl: "lessons/2sec/term1/unit1/1-1.html"
+            },
+            {
+              id: "lesson2",
+              title: "كيف يعمل الذكاء الاصطناعي",
+              description: "التعرف على آلية عمل الذكاء الاصطناعي والمفاهيم الأساسية المرتبطة به.",
+              duration: "",
+              driveUrl: "",
+            },
+            {
+              id: "lesson3",
+              title: "الذكاء الاصطناعي في الحياة اليومية والصناعة",
+              description: "التعرف على تطبيقات الذكاء الاصطناعي في الحياة اليومية ومجالات الصناعة.",
+              duration: "",
+              driveUrl: ""
+            },
+            {
+              id: "lesson4",
+              title: "القضايا الأخلاقية للذكاء الاصطناعي",
+              description: "التعرف على القضايا والتحديات الأخلاقية المرتبطة باستخدام الذكاء الاصطناعي.",
+              duration: "",
+              driveUrl: ""
+            }
+          ]
+        },
+
+        {
+          id: "unit2",
+          title: "الفصل الثاني: الأمن السيبراني",
+          description: "التعرف على تقنيات حماية المعلومات والشبكات والاستجابة للحوادث وإدارة المخاطر.",
+          lessons: [
+            {
+              id: "lesson1",
+              title: "تقنيات التشفير والمصادقة",
+              description: "التعرف على تقنيات التشفير والمصادقة ودورها في حماية المعلومات.",
+              duration: "",
+              driveUrl: ""
+            },
+            {
+              id: "lesson2",
+              title: "تصميم أمن الشبكات",
+              description: "التعرف على المبادئ الأساسية لتصميم شبكات آمنة.",
+              duration: "",
+              driveUrl: ""
+            },
+            {
+              id: "lesson3",
+              title: "الاستجابة للحوادث وإدارة المخاطر",
+              description: "التعرف على أساليب الاستجابة للحوادث وإدارة المخاطر السيبرانية.",
+              duration: "",
+              driveUrl: ""
+            }
+          ]
+        },
+
+        {
+          id: "unit3",
+          title: "الفصل الثالث: تطبيقات الويب",
+          description: "التعرف على البنية الأساسية لتطبيقات الويب وطرق الاتصال ومبادئ الواجهة الأمامية.",
+          lessons: [
+            {
+              id: "lesson1",
+              title: "البنية العامة لتطبيقات الويب",
+              description: "التعرف على المكونات والبنية العامة لتطبيقات الويب.",
+              duration: "",
+              driveUrl: ""
+            },
+            {
+              id: "lesson2",
+              title: "طرق الاتصال في تطبيقات الويب",
+              description: "التعرف على طرق الاتصال المستخدمة في تطبيقات الويب.",
+              duration: "",
+              driveUrl: ""
+            },
+            {
+              id: "lesson3",
+              title: "أساسيات تكنولوجيا الواجهة الأمامية",
+              description: "التعرف على أساسيات تقنيات الواجهة الأمامية المستخدمة في تطوير الويب.",
+              duration: "",
+              driveUrl: ""
+            }
+          ]
+        },
+
+        {
+          id: "unit4",
+          title: "الفصل الرابع: تصميم الويب والوسائط",
+          description: "التعرف على أنواع الوسائط وتصميم المعلومات وتجربة المستخدم وتقييم المواقع وتحسينها.",
+          lessons: [
+            {
+              id: "lesson1",
+              title: "أنواع الوسائط وخصائصها",
+              description: "التعرف على أنواع الوسائط المختلفة وخصائص كل نوع.",
+              duration: "",
+              driveUrl: ""
+            },
+            {
+              id: "lesson2",
+              title: "تصميم المعلومات وتجربة المستخدم للمواقع",
+              description: "التعرف على مبادئ تصميم المعلومات وتحسين تجربة المستخدم للمواقع.",
+              duration: "",
+              driveUrl: ""
+            },
+            {
+              id: "lesson3",
+              title: "أساليب تقييم المواقع الإلكترونية",
+              description: "التعرف على الأساليب والمعايير المستخدمة في تقييم المواقع الإلكترونية.",
+              duration: "",
+              driveUrl: ""
+            },
+            {
+              id: "lesson4",
+              title: "عملية التحسين التكراري للمواقع",
+              description: "التعرف على مفهوم التحسين التكراري وخطوات تطوير المواقع وتحسينها.",
+              duration: "",
+              driveUrl: ""
+            }
+          ]
+        }
+      ]
+    },
+      // second: {
+      //   name: "الترم الثاني",
+      //   units: []
+      // }
+    }
+  }
+};
+
+/* =========================================================
+   ANNOUNCEMENTS
+   ========================================================= */
+const announcements = [
+  {
+    id: 1,
+    title: "تم رفع درس جديد",
+    message: "يمكنك متابعة الدروس المتاحة من قسم دروسي.",
+    date: "2026-09-07",
+    type: "new"
+  },
+  {
+    id: 2,
+    title: "تنبيه للطلاب",
+    message: "تأكد من تحديد الدرس كمكتمل بعد الانتهاء منه حتى يتم حفظ تقدمك.",
+    date: "2026-09-07",
+    type: "important"
+  },
+  {
+    id: 3,
+    title: "تحديث المنصة",
+    message: "تم تجهيز البحث والتنقل بين الدروس وحفظ آخر درس وصلت إليه.",
+    date: "2026-09-06",
+    type: "update"
+  }
+];
+
+/* =========================================================
+   STATE
+   ========================================================= */
+const state = {
+  student: null,
+  route: "home",
+  selectedTerm: null,
+  selectedUnit: null,
+  searchQuery: ""
+};
+
+/* =========================================================
+   DOM HELPERS
+   ========================================================= */
+const $ = (selector, root = document) => root.querySelector(selector);
+const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function formatDate(dateString) {
+  const d = new Date(dateString + "T12:00:00");
+  if (Number.isNaN(d.getTime())) return dateString;
+  return new Intl.DateTimeFormat("ar-EG", { day:"numeric", month:"long", year:"numeric" }).format(d);
+}
+
+function icon(name, size = 17) {
+  return `<i data-lucide="${name}" width="${size}" height="${size}" aria-hidden="true"></i>`;
+}
+
+function refreshIcons() {
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function applyConfiguredAssets() {
+  $$("[data-brand-logo]").forEach(img => {
+    img.src = config.logo;
+    img.onerror = () => img.classList.add("hidden");
+  });
+}
+
+/* =========================================================
+   THEME
+   ========================================================= */
+function getInitialTheme() {
+  const saved = localStorage.getItem(config.storage.theme);
+  if (saved === "dark" || saved === "light") return saved;
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  localStorage.setItem(config.storage.theme, theme);
+  const iconName = theme === "dark" ? "moon" : "sun";
+  ["publicThemeBtn","authThemeBtn","appThemeBtn"].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.innerHTML = icon(iconName);
+  });
+  refreshIcons();
+}
+
+function toggleTheme() {
+  applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+}
+
+/* =========================================================
+   IMAGE FALLBACKS
+   ========================================================= */
+function setupImageFallback(imgId, fallbackId) {
+  const img = document.getElementById(imgId);
+  const fallback = document.getElementById(fallbackId);
+  if (!img || !fallback) return;
+  fallback.classList.add("hidden");
+  img.addEventListener("error", () => {
+    img.classList.add("hidden");
+    fallback.classList.remove("hidden");
+  });
+  img.addEventListener("load", () => {
+    img.classList.remove("hidden");
+    fallback.classList.add("hidden");
+  });
+}
+
+/* =========================================================
+   AUTHENTICATION
+   ========================================================= */
+function findStudent(username, password) {
+  return students.find(s => s.username === username && s.password === password) || null;
+}
+
+function findStudentByUsername(username) {
+  return students.find(s => s.username === username) || null;
+}
+
+function saveSession(student, remember = true) {
+  if (remember) {
+    localStorage.setItem(config.storage.session, JSON.stringify({
+      id: student.id,
+      username: student.username,
+      name: student.name,
+      grade: student.grade
+    }));
+  } else {
+    sessionStorage.setItem(config.storage.session, JSON.stringify({
+      id: student.id,
+      username: student.username,
+      name: student.name,
+      grade: student.grade
+    }));
+  }
+}
+
+function restoreSession() {
+  const raw = localStorage.getItem(config.storage.session) || sessionStorage.getItem(config.storage.session);
+  if (!raw) return null;
+  try {
+    const data = JSON.parse(raw);
+    const student = students.find(s => s.id === data.id && s.username === data.username);
+    if (!student || !student.active) return null;
+    return student;
+  } catch {
+    return null;
+  }
+}
+
+function clearSession() {
+  localStorage.removeItem(config.storage.session);
+  sessionStorage.removeItem(config.storage.session);
+  state.student = null;
+}
+
+function loginStudent(student, remember) {
+  state.student = student;
+  saveSession(student, remember);
+  showApp();
+  navigate("dashboard", true);
+  showToast("تم تسجيل الدخول بنجاح.", "success");
+}
+
+function logout() {
+  clearSession();
+  showPublic();
+  location.hash = "home";
+  showToast("تم تسجيل الخروج بنجاح.", "success");
+}
+
+/* =========================================================
+   PROGRESS / LAST ACCESSED
+   ========================================================= */
+function progressKey(studentId) {
+  return config.storage.progressPrefix + studentId;
+}
+
+function lastKey(studentId) {
+  return config.storage.lastLessonPrefix + studentId;
+}
+
+function getCompleted(studentId) {
+  try {
+    return JSON.parse(localStorage.getItem(progressKey(studentId)) || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function saveCompleted(studentId, completed) {
+  localStorage.setItem(progressKey(studentId), JSON.stringify([...new Set(completed)]));
+}
+
+function lessonKey(grade, termKey, unitId, lessonId) {
+  return `${grade}-${termKey}-${unitId}-${lessonId}`;
+}
+
+function getLastAccessed(studentId) {
+  const raw = localStorage.getItem(lastKey(studentId));
+  if (!raw) return null;
+  try { return JSON.parse(raw); } catch { return null; }
+}
+
+function saveLastAccessed(studentId, data) {
+  localStorage.setItem(lastKey(studentId), JSON.stringify(data));
+}
+
+function getStudentCourse() {
+  return state.student ? courses[state.student.grade] : null;
+}
+
+function getAllLessonsForStudent() {
+  const course = getStudentCourse();
+  if (!course) return [];
+  const result = [];
+  Object.entries(course.terms || {}).forEach(([termKey, term]) => {
+    (term.units || []).forEach(unit => {
+      (unit.lessons || []).forEach(lesson => {
+        result.push({ ...lesson, termKey, termName:term.name, unitId:unit.id, unitTitle:unit.title });
+      });
+    });
+  });
+  return result;
+}
+
+function getProgress() {
+  if (!state.student) return { completed:0, total:0, percent:0 };
+  const lessons = getAllLessonsForStudent();
+  const completed = getCompleted(state.student.id);
+  const count = lessons.filter(l => completed.includes(lessonKey(state.student.grade,l.termKey,l.unitId,l.id))).length;
+  const total = lessons.length;
+  return { completed:count, total, percent: total ? Math.round(count / total * 100) : 0 };
+}
+
+function isCompleted(lesson) {
+  if (!state.student) return false;
+  return getCompleted(state.student.id).includes(
+    lessonKey(state.student.grade, lesson.termKey, lesson.unitId, lesson.id)
+  );
+}
+
+function toggleLessonCompleted(lesson) {
+  if (!state.student) return;
+  const key = lessonKey(state.student.grade, lesson.termKey, lesson.unitId, lesson.id);
+  const completed = getCompleted(state.student.id);
+  if (completed.includes(key)) {
+    saveCompleted(state.student.id, completed.filter(x => x !== key));
+    showToast("تم إلغاء تحديد الدرس كمكتمل.", "success");
+  } else {
+    saveCompleted(state.student.id, [...completed, key]);
+    showToast("تم حفظ الدرس كمكتمل.", "success");
+  }
+  renderRoute();
+}
+
+/* =========================================================
+   COURSE ACCESS / ROUTING DATA
+   ========================================================= */
+function getTerm(termKey) {
+  const course = getStudentCourse();
+  return course?.terms?.[termKey] || null;
+}
+
+function findLessonForStudent(lessonId) {
+  const all = getAllLessonsForStudent();
+  return all.find(l => l.id === lessonId && l.termKey && l.unitId) || null;
+}
+
+function getAdjacentLessons(current) {
+  const all = getAllLessonsForStudent();
+  const index = all.findIndex(l =>
+    l.id === current.id && l.termKey === current.termKey && l.unitId === current.unitId
+  );
+  return {
+    previous: index > 0 ? all[index - 1] : null,
+    next: index >= 0 && index < all.length - 1 ? all[index + 1] : null
+  };
+}
+
+/* =========================================================
+   VIEWS
+   ========================================================= */
+function showPublic() {
+  $("#publicView").classList.remove("hidden");
+  $("#authView").classList.add("hidden");
+  $("#appView").classList.add("hidden");
+  window.scrollTo(0,0);
+}
+
+function showAuth() {
+  $("#publicView").classList.add("hidden");
+  $("#authView").classList.remove("hidden");
+  $("#appView").classList.add("hidden");
+  setTimeout(() => $("#username")?.focus(), 60);
+  window.scrollTo(0,0);
+}
+
+function showApp() {
+  $("#publicView").classList.add("hidden");
+  $("#authView").classList.add("hidden");
+  $("#appView").classList.remove("hidden");
+  updateShellUser();
+}
+
+function updateShellUser() {
+  if (!state.student) return;
+  const course = courses[state.student.grade];
+  const initials = state.student.name.trim().slice(0,1) || "ط";
+  $("#topStudent").innerHTML = `
+    <div class="avatar">${escapeHTML(initials)}</div>
+    <div>
+      <strong style="display:block;font-size:.75rem">${escapeHTML(state.student.name)}</strong>
+      <span class="muted" style="font-size:.62rem">${escapeHTML(course?.shortName || "طالب")}</span>
+    </div>`;
+  $("#sidebarUser").innerHTML = `
+    <strong>${escapeHTML(state.student.name)}</strong>
+    <span>${escapeHTML(course?.shortName || "—")}</span>`;
+}
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+function dashboardHTML() {
+  const course = getStudentCourse();
+  const progress = getProgress();
+  const last = getLastAccessed(state.student.id);
+  const lastLesson = last ? findLessonForStudent(last.lessonId) : null;
+
+  return `
+    <section>
+      <div class="welcome">
+        <div>
+          <span class="grade-badge ${course?.colorClass || ""}"><i></i>${escapeHTML(course?.name || "غير محدد")}</span>
+          <h1>أهلاً يا ${escapeHTML(state.student.name.split(" ")[0])}</h1>
+          <p>جاهز تكمل رحلتك في البرمجة؟</p>
+        </div>
+        <button class="btn btn-primary btn-small" data-route="courses">${icon("book-open",15)} ابدأ التعلم</button>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-top"><span>الوحدات المتاحة</span><span class="stat-icon">${icon("layers",16)}</span></div>
+          <div class="stat-value">${course ? Object.values(course.terms).reduce((n,t)=>n+(t.units?.length||0),0) : 0}</div>
+          <div class="stat-desc">ضمن مقررك الحالي</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><span>الدروس</span><span class="stat-icon">${icon("book-open",16)}</span></div>
+          <div class="stat-value">${progress.total}</div>
+          <div class="stat-desc">إجمالي الدروس المتاحة</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><span>المكتمل</span><span class="stat-icon">${icon("circle-check",16)}</span></div>
+          <div class="stat-value">${progress.completed}</div>
+          <div class="stat-desc">درس مكتمل</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><span>نسبة التقدم</span><span class="stat-icon">${icon("trending-up",16)}</span></div>
+          <div class="stat-value">${progress.percent}%</div>
+          <div class="stat-desc">في رحلتك الحالية</div>
+        </div>
+      </div>
+
+      <div class="progress-card">
+        <div class="progress-head">
+          <strong>رحلتك التعليمية</strong>
+          <span>${progress.percent}%</span>
+        </div>
+        <div class="progress-track"><div class="progress-bar" style="width:${progress.percent}%"></div></div>
+        <div class="progress-caption">${progress.completed} من ${progress.total} دروس مكتملة</div>
+      </div>
+
+      ${lastLesson ? `
+        <div class="section-card">
+          <div class="section-card-head">
+            <div>
+              <h2>استكمل من حيث توقفت</h2>
+              <p>${escapeHTML(lastLesson.unitTitle)} · ${escapeHTML(lastLesson.termName)}</p>
+            </div>
+            <button class="btn btn-primary btn-small" data-open-lesson="${escapeHTML(lastLesson.id)}" data-term="${escapeHTML(lastLesson.termKey)}" data-unit="${escapeHTML(lastLesson.unitId)}">
+              استكمال الدرس ${icon("arrow-left",15)}
+            </button>
+          </div>
+          <div class="lesson-card">
+            <div class="lesson-number">${escapeHTML(lastLesson.id.replace("lesson","").padStart(2,"0"))}</div>
+            <div class="lesson-main">
+              <h3>${escapeHTML(lastLesson.title)}</h3>
+              <p>${escapeHTML(lastLesson.description || "")}</p>
+            </div>
+            <div class="lesson-side"><span class="meta-pill">${escapeHTML(lastLesson.duration || "—")}</span></div>
+          </div>
+        </div>
+      ` : `
+        <div class="section-card">
+          <div class="empty-state">
+            <div class="empty-icon">${icon("play-circle",28)}</div>
+            <strong>ابدأ أول درس في رحلتك التعليمية.</strong>
+            <span>اختر "دروسي" للوصول إلى المحتوى.</span>
+            <div style="margin-top:14px"><button class="btn btn-primary btn-small" data-route="courses">عرض دروسي</button></div>
+          </div>
+        </div>
+      `}
+
+      <div class="section-card">
+        <div class="section-card-head">
+          <div><h2>آخر الإعلانات</h2><p>آخر التحديثات المهمة للطلاب</p></div>
+          <button class="btn btn-ghost btn-small" data-route="announcements">كل الإعلانات</button>
+        </div>
+        ${announcementHTML(announcements.slice(0,3))}
+      </div>
+    </section>`;
+}
+
+/* =========================================================
+   COURSES / UNITS / LESSONS
+   ========================================================= */
+function coursesHTML() {
+  const course = getStudentCourse();
+  if (!course) return emptyStateHTML("book-x","لا يوجد محتوى متاح حاليًا.","تحقق من إعدادات حساب الطالب.");
+
+  const terms = Object.entries(course.terms || {});
+  if (!terms.length) return emptyStateHTML("book-x","لا توجد ترمات متاحة حاليًا.","");
+
+  return `
+    <section>
+      <div class="welcome">
+        <div><h1>دروسي</h1><p>${escapeHTML(course.name)} — اختر الترم ثم الوحدة.</p></div>
+        <span class="grade-badge ${course.colorClass}"><i></i>${escapeHTML(course.shortName)}</span>
+      </div>
+      <div class="section-card">
+        <div class="section-card-head"><div><h2>الترمات الدراسية</h2><p>المحتوى متصل بحسابك الدراسي.</p></div></div>
+        <div class="course-grid">
+          ${terms.map(([key,term]) => `
+            <button class="course-card" style="text-align:right" data-term-select="${escapeHTML(key)}">
+              <div class="course-top">
+                <span class="grade-badge ${course.colorClass}"><i></i>Term</span>
+                ${icon("arrow-left",17)}
+              </div>
+              <h3>${escapeHTML(term.name)}</h3>
+              <p>${term.units?.length || 0} وحدات · ${(term.units||[]).reduce((n,u)=>n+(u.lessons?.length||0),0)} دروس</p>
+              <div class="course-meta">
+                <span class="meta-pill">فتح المحتوى</span>
+              </div>
+            </button>
+          `).join("")}
+        </div>
+      </div>
+    </section>`;
+}
+
+function termHTML(termKey) {
+  const course = getStudentCourse();
+  const term = getTerm(termKey);
+  if (!course || !term) return accessDeniedHTML();
+
+  return `
+    <section>
+      ${breadcrumbHTML([
+        {label:"دروسي", action:"courses"},
+        {label:term.name}
+      ])}
+      <div class="welcome">
+        <div><h1>${escapeHTML(term.name)}</h1><p>${escapeHTML(course.name)} — اختر الوحدة التي تريد دراستها.</p></div>
+        <button class="btn btn-ghost btn-small" data-route="courses">${icon("arrow-right",15)} الترمات</button>
+      </div>
+      <div class="section-card">
+        <div class="section-card-head"><div><h2>الوحدات</h2><p>${term.units?.length || 0} وحدات متاحة</p></div></div>
+        ${term.units?.length ? `
+          <div class="unit-grid">
+            ${term.units.map((unit,index)=>`
+              <button class="unit-card" data-unit-select="${escapeHTML(unit.id)}" data-term="${escapeHTML(termKey)}" style="text-align:right">
+                <div class="unit-num">الوحدة ${String(index+1).padStart(2,"0")}</div>
+                <h3>${escapeHTML(unit.title)}</h3>
+                <p>${escapeHTML(unit.description || "")}</p>
+                <div class="course-meta"><span class="meta-pill">${unit.lessons?.length||0} دروس</span></div>
+              </button>
+            `).join("")}
+          </div>` : emptyStateHTML("layers-3","لا توجد وحدات متاحة حاليًا.","")}
+      </div>
+    </section>`;
+}
+
+function unitHTML(termKey, unitId) {
+  const term = getTerm(termKey);
+  const unit = term?.units?.find(u=>u.id===unitId);
+  if (!term || !unit) return accessDeniedHTML();
+
+  return `
+    <section>
+      ${breadcrumbHTML([
+        {label:"دروسي", action:"courses"},
+        {label:term.name, action:`term:${termKey}`},
+        {label:unit.title}
+      ])}
+      <div class="welcome">
+        <div><h1>${escapeHTML(unit.title)}</h1><p>${escapeHTML(unit.description || "")}</p></div>
+        <span class="grade-badge ${getStudentCourse().colorClass}"><i></i>${unit.lessons?.length||0} دروس</span>
+      </div>
+      <div class="section-card">
+        <div class="section-card-head"><div><h2>دروس الوحدة</h2><p>اضغط على الدرس لعرض التفاصيل والملفات.</p></div></div>
+        ${unit.lessons?.length ? lessonListHTML(unit.lessons, termKey, unit.id) : emptyStateHTML("book-x","لا توجد دروس متاحة حاليًا.","")}
+      </div>
+    </section>`;
+}
+
+function lessonListHTML(lessons, termKey, unitId) {
+  return `<div class="lesson-list">${lessons.map(lesson=>{
+    const done = isCompleted({...lesson,termKey,unitId});
+    return `
+      <div class="lesson-card">
+        <div class="lesson-number">${escapeHTML(lesson.id.replace("lesson","").padStart(2,"0"))}</div>
+        <div class="lesson-main">
+          <h3>${escapeHTML(lesson.title)}</h3>
+          <p>${escapeHTML(lesson.description || "لا يوجد وصف لهذا الدرس.")}</p>
+        </div>
+        <div class="lesson-side">
+          ${done ? `<span class="completed-message">${icon("circle-check",14)} مكتمل</span>` : ""}
+          ${lesson.duration ? `<span class="meta-pill">${escapeHTML(lesson.duration)}</span>` : ""}
+          <div class="lesson-actions">
+            <button class="btn btn-primary btn-small" data-open-lesson="${escapeHTML(lesson.id)}" data-term="${escapeHTML(termKey)}" data-unit="${escapeHTML(unitId)}">
+              فتح الدرس ${icon("arrow-left",14)}
+            </button>
+          </div>
+        </div>
+      </div>`;
+  }).join("")}</div>`;
+}
+
+/* =========================================================
+   LESSON VIEW
+   ========================================================= */
+function lessonHTML(termKey, unitId, lessonId) {
+  const term = getTerm(termKey);
+  const unit = term?.units?.find(u=>u.id===unitId);
+  const lesson = unit?.lessons?.find(l=>l.id===lessonId);
+
+  /* Client-side access control: requested lesson must belong to current student's course. */
+  if (!state.student || !term || !unit || !lesson) return accessDeniedHTML();
+
+  saveLastAccessed(state.student.id, {
+    grade: state.student.grade,
+    termKey,
+    unitId,
+    lessonId
+  });
+
+  const done = isCompleted({...lesson,termKey,unitId});
+  const adjacent = getAdjacentLessons({...lesson,termKey,unitId});
+  const course = getStudentCourse();
+
+  return `
+    <section>
+      ${breadcrumbHTML([
+        {label:"الرئيسية", action:"dashboard"},
+        {label:course.name},
+        {label:term.name, action:`term:${termKey}`},
+        {label:unit.title, action:`unit:${termKey}:${unitId}`},
+        {label:lesson.title}
+      ])}
+
+      <div class="lesson-hero">
+        <div class="lesson-title-row">
+          <div>
+            <span class="grade-badge ${course.colorClass}"><i></i>${escapeHTML(course.shortName)}</span>
+            <h1>${escapeHTML(lesson.title)}</h1>
+            <p>${escapeHTML(lesson.description || "لا يوجد وصف لهذا الدرس حاليًا.")}</p>
+            <div class="lesson-meta">
+              <span class="meta-pill">${escapeHTML(term.name)}</span>
+              <span class="meta-pill">${escapeHTML(unit.title)}</span>
+              ${lesson.duration ? `<span class="meta-pill">${icon("clock",12)} ${escapeHTML(lesson.duration)}</span>` : ""}
+              ${done ? `<span class="completed-message">${icon("circle-check",14)} مكتمل</span>` : ""}
+            </div>
+          </div>
+          <div class="grade-badge"><i></i>الدرس ${escapeHTML(lesson.id.replace("lesson","").padStart(2,"0"))}</div>
+        </div>
+      </div>
+
+      <div class="lesson-resource">
+        <div class="section-card-head">
+          <div><h2>ملفات الدرس</h2><p>افتح الموارد التعليمية المرتبطة بهذا الدرس.</p></div>
+        </div>
+        ${lesson.driveUrl ? `
+          <div class="resource-box">
+            <div>
+              <h3>Google Drive</h3>
+              <p>سيتم فتح الملفات في علامة تبويب جديدة.</p>
+            </div>
+            <a class="btn btn-primary" href="${escapeHTML(lesson.driveUrl)}" target="_blank" rel="noopener noreferrer">
+              ${icon("external-link",16)} فتح ملفات الدرس
+            </a>
+          </div>` : `
+          <div class="empty-state">
+            <div class="empty-icon">${icon("folder-clock",28)}</div>
+            <strong>ملفات هذا الدرس ستتوفر قريبًا.</strong>
+            <span>لا يوجد رابط Google Drive مضاف حاليًا.</span>
+          </div>`}
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-head">
+          <div><h2>متابعة الدرس</h2><p>يمكنك حفظ حالة الإكمال على هذا الجهاز.</p></div>
+          <button class="btn ${done ? "btn-secondary" : "btn-primary"}" data-complete-lesson="${escapeHTML(lesson.id)}" data-term="${escapeHTML(termKey)}" data-unit="${escapeHTML(unitId)}">
+            ${done ? icon("circle-check",16) + " تم إكمال الدرس" : icon("check",16) + " تم إكمال الدرس"}
+          </button>
+          <a class="btn btn-primary" href="${escapeHTML(lesson.htmlUrl || "#")}" target="_blank" rel="noopener noreferrer"> ${icon("external-link",16)} فتح الدرس </a>
+        </div>
+        <div class="lesson-bottom">
+          <div class="lesson-nav">
+            ${adjacent.previous ? `<button class="btn btn-ghost btn-small" data-open-lesson="${escapeHTML(adjacent.previous.id)}" data-term="${escapeHTML(adjacent.previous.termKey)}" data-unit="${escapeHTML(adjacent.previous.unitId)}">${icon("arrow-right",14)} السابق</button>` : ""}
+            ${adjacent.next ? `<button class="btn btn-primary btn-small" data-open-lesson="${escapeHTML(adjacent.next.id)}" data-term="${escapeHTML(adjacent.next.termKey)}" data-unit="${escapeHTML(adjacent.next.unitId)}">التالي ${icon("arrow-left",14)}</button>` : ""}
+          </div>
+          <button class="btn btn-ghost btn-small" data-route="dashboard">${icon("layout-dashboard",14)} العودة للرئيسية</button>
+        </div>
+      </div>
+    </section>`;
+}
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+function searchHTML() {
+  const course = getStudentCourse();
+  const query = state.searchQuery.trim().toLowerCase();
+  let results = getAllLessonsForStudent();
+
+  if (query) {
+    results = results.filter(l =>
+      [l.title,l.description,l.termName,l.unitTitle].some(v => String(v||"").toLowerCase().includes(query))
+    );
+  }
+
+  return `
+    <section>
+      <div class="welcome">
+        <div><h1>البحث في الدروس</h1><p>ابحث داخل محتوى ${escapeHTML(course?.shortName || "")} فقط.</p></div>
+      </div>
+      <div class="section-card">
+        <div class="search-box">
+          ${icon("search",17)}
+          <span class="search-icon">${icon("search",17)}</span>
+          <input class="form-input" id="lessonSearch" value="${escapeHTML(state.searchQuery)}" placeholder="ابحث باسم الدرس أو الوصف..." aria-label="البحث في الدروس">
+          ${query ? `<button class="search-clear" id="clearSearch" aria-label="مسح البحث">${icon("x",16)}</button>` : ""}
+        </div>
+      </div>
+      <div class="section-card">
+        <div class="section-card-head"><div><h2>نتائج البحث</h2><p>${results.length} نتيجة</p></div></div>
+        ${results.length ? lessonListHTML(results.map(({termKey,unitId,...l})=>l), "__SEARCH__", "__SEARCH__").replaceAll('data-term="__SEARCH__" data-unit="__SEARCH__"','') : emptyStateHTML("search-x", query ? "لم نجد أي درس مطابق لبحثك." : "اكتب كلمة للبحث عن درس.","جرب عنوان درس أو كلمة من الوصف.")}
+      </div>
+    </section>`;
+}
+
+/* =========================================================
+   ANNOUNCEMENTS
+   ========================================================= */
+function announcementHTML(items) {
+  if (!items.length) return emptyStateHTML("bell-off","لا توجد إعلانات جديدة.","");
+  return `<div class="announcement-list">${items.map(a=>`
+    <article class="announcement ${escapeHTML(a.type)}">
+      <div class="announcement-icon">${icon(a.type==="important"?"triangle-alert":a.type==="update"?"refresh-cw":"sparkles",17)}</div>
+      <div>
+        <h3>${escapeHTML(a.title)}</h3>
+        <p>${escapeHTML(a.message)}</p>
+        <small>${formatDate(a.date)}</small>
+      </div>
+    </article>`).join("")}</div>`;
+}
+
+function announcementsHTML() {
+  return `
+    <section>
+      <div class="welcome">
+        <div><h1>الإعلانات</h1><p>آخر التحديثات والملاحظات الخاصة بالطلاب.</p></div>
+      </div>
+      <div class="section-card">
+        ${announcementHTML(announcements)}
+      </div>
+    </section>`;
+}
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+function profileHTML() {
+  const progress = getProgress();
+  const course = getStudentCourse();
+  return `
+    <section>
+      <div class="welcome">
+        <div><h1>الملف الشخصي</h1><p>بيانات حسابك الحالية.</p></div>
+      </div>
+      <div class="profile-photo-card">
+        ${state.student.profileImage ? `
+          <img class="profile-photo" src="${escapeHTML(state.student.profileImage)}" alt="صورة ${escapeHTML(state.student.name)}"
+               onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');">
+          <div class="profile-photo-placeholder hidden" aria-label="صورة الطالب غير متاحة">${icon("user-round-x",24)}</div>
+        ` : `
+          <div class="profile-photo-placeholder" aria-label="صورة الطالب غير متاحة">${icon("user-round-x",24)}</div>
+        `}
+        <div class="profile-photo-copy">
+          <strong>${escapeHTML(state.student.name)}</strong>
+          <span>${state.student.profileImage ? "الصورة الشخصية" : "لا توجد صورة شخصية متاحة حاليًا"}</span>
+        </div>
+      </div>
+      <div class="profile-grid">
+        <div class="section-card">
+          <div class="section-card-head"><div><h2>بيانات الحساب</h2><p>للعرض فقط</p></div></div>
+          <div class="profile-row"><span>الاسم</span><strong>${escapeHTML(state.student.name)}</strong></div>
+          <div class="profile-row"><span>اسم المستخدم</span><strong class="ltr">${escapeHTML(state.student.username)}</strong></div>
+          <div class="profile-row"><span>رقم الهاتف</span><strong class="ltr">${escapeHTML(state.student.phone)}</strong></div>
+          <div class="profile-row"><span>الصف</span><strong>${escapeHTML(course?.name || "غير محدد")}</strong></div>
+          <div class="profile-row"><span>حالة الحساب</span><strong style="color:var(--green)">نشط</strong></div>
+        </div>
+        <div class="section-card">
+          <div class="section-card-head"><div><h2>التقدم</h2><p>محفوظ محليًا على هذا الجهاز</p></div></div>
+          <div class="profile-row"><span>الدروس المكتملة</span><strong>${progress.completed}</strong></div>
+          <div class="profile-row"><span>إجمالي الدروس</span><strong>${progress.total}</strong></div>
+          <div class="profile-row"><span>التقدم العام</span><strong>${progress.percent}%</strong></div>
+          <div style="margin-top:16px" class="progress-track"><div class="progress-bar" style="width:${progress.percent}%"></div></div>
+        </div>
+      </div>
+      <div class="section-card">
+        <h2 style="font-size:1rem;margin-top:0">تعديل بيانات الحساب</h2>
+        <p class="muted" style="font-size:.78rem;margin-bottom:0">لتعديل بيانات الحساب، برجاء التواصل مع مستر عبدو.</p>
+      </div>
+    </section>`;
+}
+
+/* =========================================================
+   LAST ACCESSED
+   ========================================================= */
+function lastHTML() {
+  const last = getLastAccessed(state.student.id);
+  const lesson = last ? findLessonForStudent(last.lessonId) : null;
+  if (!lesson) {
+    return `
+      <section>
+        <div class="welcome"><div><h1>آخر ما درست</h1><p>يمكنك العودة إلى آخر درس فتحته.</p></div></div>
+        <div class="section-card">${emptyStateHTML("history","لا يوجد درس سابق.","ابدأ أي درس وسيتم حفظه تلقائيًا.")}</div>
+      </section>`;
+  }
+  return `
+    <section>
+      <div class="welcome"><div><h1>آخر ما درست</h1><p>استكمل من آخر نقطة وصلت إليها.</p></div></div>
+      <div class="section-card">
+        <div class="lesson-card">
+          <div class="lesson-number">${escapeHTML(lesson.id.replace("lesson","").padStart(2,"0"))}</div>
+          <div class="lesson-main">
+            <h3>${escapeHTML(lesson.title)}</h3>
+            <p>${escapeHTML(lesson.unitTitle)} · ${escapeHTML(lesson.termName)}</p>
+          </div>
+          <button class="btn btn-primary btn-small" data-open-lesson="${escapeHTML(lesson.id)}" data-term="${escapeHTML(lesson.termKey)}" data-unit="${escapeHTML(lesson.unitId)}">
+            استكمال ${icon("arrow-left",14)}
+          </button>
+        </div>
+      </div>
+    </section>`;
+}
+
+/* =========================================================
+   UTILITY HTML
+   ========================================================= */
+function emptyStateHTML(iconName, title, text) {
+  return `<div class="empty-state"><div class="empty-icon">${icon(iconName,28)}</div><strong>${escapeHTML(title)}</strong><span>${escapeHTML(text || "")}</span></div>`;
+}
+
+function accessDeniedHTML() {
+  return `
+    <section>
+      <div class="section-card">
+        ${emptyStateHTML("shield-x","ليس لديك صلاحية للوصول إلى هذا المحتوى.","سيتم إعادتك إلى لوحة التحكم.")}
+      </div>
+    </section>`;
+}
+
+function breadcrumbHTML(items) {
+  return `<div class="breadcrumb">
+    ${items.map((item,i)=>`
+      ${i ? `<span>/</span>` : ""}
+      ${item.action ? `<button data-breadcrumb="${escapeHTML(item.action)}">${escapeHTML(item.label)}</button>` : `<span>${escapeHTML(item.label)}</span>`}
+    `).join("")}
+  </div>`;
+}
+
+/* =========================================================
+   ROUTING
+   ========================================================= */
+function parseHash() {
+  const hash = location.hash.replace(/^#/,"") || "home";
+  const parts = hash.split("/");
+  if (parts[0] === "lesson" && parts[1]) {
+    return { route:"lesson", lessonId:decodeURIComponent(parts[1]), termKey:parts[2] || null, unitId:parts[3] || null };
+  }
+  if (parts[0] === "term" && parts[1]) return {route:"term",termKey:parts[1]};
+  if (parts[0] === "unit" && parts[1] && parts[2]) return {route:"unit",termKey:parts[1],unitId:parts[2]};
+  return {route:parts[0] || "home"};
+}
+
+function navigate(route, replace=false) {
+  const target = "#" + route;
+  if (replace) history.replaceState(null,"",target);
+  else location.hash = route;
+  renderRoute();
+}
+
+function renderRoute() {
+  const parsed = parseHash();
+  state.route = parsed.route;
+
+  if (!state.student) {
+    if (state.route === "login") showAuth();
+    else showPublic();
+    return;
+  }
+
+  showApp();
+
+  /* Public-only routes after login return to dashboard. */
+  if (["home","login"].includes(state.route)) {
+    navigate("dashboard", true);
+    return;
+  }
+
+  updateActiveNav();
+  closeMobileSidebar();
+
+  let html = "";
+  switch (state.route) {
+    case "dashboard": html = dashboardHTML(); break;
+    case "courses": html = coursesHTML(); break;
+    case "term": html = termHTML(parsed.termKey); break;
+    case "unit": html = unitHTML(parsed.termKey, parsed.unitId); break;
+    case "lesson": {
+      /* If URL omits term/unit, try to resolve from the student's allowed course. */
+      let termKey = parsed.termKey;
+      let unitId = parsed.unitId;
+      let lessonId = parsed.lessonId;
+      if (!termKey || !unitId) {
+        const resolved = findLessonForStudent(lessonId);
+        if (resolved) { termKey=resolved.termKey; unitId=resolved.unitId; }
+      }
+      html = lessonHTML(termKey,unitId,lessonId);
+      if (html.includes("ليس لديك صلاحية")) {
+        setTimeout(()=>navigate("dashboard",true),900);
+      }
+      break;
+    }
+    case "last": html = lastHTML(); break;
+    case "announcements": html = announcementsHTML(); break;
+    case "profile": html = profileHTML(); break;
+    case "search": html = searchHTML(); break;
+    default:
+      navigate("dashboard", true);
+      return;
+  }
+
+  $("#pageContent").innerHTML = html;
+  refreshIcons();
+  updateShellUser();
+  if (state.route === "lesson") window.scrollTo(0,0);
+}
+
+function updateActiveNav() {
+  $$(".nav-item").forEach(el => {
+    el.classList.toggle("active", el.dataset.route === state.route || (state.route==="term"||state.route==="unit") && el.dataset.route==="courses");
+  });
+  $$(".mobile-bottom button").forEach(el => {
+    el.classList.toggle("active", el.dataset.route === state.route || (state.route==="term"||state.route==="unit") && el.dataset.route==="courses");
+  });
+}
+
+/* =========================================================
+   TOAST / MODAL
+   ========================================================= */
+let toastTimer = null;
+function showToast(message, type="success") {
+  const toast = $("#toast");
+  const content = $("#toastContent");
+  content.innerHTML = `${icon(type==="error"?"circle-alert":"circle-check",17)} <span>${escapeHTML(message)}</span>`;
+  toast.className = `toast show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>toast.classList.remove("show"),3200);
+  refreshIcons();
+}
+
+function openModal(title, bodyHTML) {
+  $("#modalTitle").textContent = title;
+  $("#modalBody").innerHTML = bodyHTML;
+  $("#modalBackdrop").classList.remove("hidden");
+  refreshIcons();
+}
+
+function closeModal() {
+  $("#modalBackdrop").classList.add("hidden");
+}
+
+/* =========================================================
+   MOBILE SIDEBAR
+   ========================================================= */
+function closeMobileSidebar() {
+  $("#appSidebar")?.classList.remove("open");
+}
+
+function toggleMobileSidebar() {
+  $("#appSidebar")?.classList.toggle("open");
+}
+
+/* =========================================================
+   CONTACT PLACEHOLDERS
+   ========================================================= */
+function handlePlaceholderContact(type) {
+  const url = config.contact[type];
+  if (!url || url === "#") {
+    showToast("رابط التواصل لم تتم إضافته بعد.", "error");
+    return;
+  }
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+/* =========================================================
+   EVENT HANDLERS
+   ========================================================= */
+document.addEventListener("click", (event) => {
+  const actionBtn = event.target.closest("[data-action]");
+  if (actionBtn?.dataset.action === "login") {
+    event.preventDefault();
+    location.hash = "login";
+    showAuth();
+    return;
+  }
+
+  const routeEl = event.target.closest("[data-route]");
+  if (routeEl) {
+    event.preventDefault();
+    const route = routeEl.dataset.route;
+    navigate(route);
+    return;
+  }
+
+  const termEl = event.target.closest("[data-term-select]");
+  if (termEl) {
+    navigate(`term/${encodeURIComponent(termEl.dataset.termSelect)}`);
+    return;
+  }
+
+  const unitEl = event.target.closest("[data-unit-select]");
+  if (unitEl) {
+    navigate(`unit/${encodeURIComponent(unitEl.dataset.term)}/${encodeURIComponent(unitEl.dataset.unitSelect)}`);
+    return;
+  }
+
+  const lessonEl = event.target.closest("[data-open-lesson]");
+  if (lessonEl) {
+    navigate(`lesson/${encodeURIComponent(lessonEl.dataset.openLesson)}/${encodeURIComponent(lessonEl.dataset.term)}/${encodeURIComponent(lessonEl.dataset.unit)}`);
+    return;
+  }
+
+  const completeEl = event.target.closest("[data-complete-lesson]");
+  if (completeEl) {
+    const term = getTerm(completeEl.dataset.term);
+    const unit = term?.units?.find(u=>u.id===completeEl.dataset.unit);
+    const lesson = unit?.lessons?.find(l=>l.id===completeEl.dataset.completeLesson);
+    if (lesson) toggleLessonCompleted({...lesson,termKey:completeEl.dataset.term,unitId:completeEl.dataset.unit});
+    return;
+  }
+
+  const breadcrumb = event.target.closest("[data-breadcrumb]");
+  if (breadcrumb) {
+    const a = breadcrumb.dataset.breadcrumb;
+    if (a.startsWith("term:")) navigate(`term/${a.split(":")[1]}`);
+    else if (a.startsWith("unit:")) {
+      const [,term,unit] = a.split(":");
+      navigate(`unit/${term}/${unit}`);
+    } else navigate(a);
+    return;
+  }
+
+  const placeholder = event.target.closest("[data-placeholder-contact]");
+  if (placeholder) {
+    event.preventDefault();
+    handlePlaceholderContact(placeholder.dataset.placeholderContact);
+  }
+});
+
+$("#publicThemeBtn").addEventListener("click", toggleTheme);
+$("#authThemeBtn").addEventListener("click", toggleTheme);
+$("#appThemeBtn").addEventListener("click", toggleTheme);
+$("#mobileSidebarBtn").addEventListener("click", toggleMobileSidebar);
+
+$("#authBackBtn").addEventListener("click", () => {
+  location.hash = "home";
+  showPublic();
+});
+
+$("#passwordToggle").addEventListener("click", () => {
+  const input = $("#password");
+  const visible = input.type === "text";
+  input.type = visible ? "password" : "text";
+  $("#passwordToggle").innerHTML = icon(visible ? "eye" : "eye-off");
+  $("#passwordToggle").setAttribute("aria-label", visible ? "إظهار كلمة المرور" : "إخفاء كلمة المرور");
+  refreshIcons();
+});
+
+$("#loginForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const username = $("#username").value.trim();
+  const password = $("#password").value;
+  const remember = $("#rememberSession").checked;
+  const error = $("#loginError");
+  error.classList.add("hidden");
+
+  if (!username || !password) {
+    error.textContent = "يرجى إدخال اسم المستخدم وكلمة المرور.";
+    error.classList.remove("hidden");
+    return;
+  }
+
+  const student = findStudent(username,password);
+  if (!student) {
+    error.textContent = "اسم المستخدم أو كلمة المرور غير صحيحة.";
+    error.classList.remove("hidden");
+    return;
+  }
+
+  if (!student.active) {
+    error.textContent = "هذا الحساب غير نشط حاليًا. برجاء التواصل مع مستر عبدو.";
+    error.classList.remove("hidden");
+    return;
+  }
+
+  loginStudent(student,remember);
+});
+
+$("#logoutBtn").addEventListener("click", () => {
+  openModal("تسجيل الخروج", `
+    <p class="muted" style="font-size:.82rem">هل تريد تسجيل الخروج من حسابك على هذا الجهاز؟</p>
+    <div style="display:flex;gap:8px;justify-content:flex-start;margin-top:18px">
+      <button class="btn btn-danger" id="confirmLogout">${icon("log-out",15)} تسجيل الخروج</button>
+      <button class="btn btn-secondary" id="cancelLogout">إلغاء</button>
+    </div>
+  `);
+  $("#confirmLogout").addEventListener("click",()=>{closeModal();logout()});
+  $("#cancelLogout").addEventListener("click",closeModal);
+});
+
+$("#modalClose").addEventListener("click",closeModal);
+$("#modalBackdrop").addEventListener("click",(e)=>{if(e.target.id==="modalBackdrop")closeModal()});
+
+document.addEventListener("input",(event)=>{
+  if (event.target.id === "lessonSearch") {
+    state.searchQuery = event.target.value;
+    renderRoute();
+    const input = $("#lessonSearch");
+    if (input) { input.focus(); input.setSelectionRange(input.value.length,input.value.length); }
+  }
+});
+
+document.addEventListener("click",(event)=>{
+  if (event.target.closest("#clearSearch")) {
+    state.searchQuery = "";
+    renderRoute();
+  }
+});
+
+window.addEventListener("hashchange", renderRoute);
+
+/* Close sidebar when clicking outside on mobile. */
+document.addEventListener("click",(event)=>{
+  const sidebar = $("#appSidebar");
+  if (window.innerWidth <= 850 && sidebar?.classList.contains("open")) {
+    if (!event.target.closest("#appSidebar") && !event.target.closest("#mobileSidebarBtn")) closeMobileSidebar();
+  }
+});
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+function init() {
+  applyTheme(getInitialTheme());
+  applyConfiguredAssets();
+
+  setupImageFallback("heroTeacherImage","heroTeacherFallback");
+  setupImageFallback("aboutTeacherImage","aboutTeacherFallback");
+
+  const restored = restoreSession();
+  if (restored) {
+    state.student = restored;
+    const parsed = parseHash();
+    if (parsed.route === "home" || parsed.route === "login") location.hash = "dashboard";
+    renderRoute();
+  } else {
+    const parsed = parseHash();
+    if (parsed.route === "login") showAuth();
+    else showPublic();
+  }
+
+  refreshIcons();
+}
+
+init();
+</script>
+</body>
+</html>
