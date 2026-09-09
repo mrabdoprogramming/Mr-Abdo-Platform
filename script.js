@@ -68,7 +68,7 @@ const students = [
     id: "student001",
     username: "mahmoud",
     password: "6970",
-    name: "الاسم محمود محمد فخري",
+    name: " محمود محمد فخري",
     phone: "01273796970",
     grade: "secondSecondary",
     active: true
