@@ -18,7 +18,7 @@
    automatically falls back to showing the "م" letter mark,
    so nothing breaks while you add the real file.
 */
-const LOGO_PATH = "assets/logo.png";
+const LOGO_PATH = "logo.png";
 
 /* =========================================================
    CONFIGURATION
