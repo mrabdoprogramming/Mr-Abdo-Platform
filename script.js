@@ -18,7 +18,7 @@
    automatically falls back to showing the "م" letter mark,
    so nothing breaks while you add the real file.
 */
-const LOGO_PATH = "logo.png";
+const LOGO_PATH = "assets/logo.png";
 
 /* =========================================================
    CONFIGURATION
@@ -67,8 +67,8 @@ const students = [
   {
     id: "student001",
     username: "mahmoud",
-    password: "6970",
-    name: " محمود محمد فخري",
+    password: "7262010",
+    name: "محمود",
     phone: "01273796970",
     grade: "secondSecondary",
     active: true
@@ -84,16 +84,16 @@ const students = [
   {
     id: "student004",
     username: "faisal",
-    password: "1111",
+    password: "201190",
     name: "فيصل",
     grade: "firstSecondary",
     active: true
   },
   {
     id: "student004",
-    username: "student004",
-    password: "222222",
-    name: "نور خالد",
+    username: "mohamed-yahia",
+    password: "201180",
+    name: " محمد يحيى",
     grade: "thirdSecondary",
     active: false
   }
@@ -1191,7 +1191,7 @@ function lessonListHTML(lessons, termKey, unitId) {
           ${done ? `<span class="completed-message">${icon("circle-check",14)} مكتمل</span>` : ""}
           ${lesson.duration ? `<span class="meta-pill">${escapeHTML(lesson.duration)}</span>` : ""}
           <div class="lesson-actions">
-            <button class="btn btn-primary btn-small" data-open-lesson="${escapeHTML(lesson.id)}" data-term="${escapeHTML(termKey)}" data-unit="${escapeHTML(unitId)}">
+            <button class="btn btn-primary btn-small lesson-open-btn" data-open-lesson="${escapeHTML(lesson.id)}" data-term="${escapeHTML(termKey)}" data-unit="${escapeHTML(unitId)}">
               فتح الدرس ${icon("arrow-left",14)}
             </button>
           </div>
@@ -1423,7 +1423,7 @@ function lastHTML() {
             <h3>${escapeHTML(lesson.title)}</h3>
             <p>${escapeHTML(lesson.unitTitle)} · ${escapeHTML(lesson.termName)}</p>
           </div>
-          <button class="btn btn-primary btn-small" data-open-lesson="${escapeHTML(lesson.id)}" data-term="${escapeHTML(lesson.termKey)}" data-unit="${escapeHTML(lesson.unitId)}">
+          <button class="btn btn-primary btn-small lesson-open-btn" data-open-lesson="${escapeHTML(lesson.id)}" data-term="${escapeHTML(lesson.termKey)}" data-unit="${escapeHTML(lesson.unitId)}">
             استكمال ${icon("arrow-left",14)}
           </button>
         </div>
