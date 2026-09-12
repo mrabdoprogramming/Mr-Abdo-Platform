@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستر عبدو برمجة - الذكاء الاصطناعي في الحياة اليومية والصناعة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #e8ecf1;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 1366px;
+            max-width: 98vw;
+            height: 768px;
+            max-height: 98vh;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cover-decoration {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.04;
+            font-family: 'Cairo', sans-serif;
+            color: #1e293b;
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        .cover-decoration.top-right {
+            top: 30px;
+            right: 40px;
+            text-align: right;
+            font-size: 13px;
+            opacity: 0.05;
+        }
+
+        .cover-decoration.bottom-left {
+            bottom: 30px;
+            left: 40px;
+            font-size: 13px;
+            opacity: 0.05;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            padding: 28px 48px 20px 48px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .trainer-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+            border-bottom: 3px solid #f0f2f5;
+            flex-shrink: 0;
+        }
+
+        .trainer-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .trainer-avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1e293b, #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            font-weight: 900;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+            border: 3px solid #f59e0b;
+        }
+
+        .trainer-details h4 {
+            color: #1e293b;
+            font-size: 22px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        .trainer-details h4 span {
+            color: #f59e0b;
+        }
+
+        .trainer-details .sub {
+            color: #6b7280;
+            font-size: 16px;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .trainer-details .sub i {
+            color: #f59e0b;
+            margin-left: 6px;
+        }
+
+        .slide-counter {
+            color: #9ca3af;
+            font-size: 18px;
+            font-weight: 700;
+            background: #f3f4f6;
+            padding: 6px 22px;
+            border-radius: 24px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 6px 0;
+        }
+
+        .slide-title {
+            font-size: 40px;
+            font-weight: 900;
+            color: #1e293b;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .slide-title .icon {
+            font-size: 38px;
+        }
+
+        .slide-title .highlight {
+            color: #f59e0b;
+        }
+
+        .slide-title .subtitle-line {
+            font-size: 18px;
+            font-weight: 400;
+            color: #9ca3af;
+            margin-right: 14px;
+        }
+
+        .divider {
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(90deg, #f59e0b, #1e293b);
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 26px 32px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f2f5;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 40px rgba(245, 158, 11, 0.08);
+            transform: translateY(-2px);
+            border-color: #f59e0b;
+        }
+
+        .card p,
+        .card li {
+            color: #1f2937;
+            font-size: 24px;
+            line-height: 2;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card ul li {
+            padding: 6px 0;
+            padding-right: 34px;
+            position: relative;
+            font-size: 23px;
+        }
+
+        .card ul li::before {
+            content: "▸";
+            position: absolute;
+            right: 0;
+            color: #f59e0b;
+            font-weight: 700;
+            font-size: 26px;
+        }
+
+        .example-box {
+            background: #fffbeb;
+            border-radius: 16px;
+            padding: 18px 24px;
+            margin-top: 14px;
+            border-right: 5px solid #f59e0b;
+        }
+
+        .example-box .label {
+            color: #6b7280;
+            font-size: 18px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .example-box .content {
+            color: #1f2937;
+            font-size: 22px;
+            line-height: 1.8;
+        }
+
+        .punchline {
+            margin-top: 16px;
+            padding: 14px 22px;
+            background: #fffbeb;
+            border-radius: 14px;
+            border-right: 5px solid #f59e0b;
+            font-size: 24px;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .punchline i {
+            color: #f59e0b;
+            margin-left: 12px;
+            font-size: 26px;
+        }
+
+        .concept-map {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 10px 0;
+        }
+
+        .concept-map .node {
+            background: #fffbeb;
+            padding: 10px 30px;
+            border-radius: 14px;
+            border: 2px solid #fde68a;
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .concept-map .node:hover {
+            border-color: #f59e0b;
+            background: #fde68a;
+        }
+
+        .concept-map .node.highlight {
+            border-color: #f59e0b;
+            background: #fde68a;
+        }
+
+        .concept-map .arrow {
+            color: #f59e0b;
+            font-size: 28px;
+            opacity: 0.6;
+        }
+
+        .concept-map .row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== TABLE STYLES ===== */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 12px;
+            border-radius: 14px;
+            border: 1px solid #f0f2f5;
+        }
+
+        .table-wrapper table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 18px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .table-wrapper thead {
+            background: #f59e0b;
+            color: #fff;
+        }
+
+        .table-wrapper th {
+            padding: 12px 16px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 800;
+            border: 1px solid #f59e0b;
+        }
+
+        .table-wrapper td {
+            padding: 10px 14px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            color: #1f2937;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .table-wrapper tr:nth-child(even) {
+            background: #fffbeb;
+        }
+
+        .table-wrapper tr:hover {
+            background: #fde68a;
+        }
+
+        .table-wrapper .highlight-cell {
+            font-weight: 700;
+            color: #f59e0b;
+        }
+
+        /* ===== IMAGE PLACEHOLDER ===== */
+        .image-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            border: 2px dashed #d1d5db;
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 12px;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .image-placeholder img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .image-placeholder .label {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .image-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        /* ===== TWO COLUMN ===== */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 10px;
+        }
+
+        .two-col .card {
+            height: 100%;
+        }
+
+        .two-col .card h4 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .two-col .card ul li {
+            font-size: 17px;
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 3px solid #f0f2f5;
+            flex-shrink: 0;
+        }
+
+        .dots {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #d1d5db;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: #f59e0b;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+            width: 36px;
+            border-radius: 8px;
+        }
+
+        .dot:hover {
+            background: #f59e0b;
+            opacity: 0.6;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            color: #374151;
+            padding: 10px 22px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background: #e5e7eb;
+            border-color: #f59e0b;
+            color: #1e293b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-primary {
+            background: #1e293b;
+            border: none;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #f59e0b;
+            color: #fff;
+            box-shadow: 0 6px 24px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-icon {
+            width: 48px;
+            height: 48px;
+            padding: 0;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 18px;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-enter {
+            animation: slideEnter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes slideEnter {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-content::-webkit-scrollbar {
+            width: 5px;
+        }
+        .slide-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .slide-content::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+
+        /* Quiz Styles */
+        .quiz-section-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .quiz-section-title .icon {
+            font-size: 36px;
+        }
+
+        .quiz-section-title .sub {
+            font-size: 18px;
+            color: #6b7280;
+            font-weight: 400;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .quiz-item {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 20px 26px;
+            margin-bottom: 16px;
+            border: 2px solid #eef2f6;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .quiz-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .quiz-item:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.08);
+        }
+
+        .quiz-item .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .quiz-item .question-text {
+            font-size: 20px;
+            color: #1e293b;
+            font-weight: 700;
+            line-height: 1.8;
+            flex: 1;
+        }
+
+        .quiz-item .question-text .q-num {
+            color: #f59e0b;
+            font-weight: 900;
+            margin-left: 8px;
+        }
+
+        .quiz-item .question-text .sub-q {
+            font-weight: 400;
+            color: #4b5563;
+            font-size: 18px;
+            display: block;
+            padding-right: 30px;
+            margin-top: 4px;
+        }
+
+        .quiz-item .question-text .sub-q .letter {
+            color: #f59e0b;
+            font-weight: 700;
+        }
+
+        .btn-show-answer {
+            background: #1e293b;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .btn-show-answer:hover {
+            background: #f59e0b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-show-answer.showing {
+            background: #f59e0b;
+        }
+
+        .btn-show-answer.showing:hover {
+            background: #d97706;
+        }
+
+        .answer-box {
+            margin-top: 12px;
+            padding: 14px 20px;
+            background: #fffbeb;
+            border-radius: 12px;
+            border-right: 4px solid #f59e0b;
+            display: none;
+            font-size: 18px;
+            color: #1f2937;
+            line-height: 1.8;
+        }
+
+        .answer-box.show {
+            display: block;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .answer-box .ans-label {
+            color: #f59e0b;
+            font-weight: 700;
+        }
+
+        .answer-box .explanation {
+            color: #6b7280;
+            font-size: 17px;
+            margin-top: 4px;
+        }
+
+        .answer-box .explanation i {
+            color: #f59e0b;
+            margin-left: 6px;
+        }
+
+        .quiz-divider {
+            border: none;
+            border-top: 2px dashed #fde68a;
+            margin: 18px 0;
+        }
+
+        .tf-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f2f5;
+            font-size: 19px;
+            line-height: 1.7;
+            color: #1f2937;
+        }
+
+        .tf-item:last-child {
+            border-bottom: none;
+        }
+
+        .tf-item .mark {
+            font-size: 28px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            font-weight: 900;
+        }
+
+        .tf-item .mark.tick {
+            color: #22c55e;
+        }
+
+        .tf-item .mark.cross {
+            color: #ef4444;
+        }
+
+        .tf-item .explanation {
+            color: #6b7280;
+            font-size: 17px;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .tf-item .explanation i {
+            color: #f59e0b;
+            margin-left: 6px;
+        }
+
+        @media (max-width: 1024px) {
+            .slide-title {
+                font-size: 32px;
+            }
+            .card p,
+            .card li {
+                font-size: 20px;
+            }
+            .concept-map .node {
+                font-size: 18px;
+                padding: 8px 20px;
+                min-width: 150px;
+            }
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+            .table-wrapper table {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .presentation-container {
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+                max-width: 100vw;
+            }
+            .slide-content {
+                padding: 14px 16px 10px 16px;
+            }
+            .slide-title {
+                font-size: 24px;
+            }
+            .card p,
+            .card li {
+                font-size: 17px;
+            }
+            .card ul li {
+                font-size: 17px;
+                padding-right: 24px;
+            }
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+            .trainer-avatar {
+                width: 42px;
+                height: 42px;
+                font-size: 18px;
+            }
+            .trainer-details h4 {
+                font-size: 17px;
+            }
+            .trainer-details .sub {
+                font-size: 13px;
+            }
+            .btn span {
+                display: none;
+            }
+            .cover-decoration {
+                display: none;
+            }
+            .concept-map .node {
+                font-size: 15px;
+                padding: 6px 14px;
+                min-width: 120px;
+            }
+            .concept-map .arrow {
+                font-size: 20px;
+            }
+            .punchline {
+                font-size: 18px;
+            }
+            .slide-counter {
+                font-size: 14px;
+                padding: 4px 14px;
+            }
+            .quiz-item .question-text {
+                font-size: 16px;
+            }
+            .quiz-item .question-text .sub-q {
+                font-size: 15px;
+                padding-right: 0;
+            }
+            .btn-show-answer {
+                font-size: 13px;
+                padding: 6px 14px;
+            }
+            .answer-box {
+                font-size: 16px;
+                padding: 10px 14px;
+            }
+            .quiz-section-title {
+                font-size: 24px;
+            }
+            .table-wrapper table {
+                font-size: 14px;
+            }
+            .table-wrapper th,
+            .table-wrapper td {
+                padding: 6px 8px;
+                font-size: 14px;
+            }
+            .image-placeholder {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide-title {
+                font-size: 20px;
+            }
+            .card {
+                padding: 14px 16px;
+            }
+            .card p,
+            .card li {
+                font-size: 15px;
+            }
+            .quiz-item .question-text {
+                font-size: 15px;
+            }
+            .answer-box {
+                font-size: 14px;
+            }
+            .table-wrapper table {
+                font-size: 12px;
+            }
+            .table-wrapper th,
+            .table-wrapper td {
+                padding: 4px 6px;
+                font-size: 12px;
+            }
+            .image-placeholder {
+                max-width: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container" id="app">
+        <!-- Decorative Elements -->
+        <div class="cover-decoration top-right">
+            // مستر عبدو برمجة<br>
+            // From Logic to Innovation
+        </div>
+        <div class="cover-decoration bottom-left">
+            🌍 الذكاء الاصطناعي في الحياة<br>
+            🏭 الذكاء الاصطناعي في الصناعة<br>
+            ✅ ما يبرع فيه<br>
+            ⚠️ ما يتطلب الحذر
+        </div>
+
+        <div class="slide-content" id="slideContent">
+            <!-- Trainer Bar -->
+            <div class="trainer-bar">
+                <div class="trainer-info">
+                    <div class="trainer-avatar">ع</div>
+                    <div class="trainer-details">
+                        <h4>مستر <span>عبدو</span> برمجة</h4>
+                        <div class="sub"><i class="fas fa-code"></i> الذكاء الاصطناعي في الحياة اليومية والصناعة · الصف الثاني الثانوي · الوحدة الأولى · الدرس الثالث</div>
+                    </div>
+                </div>
+                <div class="slide-counter" id="slideCounter">٠١ / ٠٨</div>
+            </div>
+
+            <!-- Slide Body -->
+            <div class="slide-body" id="slideBody"></div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <div class="dots" id="dotsContainer"></div>
+                <div class="btn-group">
+                    <button class="btn btn-icon" id="prevBtn" title="السابق"><i class="fas fa-chevron-right"></i></button>
+                    <button class="btn btn-icon" id="nextBtn" title="التالي"><i class="fas fa-chevron-left"></i></button>
+                    <button class="btn" id="autoBtn" title="تشغيل تلقائي"><i class="fas fa-play"></i> <span>تلقائي</span></button>
+                    <button class="btn btn-primary btn-icon" id="fullscreenBtn" title="عرض كامل"><i class="fas fa-expand"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  DATA - الذكاء الاصطناعي في الحياة اليومية والصناعة
+        // ============================================================
+        const slides = [{
+            id: 0,
+            title: 'الذكاء الاصطناعي في الحياة اليومية والصناعة',
+            icon: '🌍',
+            content: `
+                <div style="text-align:center;padding:4px 0;">
+                    <div style="font-size:52px;margin-bottom:4px;">🤖</div>
+                    <div style="font-family:'Cairo',sans-serif;color:#f59e0b;font-size:22px;font-weight:700;letter-spacing:2px;">
+                        AI in Daily Life & Industry
+                    </div>
+                    <div style="width:100px;height:4px;background:linear-gradient(90deg,#f59e0b,#1e293b);margin:12px auto;"></div>
+                    <div style="font-size:20px;color:#6b7280;margin-bottom:8px;">الوحدة الأولى · الدرس الثالث · الصف الثاني الثانوي</div>
+
+                    <!-- الخريطة المفاهيمية -->
+                    <div class="concept-map">
+                        <div class="row">
+                            <div class="node highlight">🌍 الذكاء الاصطناعي في الحياة</div>
+                            <div class="arrow">⬇</div>
+                            <div class="node">🏭 الذكاء الاصطناعي في الصناعة</div>
+                        </div>
+                        <div class="row" style="margin-top:6px;">
+                            <div class="node">✅ ما يبرع فيه</div>
+                            <div class="arrow">⬇</div>
+                            <div class="node">⚠️ ما يتطلب الحذر</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px;display:flex;justify-content:center;gap:30px;flex-wrap:wrap;">
+                        <div style="background:#f8fafc;padding:12px 28px;border-radius:14px;border:1px solid #eef2f6;">
+                            <span style="color:#6b7280;font-size:15px;">المادة</span>
+                            <h3 style="color:#1e293b;font-size:20px;">الذكاء الاصطناعي في الحياة اليومية والصناعة</h3>
+                        </div>
+                        <div style="background:#f8fafc;padding:12px 28px;border-radius:14px;border:1px solid #eef2f6;">
+                            <span style="color:#6b7280;font-size:15px;">المقدم</span>
+                            <h3 style="color:#1e293b;font-size:20px;">مستر عبدو برمجة</h3>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px;color:#9ca3af;font-size:16px;">
+                        <i class="fas fa-arrow-left" style="color:#f59e0b;"></i> اضغط "التالي" للبدء
+                    </div>
+                </div>
+            `
+        }, {
+            id: 1,
+            title: 'مقدمة الدرس',
+            icon: '📖',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:8px;">📌 مقدمة الدرس</div>
+                    <div style="color:#1f2937;font-size:20px;margin-bottom:14px;line-height:1.8;">
+                        أصبح الذكاء الاصطناعي جزءًا من خدمات يومية كثيرة؛ فقد تقترح منصة فيديو مقاطع تناسب اهتماماتك، ويجيب مساعد صوتي عن أسئلتك، وتترجم أداة نصًا إلى لغة أخرى. وفي الصناعة، يمكن استخدامه لتحليل الصور الطبية، والتنبؤ بأعطال الآلات، وتحسين مسارات التوصيل. يجيد الذكاء الاصطناعي اكتشاف الأنماط في البيانات، لكنه قد يخطئ أو ينتج نتائج متحيزة؛ لذلك يجب التحقق من مخرجاته، خصوصًا في الاستخدامات التي تؤثر في حياة الأشخاص وحقوقهم.
+                    </div>
+
+                    <div style="background:#fffbeb;padding:16px 22px;border-radius:14px;border-right:4px solid #f59e0b;margin-bottom:14px;">
+                        <div style="font-size:20px;font-weight:800;color:#1e293b;">❓ السؤال الرئيسي</div>
+                        <div style="font-size:18px;color:#1f2937;margin-top:4px;">
+                            أين يُستخدم الذكاء الاصطناعي في الحياة اليومية والصناعة، وما الذي يبرع فيه، وما الذي يتطلب الحذر؟
+                        </div>
+                    </div>
+
+                    <div style="background:#f0fdf4;padding:16px 22px;border-radius:14px;border-right:4px solid #22c55e;margin-bottom:14px;">
+                        <div style="font-size:20px;font-weight:800;color:#1e293b;">✅ إجابة السؤال الرئيسي</div>
+                        <div style="font-size:18px;color:#1f2937;margin-top:4px;line-height:1.8;">
+                            يُستخدم الذكاء الاصطناعي في أنظمة التوصية والمساعدات الصوتية والترجمة والتعرف على الوجه. وفي قطاعات مثل الرعاية الصحية والزراعة والتصنيع والخدمات اللوجستية، وهو يجيد اكتشاف الأنماط والتعرف والتنبؤ استنادًا إلى البيانات، لكنه لا يضمن صحة النتيجة أو عدالتها. لذلك تزداد أهمية التحقق البشري كلما كان القرار أعلى أثرًا، مع مراعاة الخصوصية وجودة البيانات والتحيز ووضوح المسؤولية عن النتيجة.
+                        </div>
+                    </div>
+
+                    <div style="background:#fef3c7;padding:14px 20px;border-radius:12px;border-right:4px solid #f59e0b;">
+                        <span style="color:#92400e;font-weight:700;">💡 الفكرة الأساسية:</span>
+                        <span style="color:#1f2937;font-size:18px;">الذكاء الاصطناعي بارع في إيجاد الأنماط في البيانات، لكن الحكم البشري لا يزال ضروريًا عندما يتعلق الأمر بالأخلاق والمسؤولية.</span>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "الذكاء الاصطناعي أداة قوية، لكن الحكم البشري هو الضمانة"</div>
+            `
+        }, {
+            id: 2,
+            title: 'الذكاء الاصطناعي في الحياة اليومية',
+            icon: '🌍',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:8px;">🌍 استخدام الذكاء الاصطناعي في الحياة اليومية</div>
+                    <div style="color:#6b7280;font-size:17px;margin-bottom:10px;">
+                        العديد من تقنيات الذكاء الاصطناعي مستخدمة بالفعل من حولنا
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width:20%;">الخدمة</th>
+                                    <th style="width:45%;">دور الذكاء الاصطناعي</th>
+                                    <th style="width:35%;">أمثلة</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span style="font-weight:700;color:#f59e0b;">📺 أنظمة التوصية</span></td>
+                                    <td>التنبؤ بالتفضيلات من بيانات السلوك السابق وعرض التوصيات</td>
+                                    <td>يوتيوب · أمازون · سبوتيفاي</td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-weight:700;color:#f59e0b;">🎤 المساعدات الصوتية</span></td>
+                                    <td>التعرف على الصوت، وفهم الأوامر، وتنفيذها</td>
+                                    <td>سيري (Siri) · مساعد جوجل</td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-weight:700;color:#f59e0b;">🌐 الترجمة الآلية</span></td>
+                                    <td>ترجمة النص تلقائيًا إلى لغات مختلفة</td>
+                                    <td>Google Translate · DeepL</td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-weight:700;color:#f59e0b;">👤 التعرف على الوجه</span></td>
+                                    <td>الكشف عن وجوه الأشخاص في الصور والتعرف عليها تلقائيًا</td>
+                                    <td>فتح الهاتف الذكي</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="image-wrapper">
+                        <div class="image-placeholder">
+                            <img src="ai-daily-life.png" alt="الذكاء الاصطناعي في الحياة اليومية" onerror="this.style.display='none'">
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "الذكاء الاصطناعي أصبح جزءًا لا يتجزأ من حياتنا اليومية"</div>
+            `
+        }, {
+            id: 3,
+            title: 'الذكاء الاصطناعي في الصناعة',
+            icon: '🏭',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:8px;">🏭 استخدام الذكاء الاصطناعي في الصناعة</div>
+                    <div style="color:#6b7280;font-size:17px;margin-bottom:10px;">
+                        يجري أيضًا إدخال تقنيات الذكاء الاصطناعي في مختلف الصناعات
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width:25%;">الصناعة</th>
+                                    <th style="width:75%;">أمثلة على استخدام الذكاء الاصطناعي</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span style="font-weight:700;color:#f59e0b;">🏥 الرعاية الصحية</span></td>
+                                    <td>
+                                        • الذكاء الاصطناعي للتشخيص بالصور (الكشف عن الأمراض من صور الأشعة السينية والتصوير المقطعي)<br>
+                                        • دعم اكتشاف الأدوية
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-weight:700;color:#f59e0b;">🌾 الزراعة</span></td>
+                                    <td>
+                                        • التنبؤ بموعد الحصاد<br>
+                                        • الكشف عن الآفات والأمراض
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-weight:700;color:#f59e0b;">🏭 التصنيع</span></td>
+                                    <td>
+                                        • أتمتة فحص جودة المنتج<br>
+                                        • الصيانة التنبؤية
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-weight:700;color:#f59e0b;">🚚 الخدمات اللوجستية</span></td>
+                                    <td>
+                                        • تحسين مسارات التوصيل
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="image-wrapper">
+                        <div class="image-placeholder">
+                            <img src="ai-industry.png" alt="الذكاء الاصطناعي في الصناعة" onerror="this.style.display='none'">
+                         
+                    </div>
+
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "الذكاء الاصطناعي يعيد تشكيل الصناعات ويزيد من كفاءتها"</div>
+            `
+        }, {
+            id: 4,
+            title: 'ما يبرع فيه الذكاء الاصطناعي وما يتطلب الحذر',
+            icon: '⚖️',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:8px;">⚖️ خصائص الذكاء الاصطناعي واحتياطات الاستخدام</div>
+
+                    <div class="two-col">
+                        <div style="background:#f0fdf4;padding:16px 20px;border-radius:14px;border-right:4px solid #22c55e;">
+                            <div style="font-size:20px;font-weight:800;color:#16a34a;text-align:center;margin-bottom:8px;">✅ ما يبرع فيه الذكاء الاصطناعي</div>
+                            <ul style="list-style:none;padding:0;">
+                                <li style="padding:4px 0;font-size:17px;">▸ إيجاد وتصنيف الأنماط في البيانات المعقدة مثل الصور والنصوص</li>
+                                <li style="padding:4px 0;font-size:17px;">▸ التعرف على الصور والأصوات والنصوص، وتوليد بعض أنواع المحتوى</li>
+                                <li style="padding:4px 0;font-size:17px;">▸ الاستدلال الاحتمالي والتنبؤ استنادًا إلى البيانات</li>
+                            </ul>
+                        </div>
+                        <div style="background:#fef2f2;padding:16px 20px;border-radius:14px;border-right:4px solid #ef4444;">
+                            <div style="font-size:20px;font-weight:800;color:#ef4444;text-align:center;margin-bottom:8px;">⚠️ ما يتطلب الحذر</div>
+                            <ul style="list-style:none;padding:0;">
+                                <li style="padding:4px 0;font-size:17px;">▸ القرارات ذات البعد الأخلاقي التي قد تؤدي إلى تمييز أو تحيز</li>
+                                <li style="padding:4px 0;font-size:17px;">▸ التعامل مع المعلومات الشخصية والبيانات الحساسة</li>
+                                <li style="padding:4px 0;font-size:17px;">▸ القرارات عالية الأثر وتحديد المسؤولية عن نتائجها</li>
+                                <li style="padding:4px 0;font-size:17px;">▸ دقة النتائج عندما تكون بيانات التدريب غير كافية أو غير ممثلة أو متحيزة</li>
+                                <li style="padding:4px 0;font-size:17px;">▸ توليد معلومات غير صحيحة أو غير مدعومة تبدو مقنعة (الهلوسة)</li>
+                                <li style="padding:4px 0;font-size:17px;">▸ قضايا الحقوق عند استخدام أعمال محمية بحقوق المؤلف كبيانات تدريب</li>
+                                <li style="padding:4px 0;font-size:17px;">▸ فقدان الوضوح حول كيفية اتخاذ الحكم (مشكلة الصندوق الأسود)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:12px;background:#fef3c7;padding:12px 18px;border-radius:12px;border-right:4px solid #f59e0b;">
+                        <span style="color:#92400e;font-weight:700;">📌 مصطلح هام:</span>
+                        <span style="color:#1f2937;font-size:18px;">
+                            <span style="font-weight:700;color:#f59e0b;">مشكلة الصندوق الأسود:</span> عندما يكون من غير الواضح كيف توصل الذكاء الاصطناعي إلى حكمه
+                        </span>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "المعرفة بقدرات الذكاء الاصطناعي وحدوده هي مفتاح الاستخدام الآمن"</div>
+            `
+        }, {
+            id: 5,
+            title: '📝 اختبر تركيزك - الجزء الأول',
+            icon: '📝',
+            content: `
+                <div class="quiz-section-title">
+                    <span class="icon">📝</span> اختبر تركيزك - الجزء الأول
+                    <span class="sub">اضغط على زر "إظهار الإجابة" بجانب كل سؤال لمعرفة الإجابة</span>
+                </div>
+
+                <!-- السؤال 1 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">1.</span> ما هو المصطلح الخاص بالنظام الذي يتنبأ بالتفضيلات من بيانات السلوك السابق ويعرض التوصيات؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> أنظمة التوصية
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> مثل يوتيوب وأمازون وسبوتيفاي</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 2 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">2.</span> ما هو المصطلح الخاص بتقنية الذكاء الاصطناعي التي تتعرف على الصوت، وتفهم الأوامر وتنفذها؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> المساعدات الصوتية
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> مثل سيري ومساعد جوجل</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 3 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">3.</span> في أي صناعة تُستخدم أنظمة الذكاء الاصطناعي للتشخيص بالصور؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> صناعة الرعاية الصحية
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> للكشف عن الأمراض من صور الأشعة السينية والتصوير المقطعي</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 4 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">4.</span> في التصنيع، ما المصطلح الذي يصف استخدام البيانات للتنبؤ بأعطال الآلات أو المعدات قبل وقوعها؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> الصيانة التنبؤية
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> تساعد في تجنب التوقف المفاجئ للآلات</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 5 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">5.</span> من الخيارات التالية (أ - د)، اختر الخيار الذي لا ينتمي إلى "ما يتطلب الحذر عند استخدام الذكاء الاصطناعي":
+                            <span class="sub-q"><span class="letter">(أ)</span> الأحكام الأخلاقية</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> إيجاد الأنماط وتصنيفها</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> الأحكام التي تشمل المعلومات الشخصية أو الخصوصية</span>
+                            <span class="sub-q"><span class="letter">(د)</span> اتخاذ القرار النهائي</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> (ب) إيجاد الأنماط وتصنيفها
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> هذا مما يبرع فيه الذكاء الاصطناعي وليس مما يتطلب الحذر</div>
+                    </div>
+                </div>
+
+                <hr class="quiz-divider">
+
+                <div style="text-align:center;color:#6b7280;font-size:16px;margin-top:8px;">
+                    <i class="fas fa-lightbulb" style="color:#f59e0b;"></i> حاول الإجابة بنفسك قبل الضغط على زر الإجابة
+                </div>
+            `
+        }, {
+            id: 6,
+            title: '📝 اختبر تركيزك - الجزء الثاني',
+            icon: '📝',
+            content: `
+                <div class="quiz-section-title">
+                    <span class="icon">📝</span> اختبر تركيزك - الجزء الثاني
+                    <span class="sub">اضغط على زر "إظهار الإجابة" بجانب كل سؤال لمعرفة الإجابة</span>
+                </div>
+
+                <!-- السؤال 6 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">6.</span> لكل مثال من أمثلة استخدام الذكاء الاصطناعي (1 - 4)، حدد الصناعة الأكثر ارتباطًا: (أ) الرعاية الصحية، (ب) الزراعة، (ج) التصنيع، (د) الخدمات اللوجستية.
+                            <span class="sub-q">1. تحسين مسارات التوصيل</span>
+                            <span class="sub-q">2. الكشف عن الأمراض من صور الأشعة السينية</span>
+                            <span class="sub-q">3. الكشف عن الآفات والأمراض</span>
+                            <span class="sub-q">4. أتمتة فحص جودة المنتج</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        1. تحسين مسارات التوصيل → (د) الخدمات اللوجستية<br>
+                        2. الكشف عن الأمراض من صور الأشعة السينية → (أ) الرعاية الصحية<br>
+                        3. الكشف عن الآفات والأمراض → (ب) الزراعة<br>
+                        4. أتمتة فحص جودة المنتج → (ج) التصنيع
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> كل صناعة لها تطبيقاتها المميزة للذكاء الاصطناعي</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 7 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">7.</span> اختر كل الخيارات التي يبرع فيها الذكاء الاصطناعي:
+                            <span class="sub-q"><span class="letter">(أ)</span> الأحكام الأخلاقية</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> إيجاد السمات في الصور والنصوص وتصنيفها</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> الأحكام التي تشمل المعلومات الشخصية</span>
+                            <span class="sub-q"><span class="letter">(د)</span> الاستدلال الاحتمالي والتنبؤ استنادًا إلى البيانات</span>
+                            <span class="sub-q"><span class="letter">(هـ)</span> اتخاذ القرار الذي يتحمل مسؤولية النتائج</span>
+                            <span class="sub-q"><span class="letter">(و)</span> التعرف على الصور والصوت والنص وتوليدها</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> (ب) و (د) و (و)
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> هذه هي المجالات التي يبرع فيها الذكاء الاصطناعي، بينما الأحكام الأخلاقية والخصوصية واتخاذ القرار النهائي تتطلب حذراً</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 8 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">8.</span> من الخيارات التالية (أ - د)، اختر الخيار الذي ليس وصفًا مناسبًا للخدمات التي تستخدم الذكاء الاصطناعي:
+                            <span class="sub-q"><span class="letter">(أ)</span> نظام التوصية يتنبأ بالتفضيلات من بيانات السلوك السابق ويعرض التوصيات.</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> المساعد الصوتي يتعرف على الصوت، ويفهم الأوامر، وينفذها.</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> الترجمة الآلية هي نظام يترجم فيه البشر اللغات الأجنبية يدويًا.</span>
+                            <span class="sub-q"><span class="letter">(د)</span> التعرف على الوجه يكتشف وجوه الأشخاص في الصور ويتعرف عليها تلقائيًا.</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> (ج)
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> الخطأ في كلمة "يدوياً" لأن الترجمة الآلية تتم بشكل آلي وليس يدوي</div>
+                    </div>
+                </div>
+
+                <hr class="quiz-divider">
+
+                <div style="text-align:center;color:#6b7280;font-size:16px;margin-top:8px;">
+                    <i class="fas fa-lightbulb" style="color:#f59e0b;"></i> حاول الإجابة بنفسك قبل الضغط على زر الإجابة
+                </div>
+            `
+        }, {
+            id: 7,
+            title: '📝 أسئلة الفهم والاستكشاف + التمارين الشاملة',
+            icon: '🔍',
+            content: `
+                <div class="quiz-section-title">
+                    <span class="icon">🔍</span> أسئلة الفهم والاستكشاف
+                    <span class="sub">أسئلة لتعميق الفهم وتنمية مهارات التفكير</span>
+                </div>
+
+                <!-- السؤال 9 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">9.</span> اقرأ الفقرة التالية وأجب عن كل سؤال:
+                            <span class="sub-q">يُستخدم الذكاء الاصطناعي على نطاق واسع في حياتنا اليومية. على سبيل المثال، توصيات مقاطع الفيديو التي تناسب تفضيلات المرء على موقع فيديو تأتي من نظام (1). كذلك، تُستخدم تقنية الذكاء الاصطناعي في (2)، التي يمكن للمرء من خلالها التحدث إلى هاتف ذكي لتشغيله، وفي (3)، التي تحوّل نصًا بلغة أجنبية إلى اللغة الأم.</span>
+                            <span class="sub-q">• املأ الفراغات (1) - (3).</span>
+                            <span class="sub-q">• من بين (1 - 4) التالية، اختر كل ما يتطلب الحذر عند استخدام الذكاء الاصطناعي:</span>
+                            <span class="sub-q">1. المعالجة عالية السرعة لكميات كبيرة من البيانات</span>
+                            <span class="sub-q">2. الأحكام الأخلاقية</span>
+                            <span class="sub-q">3. الأحكام التي تشمل المعلومات الشخصية أو الخصوصية</span>
+                            <span class="sub-q">4. التعرف على الصور والصوت</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        الفراغ (1): نظام التوصية<br>
+                        الفراغ (2): المساعدات الصوتية<br>
+                        الفراغ (3): الترجمة الآلية<br><br>
+                        ما يتطلب الحذر: (2) و (3)
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> الأحكام الأخلاقية والخصوصية تتطلب حذراً، بينما المعالجة السريعة والتعرف من إنجازات الذكاء الاصطناعي</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 10 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">10.</span> (سؤال على نمط الامتحان - 6 درجات): حلّل لماذا يناسب الذكاء الاصطناعي بعض المهام بينما يتطلب الحذر في مهام أخرى.
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        يناسب الذكاء الاصطناعي مهامًا معينة لأنه يبرع في معالجة البيانات المعقدة لإيجاد الأنماط، التعرف على الصور والصوت، والتنبؤ بناءً على البيانات. ومع ذلك، يتطلب الأمر الحذر في مهام أخرى لأنه يفتقر إلى الفهم البشري للأحكام الأخلاقية، وقد ينتهك الخصوصية عند التعامل مع بيانات حساسة، كما لا يجب الاعتماد عليه كلياً في اتخاذ القرار النهائي عالي الأثر لعدم قدرته على تحمل المسؤولية.
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> الإجابة تركز على ما يبرع فيه (الأنماط، التعرف، التنبؤ) وما يتطلب الحذر (الأخلاقيات، الخصوصية، المسؤولية)</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 11 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">11.</span> طبّق ما تعلمته: ترغب مكتبة مدرسية في استخدام الذكاء الاصطناعي للتوصية بكتب للطلاب بناءً على ما استعاروه سابقًا. باستخدام ما تعلمته عن أنظمة التوصية وما يبرع فيه الذكاء الاصطناعي، اشرح كيف سيعمل الذكاء الاصطناعي، وحدد احتياطًا واحدًا ينبغي أن تراعيه المدرسة.
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        سيعمل الذكاء الاصطناعي من خلال تحليل بيانات السجل السابق لاستعارات الطلاب لاكتشاف الأنماط فيها (التنبؤ بالتفضيلات)، ثم يقدم توصيات بكتب مشابهة لاهتماماتهم.<br><br>
+                        <span style="font-weight:700;color:#f59e0b;">الاحتياط:</span> الخصوصية، حيث يجب حماية المعلومات الشخصية للطلاب وسجلات قراءتهم وعدم مشاركتها بشكل غير آمن.
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> أنظمة التوصية تبرع في تحليل الأنماط، لكن الخصوصية تبقى مصدر قلق</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 12 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">12.</span> توقف وفكر (الرعاية الصحية): يفكر مستشفى في استخدام الذكاء الاصطناعي للتشخيص بالصور للكشف عن الأمراض من صور الأشعة السينية. اشرح لماذا ينبغي أن يؤكد التشخيص النهائي طبيب بشري بدلاً من تركه للذكاء الاصطناعي وحده.
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        لأن القرارات الطبية عالية الأثر وتؤثر مباشرة في حياة الأشخاص. الذكاء الاصطناعي قد يخطئ أو ينتج نتائج متحيزة، ولا يتحمل المسؤولية الأخلاقية عن قراراته. لذلك يجب أن يكون الطبيب البشري هو من يتخذ القرار النهائي بعد التحقق من مخرجات الذكاء الاصطناعي.
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> القرارات الطبية تتطلب حكماً بشرياً ومسؤولية أخلاقية</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 13 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">13.</span> توقف وفكر (الخصوصية): غالبًا ما تستخدم خدمات الذكاء الاصطناعي بياناتك الشخصية – ما تشاهده، تشتريه، أو تقوله. لماذا يثير هذا مخاوف بشأن الخصوصية، ومن ينبغي أن يقرر كيفية استخدام بياناتك؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        يثير مخاوف بشأن الخصوصية لأن هذه البيانات قد تُستخدم بطرق لا يعلمها المستخدم، أو تُشارك مع أطراف ثالثة، أو تُستخدم للتأثير على سلوكه. ينبغي أن يكون <span style="font-weight:700;color:#f59e0b;">المستخدم نفسه</span> هو من يقرر كيفية استخدام بياناته، مع وجود قوانين واضحة تحمي خصوصيته.
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> الخصوصية حق أساسي ويجب أن يكون المستخدم على علم وموافقة</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 14 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">14.</span> توقف وفكر (الزراعة): في الزراعة، اذكر ميزة واقعية واحدة لإدخال الذكاء الاصطناعي ومصدر قلق واحد ينبغي مراعاته قبل الإدخال، واشرح باختصار السبب لكل منهما.
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        <span style="font-weight:700;color:#22c55e;">ميزة:</span> الكشف المبكر عن الآفات والأمراض، مما يقلل الخسائر ويزيد الإنتاجية.<br><br>
+                        <span style="font-weight:700;color:#ef4444;">مصدر قلق:</span> الاعتماد المفرط على التكنولوجيا قد يؤدي إلى فقدان الخبرة الزراعية التقليدية، أو تكلفة الإدخال العالية على المزارعين الصغار.
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> التوازن بين التكنولوجيا والخبرة البشرية ضروري</div>
+                    </div>
+                </div>
+
+                <hr class="quiz-divider">
+
+                <div style="text-align:center;color:#6b7280;font-size:16px;margin-top:8px;">
+                    <i class="fas fa-lightbulb" style="color:#f59e0b;"></i> حاول الإجابة بنفسك قبل الضغط على زر الإجابة
+                </div>
+            `
+        }];
+
+        // ============================================================
+        //  STATE
+        // ============================================================
+        let currentSlide = 0;
+        let autoPlay = false;
+        let autoInterval = null;
+
+        // ============================================================
+        //  DOM REFS
+        // ============================================================
+        const slideBody = document.getElementById('slideBody');
+        const dotsContainer = document.getElementById('dotsContainer');
+        const slideCounter = document.getElementById('slideCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const autoBtn = document.getElementById('autoBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        // ============================================================
+        //  TOGGLE ANSWER FUNCTION
+        // ============================================================
+        function toggleAnswer(button) {
+            const answerBox = button.closest('.quiz-item').querySelector('.answer-box');
+            const isShowing = answerBox.classList.contains('show');
+
+            if (isShowing) {
+                answerBox.classList.remove('show');
+                button.textContent = 'إظهار الإجابة';
+                button.classList.remove('showing');
+            } else {
+                answerBox.classList.add('show');
+                button.textContent = 'إخفاء الإجابة';
+                button.classList.add('showing');
+            }
+        }
+
+        // ============================================================
+        //  RENDER
+        // ============================================================
+        function renderSlide(index) {
+            const slide = slides[index];
+            if (!slide) return;
+
+            let html = `
+                <div class="slide-title slide-enter">
+                    <span class="icon">${slide.icon}</span>
+                    ${slide.title}
+                    <span class="subtitle-line">// ${String(index + 1).padStart(2, '0')}</span>
+                </div>
+                <div class="divider"></div>
+                <div class="fade-in" style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+                    ${slide.content}
+                </div>
+            `;
+            slideBody.innerHTML = html;
+
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            slideCounter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+
+            prevBtn.disabled = index === 0;
+            prevBtn.style.opacity = index === 0 ? '0.3' : '1';
+        }
+
+        function renderDots() {
+            dotsContainer.innerHTML = '';
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === currentSlide ? ' active' : '');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        // ============================================================
+        //  NAVIGATION
+        // ============================================================
+        function goToSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            currentSlide = index;
+            renderSlide(currentSlide);
+            renderDots();
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                goToSlide(currentSlide + 1);
+            } else if (autoPlay) {
+                goToSlide(0);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) goToSlide(currentSlide - 1);
+        }
+
+        // ============================================================
+        //  AUTOPLAY
+        // ============================================================
+        function toggleAutoPlay() {
+            autoPlay = !autoPlay;
+            if (autoPlay) {
+                autoInterval = setInterval(nextSlide, 6000);
+                autoBtn.innerHTML = '<i class="fas fa-pause"></i> <span>إيقاف</span>';
+                autoBtn.classList.add('btn-primary');
+            } else {
+                clearInterval(autoInterval);
+                autoBtn.innerHTML = '<i class="fas fa-play"></i> <span>تلقائي</span>';
+                autoBtn.classList.remove('btn-primary');
+            }
+        }
+
+        // ============================================================
+        //  FULLSCREEN
+        // ============================================================
+        function toggleFullscreen() {
+            const container = document.querySelector('.presentation-container');
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {});
+            } else {
+                document.exitFullscreen().catch(err => {});
+            }
+        }
+
+        // ============================================================
+        //  KEYBOARD SHORTCUTS
+        // ============================================================
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === ' ' || e.key === 'Space') {
+                e.preventDefault();
+                toggleAutoPlay();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+
+        // ============================================================
+        //  EVENT LISTENERS
+        // ============================================================
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+        autoBtn.addEventListener('click', toggleAutoPlay);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        // ============================================================
+        //  INIT
+        // ============================================================
+        renderDots();
+        renderSlide(0);
+    </script>
+
+</body>
+</html>
