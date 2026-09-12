@@ -545,7 +545,8 @@ const courses = {
               title: "الذكاء الاصطناعي في الحياة اليومية والصناعة",
               description: "التعرف على تطبيقات الذكاء الاصطناعي في الحياة اليومية ومجالات الصناعة.",
               duration: "",
-              driveUrl: ""
+              driveUrl: "https://drive.google.com/drive/folders/1K3MXNdbt6uo5_EGApWv_Z_ytjNQZgM3E?usp=drive_link",
+               htmlUrl: "2-1-3.html"
             },
             {
               id: "lesson4",
