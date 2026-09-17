@@ -553,7 +553,8 @@ const courses = {
               title: "القضايا الأخلاقية للذكاء الاصطناعي",
               description: "التعرف على القضايا والتحديات الأخلاقية المرتبطة باستخدام الذكاء الاصطناعي.",
               duration: "",
-              driveUrl: ""
+              driveUrl: "https://drive.google.com/drive/folders/1TcEle-3Lk_gZLee1SjHUPaeWa-2XgD-2?usp=drive_link",
+              htmlUrl: "2-1-4.html"
             }
           ]
         },
