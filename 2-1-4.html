@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستر عبدو برمجة - القضايا الأخلاقية المتعلقة بالذكاء الاصطناعي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #e8ecf1;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 1366px;
+            max-width: 98vw;
+            height: 768px;
+            max-height: 98vh;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cover-decoration {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.04;
+            font-family: 'Cairo', sans-serif;
+            color: #1e293b;
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        .cover-decoration.top-right {
+            top: 30px;
+            right: 40px;
+            text-align: right;
+            font-size: 13px;
+            opacity: 0.05;
+        }
+
+        .cover-decoration.bottom-left {
+            bottom: 30px;
+            left: 40px;
+            font-size: 13px;
+            opacity: 0.05;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            padding: 28px 48px 20px 48px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .trainer-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+            border-bottom: 3px solid #f0f2f5;
+            flex-shrink: 0;
+        }
+
+        .trainer-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .trainer-avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1e293b, #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            font-weight: 900;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+            border: 3px solid #f59e0b;
+        }
+
+        .trainer-details h4 {
+            color: #1e293b;
+            font-size: 22px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        .trainer-details h4 span {
+            color: #f59e0b;
+        }
+
+        .trainer-details .sub {
+            color: #6b7280;
+            font-size: 16px;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .trainer-details .sub i {
+            color: #f59e0b;
+            margin-left: 6px;
+        }
+
+        .slide-counter {
+            color: #9ca3af;
+            font-size: 18px;
+            font-weight: 700;
+            background: #f3f4f6;
+            padding: 6px 22px;
+            border-radius: 24px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 6px 0;
+        }
+
+        .slide-title {
+            font-size: 40px;
+            font-weight: 900;
+            color: #1e293b;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .slide-title .icon {
+            font-size: 38px;
+        }
+
+        .slide-title .highlight {
+            color: #f59e0b;
+        }
+
+        .slide-title .subtitle-line {
+            font-size: 18px;
+            font-weight: 400;
+            color: #9ca3af;
+            margin-right: 14px;
+        }
+
+        .divider {
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(90deg, #f59e0b, #1e293b);
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 26px 32px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f2f5;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 40px rgba(245, 158, 11, 0.08);
+            transform: translateY(-2px);
+            border-color: #f59e0b;
+        }
+
+        .card p,
+        .card li {
+            color: #1f2937;
+            font-size: 24px;
+            line-height: 2;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card ul li {
+            padding: 6px 0;
+            padding-right: 34px;
+            position: relative;
+            font-size: 23px;
+        }
+
+        .card ul li::before {
+            content: "▸";
+            position: absolute;
+            right: 0;
+            color: #f59e0b;
+            font-weight: 700;
+            font-size: 26px;
+        }
+
+        .example-box {
+            background: #fffbeb;
+            border-radius: 16px;
+            padding: 18px 24px;
+            margin-top: 14px;
+            border-right: 5px solid #f59e0b;
+        }
+
+        .example-box .label {
+            color: #6b7280;
+            font-size: 18px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .example-box .content {
+            color: #1f2937;
+            font-size: 22px;
+            line-height: 1.8;
+        }
+
+        .punchline {
+            margin-top: 16px;
+            padding: 14px 22px;
+            background: #fffbeb;
+            border-radius: 14px;
+            border-right: 5px solid #f59e0b;
+            font-size: 24px;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .punchline i {
+            color: #f59e0b;
+            margin-left: 12px;
+            font-size: 26px;
+        }
+
+        .concept-map {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 10px 0;
+        }
+
+        .concept-map .node {
+            background: #fffbeb;
+            padding: 10px 30px;
+            border-radius: 14px;
+            border: 2px solid #fde68a;
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .concept-map .node:hover {
+            border-color: #f59e0b;
+            background: #fde68a;
+        }
+
+        .concept-map .node.highlight {
+            border-color: #f59e0b;
+            background: #fde68a;
+        }
+
+        .concept-map .arrow {
+            color: #f59e0b;
+            font-size: 28px;
+            opacity: 0.6;
+        }
+
+        .concept-map .row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== TABLE STYLES ===== */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 12px;
+            border-radius: 14px;
+            border: 1px solid #f0f2f5;
+        }
+
+        .table-wrapper table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 17px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .table-wrapper thead {
+            background: #f59e0b;
+            color: #fff;
+        }
+
+        .table-wrapper th {
+            padding: 10px 14px;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 800;
+            border: 1px solid #f59e0b;
+        }
+
+        .table-wrapper td {
+            padding: 9px 13px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            color: #1f2937;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .table-wrapper tr:nth-child(even) {
+            background: #fffbeb;
+        }
+
+        .table-wrapper tr:hover {
+            background: #fde68a;
+        }
+
+        .table-wrapper .highlight-cell {
+            font-weight: 700;
+            color: #f59e0b;
+        }
+
+        /* ===== PRINCIPLES GRID ===== */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        .principle-item {
+            background: #fffbeb;
+            padding: 16px 20px;
+            border-radius: 14px;
+            border-right: 4px solid #f59e0b;
+            transition: all 0.3s ease;
+        }
+
+        .principle-item:hover {
+            background: #fde68a;
+            transform: translateX(-3px);
+        }
+
+        .principle-item .title {
+            font-size: 19px;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .principle-item .desc {
+            font-size: 16px;
+            color: #4b5563;
+            margin-top: 4px;
+            line-height: 1.7;
+        }
+
+        /* ===== CAUSES GRID ===== */
+        .causes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        .cause-item {
+            background: #fef2f2;
+            padding: 16px 20px;
+            border-radius: 14px;
+            border-right: 4px solid #ef4444;
+            transition: all 0.3s ease;
+        }
+
+        .cause-item:hover {
+            background: #fecaca;
+            transform: translateX(-3px);
+        }
+
+        .cause-item .title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ef4444;
+        }
+
+        .cause-item .desc {
+            font-size: 16px;
+            color: #1f2937;
+            margin-top: 4px;
+            line-height: 1.7;
+        }
+
+        /* ===== TWO COLUMN ===== */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 10px;
+        }
+
+        .two-col .card {
+            height: 100%;
+        }
+
+        .two-col .card h4 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        /* ===== IMAGE PLACEHOLDER ===== */
+        .image-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            border: 2px dashed #d1d5db;
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 12px;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .image-placeholder img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .image-placeholder .label {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .image-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 3px solid #f0f2f5;
+            flex-shrink: 0;
+        }
+
+        .dots {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #d1d5db;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: #f59e0b;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+            width: 36px;
+            border-radius: 8px;
+        }
+
+        .dot:hover {
+            background: #f59e0b;
+            opacity: 0.6;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            color: #374151;
+            padding: 10px 22px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background: #e5e7eb;
+            border-color: #f59e0b;
+            color: #1e293b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-primary {
+            background: #1e293b;
+            border: none;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #f59e0b;
+            color: #fff;
+            box-shadow: 0 6px 24px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-icon {
+            width: 48px;
+            height: 48px;
+            padding: 0;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 18px;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-enter {
+            animation: slideEnter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes slideEnter {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-content::-webkit-scrollbar {
+            width: 5px;
+        }
+        .slide-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .slide-content::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+
+        /* ===== NOTE BOXES ===== */
+        .note-box {
+            background: #fef2f2;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin-top: 10px;
+            border-right: 4px solid #ef4444;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .note-box .icon {
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .note-box .content {
+            font-size: 17px;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        .note-box .content strong {
+            color: #ef4444;
+        }
+
+        .note-box.tip {
+            background: #eff6ff;
+            border-right-color: #3b82f6;
+        }
+
+        .note-box.tip .content strong {
+            color: #3b82f6;
+        }
+
+        .note-box.tech {
+            background: #f0fdf4;
+            border-right-color: #22c55e;
+        }
+
+        .note-box.tech .content strong {
+            color: #22c55e;
+        }
+
+        .note-box.warn {
+            background: #fff7ed;
+            border-right-color: #f97316;
+        }
+
+        .note-box.warn .content strong {
+            color: #f97316;
+        }
+
+        /* ===== VOCAB GRID ===== */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .vocab-item {
+            background: #fffbeb;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border-right: 4px solid #f59e0b;
+            transition: all 0.3s ease;
+        }
+
+        .vocab-item:hover {
+            background: #fde68a;
+            transform: translateX(-3px);
+        }
+
+        .vocab-item .term {
+            font-size: 17px;
+            font-weight: 800;
+            color: #f59e0b;
+        }
+
+        .vocab-item .def {
+            font-size: 15px;
+            color: #1f2937;
+            margin-top: 4px;
+            line-height: 1.6;
+        }
+
+        /* Quiz Styles */
+        .quiz-section-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .quiz-section-title .icon {
+            font-size: 36px;
+        }
+
+        .quiz-section-title .sub {
+            font-size: 18px;
+            color: #6b7280;
+            font-weight: 400;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .quiz-item {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 20px 26px;
+            margin-bottom: 16px;
+            border: 2px solid #eef2f6;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .quiz-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .quiz-item:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.08);
+        }
+
+        .quiz-item .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .quiz-item .question-text {
+            font-size: 20px;
+            color: #1e293b;
+            font-weight: 700;
+            line-height: 1.8;
+            flex: 1;
+        }
+
+        .quiz-item .question-text .q-num {
+            color: #f59e0b;
+            font-weight: 900;
+            margin-left: 8px;
+        }
+
+        .quiz-item .question-text .sub-q {
+            font-weight: 400;
+            color: #4b5563;
+            font-size: 18px;
+            display: block;
+            padding-right: 30px;
+            margin-top: 4px;
+        }
+
+        .quiz-item .question-text .sub-q .letter {
+            color: #f59e0b;
+            font-weight: 700;
+        }
+
+        .btn-show-answer {
+            background: #1e293b;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .btn-show-answer:hover {
+            background: #f59e0b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-show-answer.showing {
+            background: #f59e0b;
+        }
+
+        .btn-show-answer.showing:hover {
+            background: #d97706;
+        }
+
+        .answer-box {
+            margin-top: 12px;
+            padding: 14px 20px;
+            background: #fffbeb;
+            border-radius: 12px;
+            border-right: 4px solid #f59e0b;
+            display: none;
+            font-size: 18px;
+            color: #1f2937;
+            line-height: 1.8;
+        }
+
+        .answer-box.show {
+            display: block;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .answer-box .ans-label {
+            color: #f59e0b;
+            font-weight: 700;
+        }
+
+        .answer-box .explanation {
+            color: #6b7280;
+            font-size: 17px;
+            margin-top: 4px;
+        }
+
+        .answer-box .explanation i {
+            color: #f59e0b;
+            margin-left: 6px;
+        }
+
+        .quiz-divider {
+            border: none;
+            border-top: 2px dashed #fde68a;
+            margin: 18px 0;
+        }
+
+        @media (max-width: 1024px) {
+            .slide-title {
+                font-size: 30px;
+            }
+            .card p,
+            .card li {
+                font-size: 19px;
+            }
+            .principles-grid,
+            .causes-grid,
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .presentation-container {
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+                max-width: 100vw;
+            }
+            .slide-content {
+                padding: 14px 16px 10px 16px;
+            }
+            .slide-title {
+                font-size: 22px;
+            }
+            .card p,
+            .card li {
+                font-size: 16px;
+            }
+            .card ul li {
+                font-size: 16px;
+                padding-right: 24px;
+            }
+            .principles-grid,
+            .causes-grid,
+            .vocab-grid,
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+            .trainer-avatar {
+                width: 42px;
+                height: 42px;
+                font-size: 18px;
+            }
+            .trainer-details h4 {
+                font-size: 16px;
+            }
+            .trainer-details .sub {
+                font-size: 12px;
+            }
+            .btn span {
+                display: none;
+            }
+            .cover-decoration {
+                display: none;
+            }
+            .concept-map .node {
+                font-size: 14px;
+                padding: 6px 14px;
+                min-width: 120px;
+            }
+            .concept-map .arrow {
+                font-size: 20px;
+            }
+            .punchline {
+                font-size: 17px;
+            }
+            .slide-counter {
+                font-size: 13px;
+                padding: 4px 12px;
+            }
+            .quiz-item .question-text {
+                font-size: 15px;
+            }
+            .quiz-item .question-text .sub-q {
+                font-size: 14px;
+                padding-right: 0;
+            }
+            .btn-show-answer {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+            .answer-box {
+                font-size: 15px;
+                padding: 10px 14px;
+            }
+            .quiz-section-title {
+                font-size: 22px;
+            }
+            .table-wrapper table {
+                font-size: 13px;
+            }
+            .table-wrapper th,
+            .table-wrapper td {
+                padding: 6px 8px;
+                font-size: 13px;
+            }
+            .image-placeholder {
+                max-width: 220px;
+            }
+            .principle-item .title,
+            .cause-item .title,
+            .vocab-item .term {
+                font-size: 15px;
+            }
+            .principle-item .desc,
+            .cause-item .desc,
+            .vocab-item .def {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide-title {
+                font-size: 18px;
+            }
+            .card {
+                padding: 12px 14px;
+            }
+            .card p,
+            .card li {
+                font-size: 14px;
+            }
+            .quiz-item .question-text {
+                font-size: 13px;
+            }
+            .answer-box {
+                font-size: 13px;
+            }
+            .table-wrapper table {
+                font-size: 11px;
+            }
+            .image-placeholder {
+                max-width: 170px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container" id="app">
+        <!-- Decorative Elements -->
+        <div class="cover-decoration top-right">
+            // مستر عبدو برمجة<br>
+            // From Logic to Innovation
+        </div>
+        <div class="cover-decoration bottom-left">
+            ⚖️ القضايا الأخلاقية<br>
+            🎯 التحيز الخوارزمي<br>
+            🔒 الخصوصية<br>
+            🛡️ المبادئ الأساسية
+        </div>
+
+        <div class="slide-content" id="slideContent">
+            <!-- Trainer Bar -->
+            <div class="trainer-bar">
+                <div class="trainer-info">
+                    <div class="trainer-avatar">ع</div>
+                    <div class="trainer-details">
+                        <h4>مستر <span>عبدو</span> برمجة</h4>
+                        <div class="sub"><i class="fas fa-code"></i> القضايا الأخلاقية المتعلقة بالذكاء الاصطناعي · الصف الثاني الثانوي · الوحدة الأولى · الدرس الرابع</div>
+                    </div>
+                </div>
+                <div class="slide-counter" id="slideCounter">٠١ / ٠٨</div>
+            </div>
+
+            <!-- Slide Body -->
+            <div class="slide-body" id="slideBody"></div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <div class="dots" id="dotsContainer"></div>
+                <div class="btn-group">
+                    <button class="btn btn-icon" id="prevBtn" title="السابق"><i class="fas fa-chevron-right"></i></button>
+                    <button class="btn btn-icon" id="nextBtn" title="التالي"><i class="fas fa-chevron-left"></i></button>
+                    <button class="btn" id="autoBtn" title="تشغيل تلقائي"><i class="fas fa-play"></i> <span>تلقائي</span></button>
+                    <button class="btn btn-primary btn-icon" id="fullscreenBtn" title="عرض كامل"><i class="fas fa-expand"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  DATA - القضايا الأخلاقية المتعلقة بالذكاء الاصطناعي
+        // ============================================================
+        const slides = [{
+            id: 0,
+            title: 'القضايا الأخلاقية المتعلقة بالذكاء الاصطناعي',
+            icon: '⚖️',
+            content: `
+                <div style="text-align:center;padding:4px 0;">
+                    <div style="font-size:52px;margin-bottom:4px;">🧭</div>
+                    <div style="font-family:'Cairo',sans-serif;color:#f59e0b;font-size:22px;font-weight:700;letter-spacing:2px;">
+                        Ethical Issues of AI
+                    </div>
+                    <div style="width:100px;height:4px;background:linear-gradient(90deg,#f59e0b,#1e293b);margin:12px auto;"></div>
+                    <div style="font-size:20px;color:#6b7280;margin-bottom:8px;">الوحدة الأولى · الدرس الرابع · الصف الثاني الثانوي</div>
+
+                    <!-- الخريطة المفاهيمية -->
+                    <div class="concept-map">
+                        <div class="row">
+                            <div class="node highlight">🎯 التحيز الخوارزمي</div>
+                            <div class="arrow">⬇</div>
+                            <div class="node">🔒 قضايا الخصوصية</div>
+                        </div>
+                        <div class="row" style="margin-top:6px;">
+                            <div class="node">🔍 الذكاء الاصطناعي القابل للتفسير</div>
+                            <div class="arrow">⬇</div>
+                            <div class="node">🛡️ المبادئ الأساسية</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px;display:flex;justify-content:center;gap:30px;flex-wrap:wrap;">
+                        <div style="background:#f8fafc;padding:12px 28px;border-radius:14px;border:1px solid #eef2f6;">
+                            <span style="color:#6b7280;font-size:15px;">المادة</span>
+                            <h3 style="color:#1e293b;font-size:20px;">القضايا الأخلاقية للذكاء الاصطناعي</h3>
+                        </div>
+                        <div style="background:#f8fafc;padding:12px 28px;border-radius:14px;border:1px solid #eef2f6;">
+                            <span style="color:#6b7280;font-size:15px;">المقدم</span>
+                            <h3 style="color:#1e293b;font-size:20px;">مستر عبدو برمجة</h3>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px;color:#9ca3af;font-size:16px;">
+                        <i class="fas fa-arrow-left" style="color:#f59e0b;"></i> اضغط "التالي" للبدء
+                    </div>
+                </div>
+            `
+        }, {
+            id: 1,
+            title: 'خريطة الدرس والمفاهيم الأساسية',
+            icon: '🗺️',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:8px;">🗺️ خريطة الدرس</div>
+
+                    <div style="background:#fffbeb;padding:14px 20px;border-radius:14px;border-right:4px solid #f59e0b;margin-bottom:12px;">
+                        <div style="font-size:18px;font-weight:800;color:#1e293b;margin-bottom:4px;">🎯 الفكرة الأساسية للدرس</div>
+                        <div style="font-size:17px;color:#1f2937;line-height:1.8;">
+                            إذا كانت بيانات التدريب متحيزة، يمكن للذكاء الاصطناعي أن يكرر هذا التحيز في أحكامه؛ واستخدام الذكاء الاصطناعي بمسؤولية يعني التحقق من التحيز، والقدرة على شرح القرارات، ومعرفة من هو المسؤول.
+                        </div>
+                    </div>
+
+                    <div style="background:#fef3c7;padding:14px 20px;border-radius:14px;border-right:4px solid #f59e0b;margin-bottom:12px;">
+                        <div style="font-size:18px;font-weight:800;color:#92400e;margin-bottom:4px;">❓ السؤال الرئيسي للدرس</div>
+                        <div style="font-size:17px;color:#1f2937;line-height:1.8;">
+                            ما القضايا الأخلاقية التي تنشأ مع انتشار الذكاء الاصطناعي، وما المبادئ التي ينبغي أن توجه كيفية استخدامنا له؟
+                        </div>
+                    </div>
+
+                    <div style="background:#f0fdf4;padding:14px 20px;border-radius:14px;border-right:4px solid #22c55e;">
+                        <div style="font-size:18px;font-weight:800;color:#16a34a;margin-bottom:6px;">📚 المفاهيم الأساسية</div>
+                        <div style="font-size:15px;color:#1f2937;line-height:1.9;">
+                            • التحيز الخوارزمي · بيانات التدريب · التعرف على الوجه<br>
+                            • الخصوصية · الذكاء الاصطناعي القابل للتفسير (XAI)<br>
+                            • مشكلة الصندوق الأسود · المسؤولية · العدالة<br>
+                            • الشفافية · حماية الخصوصية · المساءلة
+                        </div>
+                    </div>
+
+                    <div style="margin-top:12px;background:#f8fafc;padding:12px 18px;border-radius:12px;border:1px solid #eef2f6;">
+                        <span style="font-size:15px;color:#6b7280;">
+                            <strong>مفهوم الدرس:</strong> القيم والأخلاق، القوة ·
+                            <strong>المحتوى:</strong> الذكاء الاصطناعي ·
+                            <strong>السياق:</strong> اجتماعي وسياسي ·
+                            <strong>التواصل:</strong> التفكير، التواصل
+                        </span>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "الذكاء الاصطناعي بلا أخلاق قد يكون خطرًا أكثر من كونه نعمة"</div>
+            `
+        }, {
+            id: 2,
+            title: 'التحيز الخوارزمي',
+            icon: '🎯',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:8px;">🎯 التحيز الخوارزمي</div>
+                    <div style="color:#1f2937;font-size:18px;margin-bottom:12px;line-height:1.8;">
+                        <strong>التعريف:</strong> انحراف أو نمط قد يؤدي إلى نتائج غير عادلة أو ضارة. ويمكن أن ينشأ من البيانات أو تصميم النظام أو طريقة استخدامه أو السياق البشري والاجتماعي.
+                    </div>
+
+                    <div class="example-box" style="border-right-color:#f59e0b;">
+                        <span class="label">📌 أمثلة:</span>
+                        <div class="content">
+                            • نظام توظيف يفضل فئة بصورة غير عادلة<br>
+                            • نظام تعرف على الوجه تقل دقته مع فئات معينة
+                        </div>
+                    </div>
+
+                    <div style="font-size:20px;font-weight:700;color:#1e293b;margin-top:14px;margin-bottom:8px;">⚠️ الأسباب الرئيسية للتحيز</div>
+
+                    <div class="causes-grid">
+                        <div class="cause-item">
+                            <div class="title">1. بيانات التدريب متحيزة</div>
+                            <div class="desc">
+                                • بيانات غير كافية عن سمات معينة<br>
+                                • انعكاس نزعات تمييزية سابقة في البيانات
+                            </div>
+                        </div>
+                        <div class="cause-item">
+                            <div class="title">2. طريقة بناء النظام</div>
+                            <div class="desc">
+                                • اختيار غير مناسب للمتغيرات<br>
+                                • متغير بديل يمثل بشكل غير مباشر سمة محمية<br>
+                                • تصميم النموذج نفسه
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="image-wrapper">
+                        <div class="image-placeholder">
+                            <img src="algorithmic-bias.png" alt="التحيز الخوارزمي" onerror="this.style.display='none'">
+                            <span class="label">📷 صورة توضيحية: التحيز الخوارزمي</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "بيانات التدريب المتحيزة تُنتج قرارات متحيزة"</div>
+            `
+        }, {
+            id: 3,
+            title: 'قضايا الخصوصية',
+            icon: '🔒',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:8px;">🔒 قضايا الخصوصية</div>
+                    <div style="color:#1f2937;font-size:18px;margin-bottom:12px;line-height:1.8;">
+                        أدى تطور تقنية الذكاء الاصطناعي إلى ظهور قضايا جديدة تتعلق بالخصوصية:
+                    </div>
+
+                    <div class="two-col">
+                        <div style="background:#fef2f2;padding:16px 20px;border-radius:14px;border-right:4px solid #ef4444;">
+                            <div style="font-size:19px;font-weight:800;color:#ef4444;margin-bottom:6px;">📹 المراقبة عبر تقنية التعرف على الوجه</div>
+                            <div style="font-size:16px;color:#1f2937;line-height:1.7;">
+                                يمكن للكاميرات في الأماكن العامة التعرف على الأفراد وتتبعهم.
+                            </div>
+                        </div>
+                        <div style="background:#fef2f2;padding:16px 20px;border-radius:14px;border-right:4px solid #ef4444;">
+                            <div style="font-size:19px;font-weight:800;color:#ef4444;margin-bottom:6px;">📊 الجمع الجماعي للبيانات الشخصية</div>
+                            <div style="font-size:16px;color:#1f2937;line-height:1.7;">
+                                تُجمع وتُحلل كميات كبيرة من بيانات السلوك عبر الإنترنت.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="image-wrapper">
+                        <div class="image-placeholder">
+                            <img src="privacy-issues.png" alt="قضايا الخصوصية في الذكاء الاصطناعي" onerror="this.style.display='none'">
+                            <span class="label">📷 صورة توضيحية: قضايا الخصوصية</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "الخصوصية حق أساسي، والذكاء الاصطناعي يجب ألا ينتهكه"</div>
+            `
+        }, {
+            id: 4,
+            title: 'الذكاء الاصطناعي القابل للتفسير والمسؤولية',
+            icon: '🔍',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:10px;">🔍 الذكاء الاصطناعي القابل للتفسير (XAI) والمسؤولية</div>
+
+                    <div style="background:#fffbeb;padding:14px 20px;border-radius:14px;border-right:4px solid #f59e0b;margin-bottom:10px;">
+                        <div style="font-size:18px;font-weight:800;color:#1e293b;">1. الذكاء الاصطناعي القابل للتفسير (XAI)</div>
+                        <div style="font-size:16px;color:#1f2937;margin-top:4px;line-height:1.7;">
+                            أساليب تساعد البشر على فهم العوامل التي أسهمت في وصول النظام إلى مخرج أو قرار معين. وعندما تكون آلية الوصول إلى النتيجة غير واضحة، يصعب تقييمها واكتشاف الأخطاء أو التحيز.
+                        </div>
+                    </div>
+
+                    <div style="background:#fffbeb;padding:14px 20px;border-radius:14px;border-right:4px solid #f59e0b;margin-bottom:10px;">
+                        <div style="font-size:18px;font-weight:800;color:#1e293b;">2. المسؤولية (Responsibility)</div>
+                        <div style="font-size:16px;color:#1f2937;margin-top:4px;line-height:1.7;">
+                            تحديد أدوار وواجبات الأطراف المرتبطة بتطوير النظام وتشغيله واستخدامه، مثل المطور والجهة المشغلة والمستخدم. ولا يوجد توزيع واحد للمسؤولية يصلح لكل السياقات.
+                        </div>
+                    </div>
+
+                    <div style="background:#fffbeb;padding:14px 20px;border-radius:14px;border-right:4px solid #f59e0b;margin-bottom:10px;">
+                        <div style="font-size:18px;font-weight:800;color:#1e293b;">3. المساءلة (Accountability)</div>
+                        <div style="font-size:16px;color:#1f2937;margin-top:4px;line-height:1.7;">
+                            تحديد الجهات المسؤولة عن النظام وقراراته وآثاره، وإمكان محاسبتها وفق أدوارها.
+                        </div>
+                        <div style="background:#fef3c7;padding:8px 14px;border-radius:10px;margin-top:6px;font-size:14px;color:#92400e;">
+                            <strong>📌 ملاحظة:</strong> المساءلة ليست القدرة على شرح القرار — تلك وظيفة XAI — بل تحديد مَن يُحاسب على النتيجة.
+                        </div>
+                    </div>
+
+                    <div style="background:#fffbeb;padding:14px 20px;border-radius:14px;border-right:4px solid #f59e0b;">
+                        <div style="font-size:18px;font-weight:800;color:#1e293b;">4. الشفافية (Transparency)</div>
+                        <div style="font-size:16px;color:#1f2937;margin-top:4px;line-height:1.7;">
+                            إتاحة معلومات واضحة ومناسبة عن النظام واستخدامه وعملية اتخاذ القرار وحدوده.
+                        </div>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "القدرة على شرح القرار هي أساس الثقة في الذكاء الاصطناعي"</div>
+            `
+        }, {
+            id: 5,
+            title: 'المبادئ الأساسية لأخلاقيات الذكاء الاصطناعي',
+            icon: '🛡️',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:8px;">🛡️ المبادئ الأساسية لأخلاقيات الذكاء الاصطناعي</div>
+                    <div style="color:#6b7280;font-size:16px;margin-bottom:12px;">
+                        يركز الدرس على أربعة مبادئ مهمة للاستخدام المسؤول للذكاء الاصطناعي، من بين مبادئ أخرى:
+                    </div>
+
+                    <div class="principles-grid">
+                        <div class="principle-item">
+                            <div class="title">⚖️ العدالة (Justice)</div>
+                            <div class="desc">عدم التمييز ظلماً ضد أي شخص أو مجموعة بعينها.</div>
+                        </div>
+                        <div class="principle-item">
+                            <div class="title">🔍 الشفافية (Transparency)</div>
+                            <div class="desc">إتاحة معلومات واضحة ومناسبة عن النظام واستخدامه وعملية اتخاذ القرار وحدوده.</div>
+                        </div>
+                        <div class="principle-item">
+                            <div class="title">🔒 حماية الخصوصية (Privacy Protection)</div>
+                            <div class="desc">التعامل مع المعلومات الشخصية بشكل مناسب وحماية الخصوصية.</div>
+                        </div>
+                        <div class="principle-item">
+                            <div class="title">📋 المساءلة (Accountability)</div>
+                            <div class="desc">تحديد الجهات المسؤولة عن النظام وقراراته وآثاره، وإمكان محاسبتها وفق أدوارها.</div>
+                        </div>
+                    </div>
+
+                    <div class="image-wrapper">
+                        <div class="image-placeholder">
+                            <img src="ai-ethics-principles.png" alt="مبادئ أخلاقيات الذكاء الاصطناعي" onerror="this.style.display='none'">
+                            <span class="label">📷 صورة توضيحية: مبادئ أخلاقيات الذكاء الاصطناعي</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "العدالة والشفافية وحماية الخصوصية والمساءلة: أربع ركائز للذكاء الاصطناعي الأخلاقي"</div>
+            `
+        }, {
+            id: 6,
+            title: '📝 اختبر تركيزك - الجزء الأول',
+            icon: '📝',
+            content: `
+                <div class="quiz-section-title">
+                    <span class="icon">📝</span> اختبر تركيزك - الجزء الأول
+                    <span class="sub">اضغط على زر "إظهار الإجابة" بجانب كل سؤال لمعرفة الإجابة</span>
+                </div>
+
+                <!-- السؤال 1 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">1.</span> ضع علامة (صح) إذا كانت العبارة صحيحة أو (خطأ) إذا كانت خاطئة:
+                            <span class="sub-q"><span class="letter">(أ)</span> التحيز الخوارزمي نمط في مخرجات الذكاء الاصطناعي قد ينشأ من البيانات أو تصميم النظام أو طريقة استخدامه، وقد يؤدي إلى نتائج غير عادلة.</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> حتى لو كانت عملية اتخاذ القرار في الذكاء الاصطناعي غير واضحة، لا توجد مشكلة طالما أن النتيجة صحيحة.</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> الذكاء الاصطناعي القابل للتفسير (XAI) هو تقنية تتيح للبشر فهم منطق الذكاء الاصطناعي.</span>
+                            <span class="sub-q"><span class="letter">(د)</span> عندما يتخذ الذكاء الاصطناعي حكماً خاطئاً، فإن من هو المسؤول قد تم تحديده بوضوح بالفعل.</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        (أ) <span style="color:#22c55e;font-weight:700;">صح</span> — تعريف صحيح للتحيز الخوارزمي<br>
+                        (ب) <span style="color:#ef4444;font-weight:700;">خطأ</span> — عندما تكون العملية غير واضحة يصعب التحقق من صحة النتيجة<br>
+                        (ج) <span style="color:#22c55e;font-weight:700;">صح</span> — وصف صحيح لتقنية XAI<br>
+                        (د) <span style="color:#ef4444;font-weight:700;">خطأ</span> — تختلف الآراء حول المسؤولية ولم تحدد بعد بوضوح قاطع لجميع السياقات
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> راجع تعريفات التحيز وXAI والمسؤولية</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 2 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">2.</span> طابق كل وصف (1 - 4) مع أنسب مبدأ أساسي من مبادئ أخلاقيات الذكاء الاصطناعي:
+                            <span class="sub-q">1. عدم التمييز ظلماً ضد أي شخص أو مجموعة بعينها.</span>
+                            <span class="sub-q">2. إتاحة معلومات واضحة ومناسبة عن النظام واستخدامه وعملية اتخاذ القرار وحدوده.</span>
+                            <span class="sub-q">3. التعامل مع المعلومات الشخصية بشكل مناسب وحماية الخصوصية.</span>
+                            <span class="sub-q">4. تحديد الجهات المسؤولة عن النظام وقراراته وآثاره، وإمكان محاسبتها.</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        1 → (أ) العدالة<br>
+                        2 → (ب) الشفافية<br>
+                        3 → (ج) حماية الخصوصية<br>
+                        4 → (د) المساءلة
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> كل وصف يمثل المبدأ المرتبط به</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 3 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">3.</span> ما المصطلح الذي يصف نمطاً في نظام ذكاء اصطناعي قد يؤدي إلى نتائج غير عادلة أو ضارة؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> التحيز الخوارزمي
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> ينشأ من البيانات أو تصميم النظام أو طريقة استخدامه أو السياق البشري والاجتماعي</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 4 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">4.</span> ما هو المصطلح الخاص بالتقنية التي تتيح للبشر فهم سبب اتخاذ الذكاء الاصطناعي حكماً معيناً؟ واذكر أيضاً اختصارها المكون من ثلاثة أحرف.
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> الذكاء الاصطناعي القابل للتفسير (XAI)
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> XAI = Explainable AI</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 5 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">5.</span> من بين المبادئ الأساسية لأخلاقيات الذكاء الاصطناعي، ما هو المصطلح الخاص بالمبدأ الذي يقتضي عدم التمييز ظلماً ضد أي شخص أو مجموعة بعينها؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> العدالة
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> العدالة تعني عدم التمييز ضد أي فئة</div>
+                    </div>
+                </div>
+
+                <hr class="quiz-divider">
+
+                <div style="text-align:center;color:#6b7280;font-size:16px;margin-top:8px;">
+                    <i class="fas fa-lightbulb" style="color:#f59e0b;"></i> حاول الإجابة بنفسك قبل الضغط على زر الإجابة
+                </div>
+            `
+        }, {
+            id: 7,
+            title: '📝 اختبر تركيزك - الجزء الثاني',
+            icon: '📝',
+            content: `
+                <div class="quiz-section-title">
+                    <span class="icon">📝</span> اختبر تركيزك - الجزء الثاني
+                    <span class="sub">اضغط على زر "إظهار الإجابة" بجانب كل سؤال لمعرفة الإجابة</span>
+                </div>
+
+                <!-- السؤال 6 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">6.</span> من بين المبادئ الأساسية لأخلاقيات الذكاء الاصطناعي، ما هو المصطلح الخاص بالمبدأ الذي يقتضي التعامل مع المعلومات الشخصية بشكل مناسب؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> حماية الخصوصية
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> حماية الخصوصية تعني التعامل المناسب مع البيانات الشخصية</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 7 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">7.</span> من الخيارات التالية (أ - د)، اختر الخيار الذي <u>ليس</u> سبباً مناسباً للتحيز الخوارزمي:
+                            <span class="sub-q"><span class="letter">(أ)</span> بيانات التدريب متحيزة.</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> انعكاس نزعات تمييزية سابقة في البيانات.</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> سرعة معالجة الحاسوب بطيئة.</span>
+                            <span class="sub-q"><span class="letter">(د)</span> هناك بيانات غير كافية عن سمات معينة.</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> (ج) سرعة معالجة الحاسوب بطيئة
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> سرعة المعالجة لا علاقة لها بالتحيز — التحيز سببه البيانات أو التصميم أو الاستخدام</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 8 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">8.</span> من الخيارات التالية (أ - د)، اختر كل ما يمثل قضايا خصوصية مرتبطة بالذكاء الاصطناعي:
+                            <span class="sub-q"><span class="letter">(أ)</span> يتم التعرف على الأفراد وتتبعهم من خلال تقنية التعرف على الوجه.</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> تُجمع بيانات السلوك عبر الإنترنت وتُحلَّل بكميات كبيرة.</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> الذكاء الاصطناعي ينشئ أعمالاً إبداعية.</span>
+                            <span class="sub-q"><span class="letter">(د)</span> تتحسن سرعة حوسبة الذكاء الاصطناعي.</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> (أ) و (ب)
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> كلاهما يمثل قضايا خصوصية — المراقبة وجمع البيانات</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 9 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">9.</span> اقرأ الفقرة التالية وأجب عن كل سؤال (املأ الفراغات 1 - 3):
+                            <span class="sub-q">"مع انتشار أنظمة الذكاء الاصطناعي، برزت قضايا أخلاقية متعددة. قد يظهر (1) عندما تؤدي البيانات أو طريقة تصميم النظام أو استخدامه إلى نتائج غير عادلة. ولمعالجة مشكلة «الصندوق الأسود» تُطوَّر أساليب تسمى (2) تساعد على فهم العوامل المؤثرة في المخرجات. وعندما ينتج النظام قرارًا خاطئًا أو ضارًا تُطرح مسألة (3)؛ ولا يوجد معيار واحد يوزعها بالطريقة نفسها في جميع السياقات."</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        (1) التحيز الخوارزمي<br>
+                        (2) الذكاء الاصطناعي القابل للتفسير (XAI)<br>
+                        (3) المسؤولية
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> المفاهيم الثلاثة الأساسية في الفقرة</div>
+                    </div>
+                </div>
+
+                <hr class="quiz-divider">
+
+                <div style="text-align:center;color:#6b7280;font-size:16px;margin-top:8px;">
+                    <i class="fas fa-lightbulb" style="color:#f59e0b;"></i> حاول الإجابة بنفسك قبل الضغط على زر الإجابة
+                </div>
+            `
+        }, {
+            id: 8,
+            title: '📝 اختبر تركيزك - الجزء الثالث',
+            icon: '📝',
+            content: `
+                <div class="quiz-section-title">
+                    <span class="icon">📝</span> اختبر تركيزك - الجزء الثالث
+                    <span class="sub">اضغط على زر "إظهار الإجابة" بجانب كل سؤال لمعرفة الإجابة</span>
+                </div>
+
+                <!-- السؤال 10 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">10.</span> لكل من 1 - 4، حدد أي مبدأ أساسي من مبادئ أخلاقيات الذكاء الاصطناعي يرتبط ارتباطًا وثيقًا به:
+                            <span class="sub-q">1. ضمان أن يقيّم ذكاء اصطناعي للتوظيف بعدالة بغض النظر عن الجنس.</span>
+                            <span class="sub-q">2. الإفصاح عن عملية اتخاذ القرار في الذكاء الاصطناعي للمستخدمين بطريقة سهلة الفهم.</span>
+                            <span class="sub-q">3. عدم استخدام البيانات الشخصية المجمّعة لأغراض غير الغرض الأصلي منها.</span>
+                            <span class="sub-q">4. القدرة على شرح سبب التوصل إلى نتيجة تشخيصية معينة من قبل الذكاء الاصطناعي.</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        1 → (أ) العدالة<br>
+                        2 → (ب) الشفافية<br>
+                        3 → (ج) حماية الخصوصية<br>
+                        4 → (د) المساءلة
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> كل مثال يرتبط بمبدأ محدد من مبادئ أخلاقيات الذكاء الاصطناعي</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 11 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">11.</span> من الخيارات التالية (أ - د)، اختر الخيار الذي يصف بشكل أنسب القضايا الأخلاقية المتعلقة بالذكاء الاصطناعي:
+                            <span class="sub-q"><span class="letter">(أ)</span> لا توجد قضايا أخلاقية متعلقة بالذكاء الاصطناعي.</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> التحيز الخوارزمي ناتج عن سرعة معالجة الذكاء الاصطناعي.</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> يمكن أن يتسبب التحيز في بيانات التدريب في تحيز تمييزي في أحكام الذكاء الاصطناعي.</span>
+                            <span class="sub-q"><span class="letter">(د)</span> حتى لو كانت عملية اتخاذ القرار في الذكاء الاصطناعي غير واضحة، لا توجد مشكلة بالنسبة للمستخدمين.</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> (ج)
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> التحيز في بيانات التدريب يؤدي إلى تحيز تمييزي في أحكام الذكاء الاصطناعي</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 12 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">12.</span> (سؤال على نمط الامتحان - 6 درجات): حلل كيف يمكن أن ينشأ التحيز الخوارزمي في نظام ذكاء اصطناعي، وكيف يمكن تقليله؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        <strong style="color:#f59e0b;">كيف ينشأ:</strong> ينشأ التحيز بسبب الاعتماد على (بيانات تدريب متحيزة) إما لأنها تعكس نزعات تمييزية سابقة أو لعدم كفاية البيانات عن سمات معينة، وكذلك قد ينشأ من طريقة تصميم النظام واختيار المتغيرات.<br><br>
+                        <strong style="color:#f59e0b;">كيف يمكن تقليله:</strong> يمكن تقليله بالاعتماد على مبدأ <strong>العدالة</strong> لضمان عدم التمييز ضد أي فئة، وتطبيق مبدأ <strong>الشفافية</strong> وتقنية الذكاء الاصطناعي القابل للتفسير (XAI) لإتاحة معلومات واضحة عن كيفية اتخاذ النظام للقرار، مما يسهل اكتشاف أي تحيز ومعالجته.
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> الإجابة تركز على الأسباب (بيانات متحيزة + تصميم) والحلول (العدالة + الشفافية + XAI)</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 13 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">13.</span> توقف وفكر (1): عند استخدام تقنية التعرف على الوجه في الأماكن العامة قد تتحسن السلامة والراحة، لكن تنشأ مخاوف بشأن الخصوصية. ما المبدأ الأساسي المرتبط بذلك؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> حماية الخصوصية
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> استخدام تقنية التعرف على الوجه في الأماكن العامة يثير مخاوف الخصوصية</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 14 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">14.</span> توقف وفكر (2): إذا لم يستطع أحد شرح سبب رفض الذكاء الاصطناعي لطلب توظيف شخص ما، فهل هذا عادل؟ أي مبدأ مفقود؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> لا، هذا غير عادل. المبدأ المفقود هو: <strong>الشفافية والذكاء الاصطناعي القابل للتفسير (XAI)</strong>
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> بدون شرح للقرار، لا يمكن التحقق من عدالته</div>
+                    </div>
+                </div>
+
+                <hr class="quiz-divider">
+
+                <div style="text-align:center;color:#6b7280;font-size:16px;margin-top:8px;">
+                    <i class="fas fa-lightbulb" style="color:#f59e0b;"></i> حاول الإجابة بنفسك قبل الضغط على زر الإجابة
+                </div>
+            `
+        }];
+
+        // ============================================================
+        //  STATE
+        // ============================================================
+        let currentSlide = 0;
+        let autoPlay = false;
+        let autoInterval = null;
+
+        // ============================================================
+        //  DOM REFS
+        // ============================================================
+        const slideBody = document.getElementById('slideBody');
+        const dotsContainer = document.getElementById('dotsContainer');
+        const slideCounter = document.getElementById('slideCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const autoBtn = document.getElementById('autoBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        // ============================================================
+        //  TOGGLE ANSWER FUNCTION
+        // ============================================================
+        function toggleAnswer(button) {
+            const answerBox = button.closest('.quiz-item').querySelector('.answer-box');
+            const isShowing = answerBox.classList.contains('show');
+
+            if (isShowing) {
+                answerBox.classList.remove('show');
+                button.textContent = 'إظهار الإجابة';
+                button.classList.remove('showing');
+            } else {
+                answerBox.classList.add('show');
+                button.textContent = 'إخفاء الإجابة';
+                button.classList.add('showing');
+            }
+        }
+
+        // ============================================================
+        //  RENDER
+        // ============================================================
+        function renderSlide(index) {
+            const slide = slides[index];
+            if (!slide) return;
+
+            let html = `
+                <div class="slide-title slide-enter">
+                    <span class="icon">${slide.icon}</span>
+                    ${slide.title}
+                    <span class="subtitle-line">// ${String(index + 1).padStart(2, '0')}</span>
+                </div>
+                <div class="divider"></div>
+                <div class="fade-in" style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+                    ${slide.content}
+                </div>
+            `;
+            slideBody.innerHTML = html;
+
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            slideCounter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+
+            prevBtn.disabled = index === 0;
+            prevBtn.style.opacity = index === 0 ? '0.3' : '1';
+        }
+
+        function renderDots() {
+            dotsContainer.innerHTML = '';
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === currentSlide ? ' active' : '');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        // ============================================================
+        //  NAVIGATION
+        // ============================================================
+        function goToSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            currentSlide = index;
+            renderSlide(currentSlide);
+            renderDots();
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                goToSlide(currentSlide + 1);
+            } else if (autoPlay) {
+                goToSlide(0);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) goToSlide(currentSlide - 1);
+        }
+
+        // ============================================================
+        //  AUTOPLAY
+        // ============================================================
+        function toggleAutoPlay() {
+            autoPlay = !autoPlay;
+            if (autoPlay) {
+                autoInterval = setInterval(nextSlide, 6000);
+                autoBtn.innerHTML = '<i class="fas fa-pause"></i> <span>إيقاف</span>';
+                autoBtn.classList.add('btn-primary');
+            } else {
+                clearInterval(autoInterval);
+                autoBtn.innerHTML = '<i class="fas fa-play"></i> <span>تلقائي</span>';
+                autoBtn.classList.remove('btn-primary');
+            }
+        }
+
+        // ============================================================
+        //  FULLSCREEN
+        // ============================================================
+        function toggleFullscreen() {
+            const container = document.querySelector('.presentation-container');
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {});
+            } else {
+                document.exitFullscreen().catch(err => {});
+            }
+        }
+
+        // ============================================================
+        //  KEYBOARD SHORTCUTS
+        // ============================================================
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === ' ' || e.key === 'Space') {
+                e.preventDefault();
+                toggleAutoPlay();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+
+        // ============================================================
+        //  EVENT LISTENERS
+        // ============================================================
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+        autoBtn.addEventListener('click', toggleAutoPlay);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        // ============================================================
+        //  INIT
+        // ============================================================
+        renderDots();
+        renderSlide(0);
+    </script>
+
+</body>
+</html>
