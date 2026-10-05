@@ -573,7 +573,7 @@ const courses = {
               duration: "",
               driveUrl: "https://drive.google.com/drive/folders/1TcEle-3Lk_gZLee1SjHUPaeWa-2XgD-2?usp=drive_link",
               htmlUrl: "2-1-4.html"
-            }
+            },
             {
               id: "lesson5",
               title: "جزء العملي الخاص باولى ثانوي",
