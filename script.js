@@ -574,6 +574,14 @@ const courses = {
               driveUrl: "https://drive.google.com/drive/folders/1TcEle-3Lk_gZLee1SjHUPaeWa-2XgD-2?usp=drive_link",
               htmlUrl: "2-1-4.html"
             }
+            {
+              id: "lesson4",
+              title: "جزء العملي الخاص باولى ثانوي",
+              description: "شرح عناصر الجافاسكريبت الخاصه بمنهج اولى ثانوي",
+              duration: "",
+              driveUrl: ",
+              htmlUrl: "1se_js_ex.html"
+            }
           ]
         },
 
