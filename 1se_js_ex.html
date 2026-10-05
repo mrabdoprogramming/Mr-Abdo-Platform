@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستر عبدو برمجة - JavaScript Review (VS Code Style)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="vscode-style.css">
+</head>
+<body>
+
+    <!-- ============================================================
+         VS CODE WINDOW
+         ============================================================ -->
+    <div class="vscode-window" id="vscodeWindow">
+
+        <!-- ============================================================
+             TITLE BAR
+             ============================================================ -->
+        <header class="title-bar">
+            <div class="window-controls">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <div class="title-text">
+                <i class="fas fa-code"></i>
+                <span>JavaScript Review — مستر عبدو برمجة</span>
+            </div>
+            <div class="title-actions">
+                <button class="icon-btn" id="sidebarToggle" title="إظهار/إخفاء القائمة الجانبية">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <button class="icon-btn" id="fullscreenToggle" title="عرض كامل">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- ============================================================
+             MAIN AREA
+             ============================================================ -->
+        <div class="main-area">
+
+            <!-- ============================================================
+                 SIDEBAR (EXPLORER)
+                 ============================================================ -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <i class="fas fa-folder-open"></i>
+                    <span>EXPLORER</span>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-title">
+                        <i class="fas fa-chevron-down"></i>
+                        <span>JS-REVIEW</span>
+                    </div>
+                    <ul class="file-tree" id="fileTree">
+                        <li class="file-item active" data-target="intro">
+                            <i class="fab fa-js-square file-icon js"></i>
+                            <span>00-introduction.js</span>
+                        </li>
+                        <li class="file-item" data-target="setup">
+                            <i class="fab fa-js-square file-icon js"></i>
+                            <span>01-setup.js</span>
+                        </li>
+                        <li class="file-item" data-target="where">
+                            <i class="fab fa-js-square file-icon js"></i>
+                            <span>02-where-to-put-js.js</span>
+                        </li>
+                        <li class="file-item" data-target="console">
+                            <i class="fab fa-js-square file-icon js"></i>
+                            <span>03-console-api.js</span>
+                        </li>
+                        <li class="file-item" data-target="ecmascript">
+                            <i class="fab fa-js-square file-icon js"></i>
+                            <span>04-ecmascript-es6.js</span>
+                        </li>
+                        <li class="file-item" data-target="comments">
+                            <i class="fab fa-js-square file-icon js"></i>
+                            <span>05-comments.js</span>
+                        </li>
+                        <li class="file-item" data-target="variables">
+                            <i class="fab fa-js-square file-icon js"></i>
+                            <span>06-variables.js</span>
+                        </li>
+                        <li class="file-item" data-target="types">
+                            <i class="fab fa-js-square file-icon js"></i>
+                            <span>07-data-types.js</span>
+                        </li>
+                        <li class="file-item" data-target="operators">
+                            <i class="fab fa-js-square file-icon js"></i>
+                            <span>08-operators.js</span>
+                        </li>
+                        <li class="file-item" data-target="conditions">
+                            <i class="fab fa-js-square file-icon js"></i>
+                            <span>09-conditions.js</span>
+                        </li>
+                        <li class="file-item" data-target="functions">
+                            <i class="fab fa-js-square file-icon js"></i>
+                            <span>10-functions.js</span>
+                        </li>
+                        <li class="file-item" data-target="arrays">
+                            <i class="fab fa-js-square file-icon js"></i>
+                            <span>11-arrays.js</span>
+                        </li>
+                        <li class="file-item" data-target="loops">
+                            <i class="fab fa-js-square file-icon js"></i>
+                            <span>12-loops.js</span>
+                        </li>
+                        <li class="file-item" data-target="problems">
+                            <i class="fas fa-file-code file-icon md"></i>
+                            <span>13-problems.md</span>
+                        </li>
+                        <li class="file-item" data-target="homework">
+                            <i class="fas fa-file-code file-icon md"></i>
+                            <span>14-homework.md</span>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- ============================================================
+                 EDITOR AREA
+                 ============================================================ -->
+            <main class="editor-area">
+
+                <!-- TABS BAR -->
+                <div class="tabs-bar" id="tabsBar">
+                    <div class="tab active" data-target="intro">
+                        <i class="fab fa-js-square file-icon js"></i>
+                        <span>00-introduction.js</span>
+                        <i class="fas fa-times close-tab"></i>
+                    </div>
+                </div>
+
+                <!-- BREADCRUMB -->
+                <div class="breadcrumb" id="breadcrumb">
+                    <span>JS-REVIEW</span>
+                    <i class="fas fa-chevron-left"></i>
+                    <span id="breadcrumbFile">00-introduction.js</span>
+                </div>
+
+                <!-- EDITOR CONTENT -->
+                <div class="editor-content" id="editorContent">
+
+                    <!-- ============================================================
+                         SECTION 00: INTRODUCTION
+                         ============================================================ -->
+                    <section class="code-section active" id="intro">
+                        <div class="comment-block">
+                            <p>/**</p>
+                            <p> * 📘 مراجعة JavaScript — الصف الثاني الثانوي</p>
+                            <p> * ✍️ مستر عبدو برمجة</p>
+                            <p> * 🎯 البيئة: Visual Studio Code</p>
+                            <p> */</p>
+                        </div>
+
+                        <div class="comment-block">
+                            <p>// =========================================</p>
+                            <p>// مقدمة</p>
+                            <p>// =========================================</p>
+                        </div>
+
+                        <div class="comment-block">
+                            <p>// قبل أن نبدأ في كتابة JavaScript،</p>
+                            <p>// لازم نفهم أولًا البيئة اللي هنكتب ونشغل فيها الكود.</p>
+                            <p>// إحنا مش هنكتب الكود وخلاص.</p>
+                            <p>// إحنا عايزين من البداية نتعلم طريقة كتابة كود منظمة،</p>
+                            <p>// سهلة القراءة، سهلة التعديل، وتقلل الأخطاء.</p>
+                        </div>
+
+                        <div class="comment-block">
+                            <p>// لذلك أول جزء في المراجعة هيكون عن أدوات العمل،</p>
+                            <p>// وبعدها نفهم علاقة JavaScript بالـ HTML والمتصفح،</p>
+                            <p>// وبعدها نبدأ مراجعة اللغة نفسها.</p>
+                        </div>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 01: SETUP
+                         ============================================================ -->
+                    <section class="code-section" id="setup">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">🛠️</span>
+                            أولًا: تجهيز بيئة العمل
+                        </h1>
+                        <p class="section-paragraph">
+                            هنستخدم <strong>Visual Studio Code</strong> لكتابة الكود. لكن قبل ما نبدأ، هنضيف مجموعة من الإضافات <strong>Extensions</strong> تساعدنا أثناء البرمجة.
+                        </p>
+
+                        <!-- Extension 1: Prettier -->
+                        <article class="extension-card">
+                            <header class="ext-header">
+                                <div class="ext-icon prettier"><i class="fas fa-magic"></i></div>
+                                <div class="ext-info">
+                                    <h2>1. Prettier</h2>
+                                    <span class="ext-badge">Code Formatter</span>
+                                </div>
+                            </header>
+                            <p class="ext-desc"><strong>Prettier</strong> هو Code Formatter — يعني أداة تقوم بتنسيق الكود تلقائيًا بطريقة موحدة ومنظمة.</p>
+
+                            <div class="code-block bad-code">
+                                <div class="code-label"><i class="fas fa-times-circle"></i> قبل Prettier</div>
+                                <pre><code><span class="keyword">let</span> <span class="variable">name</span>=<span class="string">"Abdo"</span>;
+console.<span class="function">log</span>(name);</code></pre>
+                            </div>
+
+                            <div class="code-block good-code">
+                                <div class="code-label"><i class="fas fa-check-circle"></i> بعد Prettier</div>
+                                <pre><code><span class="keyword">let</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">"Abdo"</span>;
+console.<span class="function">log</span>(name);</code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <strong>أهميته:</strong> لما يكون عندك 100 أو 1000 سطر من الكود، التنظيم يصبح مهم جدًا. كما أنه يساعد الفريق كله على كتابة الكود بنفس أسلوب التنسيق تقريبًا.
+                            </div>
+                        </article>
+
+                        <!-- Extension 2: ESLint -->
+                        <article class="extension-card">
+                            <header class="ext-header">
+                                <div class="ext-icon eslint"><i class="fas fa-search"></i></div>
+                                <div class="ext-info">
+                                    <h2>2. ESLint</h2>
+                                    <span class="ext-badge">Code Linter</span>
+                                </div>
+                            </header>
+                            <p class="ext-desc"><strong>ESLint</strong> مختلف عن Prettier. Prettier يهتم بشكل الكود وتنسيقه. أما ESLint فيقوم بفحص الكود واكتشاف بعض المشاكل والأخطاء والممارسات التي قد تؤدي إلى مشاكل.</p>
+
+                            <div class="code-block warning-code">
+                                <div class="code-label"><i class="fas fa-exclamation-triangle"></i> تنبيه ESLint</div>
+                                <pre><code><span class="keyword">let</span> <span class="variable">age</span> <span class="operator">=</span> <span class="number">20</span>;
+
+<span class="comment">// ESLint: 'age' is declared but its value is never read.</span></code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <strong>مهم جدًا:</strong> ESLint ليس "لغة JavaScript" وليس هو الذي يجعل JavaScript تعمل. هو أداة تساعد المبرمج على كتابة كود أفضل.
+                            </div>
+                        </article>
+
+                        <!-- Extension 3: Indent Rainbow -->
+                        <article class="extension-card">
+                            <header class="ext-header">
+                                <div class="ext-icon indent"><i class="fas fa-layer-group"></i></div>
+                                <div class="ext-info">
+                                    <h2>3. Indent Rainbow</h2>
+                                    <span class="ext-badge">Visual Helper</span>
+                                </div>
+                            </header>
+                            <p class="ext-desc"><strong>Indentation</strong> معناها المسافات التي توضح مستويات الكود. في بعض اللغات والمشاريع، خصوصًا عندما يكون عندنا Blocks متداخلة، يكون من الصعب معرفة كل جزء تابع لأي جزء.</p>
+                            <p class="ext-desc"><strong>Indent Rainbow</strong> يقوم بتلوين مستويات الـ indentation بشكل يساعد العين على تتبعها.</p>
+                            <p class="ext-desc">هو ليس ضروريًا لتشغيل JavaScript، لكنه أداة مساعدة لفهم وترتيب الكود.</p>
+                        </article>
+
+                        <!-- Extension 4: Live Server -->
+                        <article class="extension-card">
+                            <header class="ext-header">
+                                <div class="ext-icon liveserver"><i class="fas fa-server"></i></div>
+                                <div class="ext-info">
+                                    <h2>4. Live Server</h2>
+                                    <span class="ext-badge">Dev Server</span>
+                                </div>
+                            </header>
+                            <p class="ext-desc"><strong>Live Server</strong> يسمح لنا بتشغيل صفحات HTML على Local Development Server. بدل ما نفتح ملف HTML بشكل تقليدي، يمكننا تشغيل الصفحة من خلال سيرفر محلي، وعند تعديل الملفات يمكن رؤية التغييرات بسرعة.</p>
+                            <p class="ext-desc">هذا مفيد جدًا عندما نبدأ العمل على: <strong>HTML</strong> · <strong>CSS</strong> · <strong>JavaScript</strong>.</p>
+                        </article>
+
+                        <!-- Extension 5: Material Icon Theme -->
+                        <article class="extension-card">
+                            <header class="ext-header">
+                                <div class="ext-icon material"><i class="fas fa-icons"></i></div>
+                                <div class="ext-info">
+                                    <h2>5. Material Icon Theme</h2>
+                                    <span class="ext-badge">File Icons</span>
+                                </div>
+                            </header>
+                            <p class="ext-desc">إضافة تجعل شكل الملفات والمجلدات داخل Visual Studio Code أوضح من خلال Icons مختلفة. مثلًا يمكن أن يظهر ملف HTML بأيقونة مختلفة عن CSS أو JavaScript.</p>
+                            <p class="ext-desc">هي لا تؤثر على الكود إطلاقًا. هي فقط لتحسين تجربة العمل داخل المحرر.</p>
+                        </article>
+
+                        <!-- Extension 6: Path Intellisense -->
+                        <article class="extension-card">
+                            <header class="ext-header">
+                                <div class="ext-icon path"><i class="fas fa-route"></i></div>
+                                <div class="ext-info">
+                                    <h2>6. Path Intellisense</h2>
+                                    <span class="ext-badge">Path Autocomplete</span>
+                                </div>
+                            </header>
+                            <p class="ext-desc">تساعدنا أثناء كتابة مسارات الملفات. مثلًا عندما نريد ربط ملف JavaScript:</p>
+
+                            <div class="code-block">
+                                <pre><code>&lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="string">"./js/script.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;</code></pre>
+                            </div>
+
+                            <p class="ext-desc">الإضافة تساعدنا في اقتراح الملفات والمجلدات الموجودة بدل كتابة المسار كاملًا يدويًا.</p>
+                        </article>
+
+                        <!-- Summary Table -->
+                        <h3 class="subsection-heading">📋 الخلاصة</h3>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>الأداة</th>
+                                        <th>الوظيفة</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Prettier</strong></td><td>لتنسيق الكود.</td></tr>
+                                    <tr><td><strong>ESLint</strong></td><td>لفحص الكود واكتشاف بعض المشاكل.</td></tr>
+                                    <tr><td><strong>Indent Rainbow</strong></td><td>لتوضيح مستويات الـ indentation.</td></tr>
+                                    <tr><td><strong>Live Server</strong></td><td>لتشغيل الموقع محليًا بطريقة مناسبة أثناء التطوير.</td></tr>
+                                    <tr><td><strong>Material Icon</strong></td><td>لتسهيل التعرف على الملفات والمجلدات بصريًا.</td></tr>
+                                    <tr><td><strong>Path Intellisense</strong></td><td>لمساعدتنا في كتابة مسارات الملفات.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 02: WHERE TO PUT JS
+                         ============================================================ -->
+                    <section class="code-section" id="where">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">📍</span>
+                            ثانيًا: أين نضع JavaScript داخل صفحة HTML؟
+                        </h1>
+                        <p class="section-paragraph">
+                            JavaScript يمكن إضافتها إلى صفحة HTML بعدة طرق. سنركز الآن على <strong>3 أماكن أساسية</strong>:
+                        </p>
+
+                        <!-- Method 1 -->
+                        <article class="method-card">
+                            <h2>🔹 الطريقة الأولى: داخل head</h2>
+                            <div class="code-block">
+<pre><code>&lt;!<span class="tag">DOCTYPE</span> html&gt;
+&lt;<span class="tag">html</span>&gt;
+&lt;<span class="tag">head</span>&gt;
+
+<span class="tag">&lt;script&gt;</span>
+    console.<span class="function">log</span>(<span class="string">"Hello JavaScript"</span>);
+<span class="tag">&lt;/script&gt;</span>
+
+&lt;/<span class="tag">head</span>&gt;
+
+&lt;<span class="tag">body</span>&gt;
+
+&lt;<span class="tag">h1</span>&gt;Hello World&lt;/<span class="tag">h1</span>&gt;
+
+&lt;/<span class="tag">body</span>&gt;
+&lt;/<span class="tag">html</span>&gt;</code></pre>
+                            </div>
+
+                            <p class="section-paragraph">هنا JavaScript موجودة داخل عنصر script الموجود في head. لكن هناك مشكلة مهمة.</p>
+
+                            <div class="error-box">
+                                <div class="error-header"><i class="fas fa-exclamation-circle"></i> المشكلة</div>
+                                <p>المتصفح يقرأ HTML بالترتيب. يعني عندما يصل إلى script، يمكن أن ينفذ JavaScript قبل أن يكون قد قرأ باقي عناصر HTML الموجودة بعده.</p>
+                            </div>
+
+                            <div class="code-block error-code">
+                                <pre><code>&lt;<span class="tag">head</span>&gt;
+
+<span class="tag">&lt;script&gt;</span>
+    <span class="keyword">let</span> <span class="variable">title</span> <span class="operator">=</span> document.<span class="function">querySelector</span>(<span class="string">"h1"</span>);
+    console.<span class="function">log</span>(title);
+<span class="tag">&lt;/script&gt;</span>
+
+&lt;/<span class="tag">head</span>&gt;
+
+&lt;<span class="tag">body</span>&gt;
+
+&lt;<span class="tag">h1</span>&gt;Hello World&lt;/<span class="tag">h1</span>&gt;
+
+&lt;/<span class="tag">body</span>&gt;</code></pre>
+                            </div>
+
+                            <div class="error-box">
+                                <div class="error-header"><i class="fas fa-times-circle"></i> ما المشكلة؟</div>
+                                <p>عندما JavaScript حاول البحث عن h1، فإن المتصفح لم يصل إلى h1 أصلًا. لذلك العنصر لم يكن موجودًا في الـ DOM في تلك اللحظة.</p>
+                            </div>
+                        </article>
+
+                        <!-- Method 2 -->
+                        <article class="method-card">
+                            <h2>🔹 الطريقة الثانية: JavaScript في نهاية body</h2>
+                            <div class="code-block">
+<pre><code>&lt;!<span class="tag">DOCTYPE</span> html&gt;
+&lt;<span class="tag">html</span>&gt;
+
+&lt;<span class="tag">head</span>&gt;
+&lt;/<span class="tag">head</span>&gt;
+
+&lt;<span class="tag">body</span>&gt;
+
+&lt;<span class="tag">h1</span> <span class="attr">id</span>=<span class="string">"title"</span>&gt;Hello World&lt;/<span class="tag">h1</span>&gt;
+
+<span class="tag">&lt;script&gt;</span>
+    <span class="keyword">let</span> <span class="variable">title</span> <span class="operator">=</span> document.<span class="function">querySelector</span>(<span class="string">"#title"</span>);
+    console.<span class="function">log</span>(title);
+<span class="tag">&lt;/script&gt;</span>
+
+&lt;/<span class="tag">body</span>&gt;
+
+&lt;/<span class="tag">html</span>&gt;</code></pre>
+                            </div>
+
+                            <p class="section-paragraph">هنا المتصفح قرأ h1 أولًا. وبعدها وصل إلى JavaScript. لذلك العنصر أصبح موجودًا ويمكن الوصول إليه.</p>
+
+                            <div class="success-box">
+                                <div class="success-header"><i class="fas fa-check-circle"></i> ميزة هذه الطريقة</div>
+                                <p>هذه الطريقة كانت وما زالت طريقة بسيطة جدًا لتجنب مشكلة محاولة JavaScript الوصول إلى عناصر HTML قبل إنشائها في DOM.</p>
+                            </div>
+                        </article>
+
+                        <!-- Method 3 -->
+                        <article class="method-card">
+                            <h2>🔹 الطريقة الثالثة: ملف JavaScript خارجي</h2>
+                            <p class="section-paragraph">بدل أن نكتب JavaScript داخل HTML، يمكننا إنشاء ملف:</p>
+
+                            <div class="file-structure">
+                                <div class="file-structure-item">
+                                    <i class="fab fa-html5 file-icon html"></i>
+                                    <span>index.html</span>
+                                </div>
+                                <div class="file-structure-item">
+                                    <i class="fab fa-js-square file-icon js"></i>
+                                    <span>script.js</span>
+                                </div>
+                            </div>
+
+                            <p class="section-paragraph">وفي HTML:</p>
+                            <div class="code-block">
+                                <pre><code>&lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="string">"script.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;</code></pre>
+                            </div>
+
+                            <p class="section-paragraph">وفي script.js:</p>
+                            <div class="code-block">
+                                <pre><code>console.<span class="function">log</span>(<span class="string">"Hello from JavaScript file"</span>);</code></pre>
+                            </div>
+
+                            <p class="section-paragraph">بهذه الطريقة يصبح HTML مسؤولًا عن هيكل الصفحة، وJavaScript موجودة في ملف منفصل. وهذا أفضل لتنظيم المشاريع.</p>
+
+                            <div class="success-box">
+                                <div class="success-header"><i class="fas fa-star"></i> ميزة الملف الخارجي</div>
+                                <ul class="bullet-list">
+                                    <li>يمكن إعادة استخدامه.</li>
+                                    <li>الكود يصبح أسهل في التنظيم.</li>
+                                    <li>HTML لا يصبح مليئًا بكود JavaScript.</li>
+                                    <li>يمكن فصل مسؤوليات المشروع.</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <!-- defer -->
+                        <article class="method-card">
+                            <h2>🔹 طيب لو عايزين نحط ملف JavaScript في head؟</h2>
+                            <p class="section-paragraph">هنا عندنا حل مهم: <strong>defer</strong></p>
+
+                            <div class="code-block">
+                                <pre><code>&lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="string">"script.js"</span> <span class="keyword">defer</span>&gt;&lt;/<span class="tag">script</span>&gt;</code></pre>
+                            </div>
+
+                            <p class="section-paragraph">مع <strong>defer</strong>:</p>
+                            <ul class="bullet-list">
+                                <li>المتصفح يستطيع تحميل ملف JavaScript أثناء قراءة الصفحة، لكن تنفيذ السكربت يتم بعد الانتهاء من تحليل HTML.</li>
+                                <li>وبالتالي نستطيع وضع ملف JavaScript في head مع تقليل مشكلة محاولة الوصول إلى عناصر HTML قبل وجودها.</li>
+                                <li>والأهم أن defer يحافظ على ترتيب تنفيذ ملفات JavaScript المؤجلة حسب ترتيب ظهورها في الصفحة.</li>
+                            </ul>
+                        </article>
+
+                        <!-- defer vs async -->
+                        <article class="method-card">
+                            <h2>🔹 إيه الفرق بين defer و async؟</h2>
+                            <p class="section-paragraph">مش مطلوب نتعمق فيهم الآن، لكن لازم نعرف الفكرة.</p>
+
+                            <div class="two-col">
+                                <div class="col-card defer-card">
+                                    <h4><i class="fas fa-clock"></i> defer</h4>
+                                    <ul class="bullet-list">
+                                        <li>السكريبت يتم تحميله أثناء قراءة الصفحة، ثم يتم تنفيذه بعد تحليل HTML.</li>
+                                        <li>يحافظ على ترتيب تنفيذ السكربتات المؤجلة.</li>
+                                    </ul>
+                                </div>
+                                <div class="col-card async-card">
+                                    <h4><i class="fas fa-bolt"></i> async</h4>
+                                    <ul class="bullet-list">
+                                        <li>السكريبت يتم تحميله بشكل مستقل، وعندما ينتهي تحميله يتم تنفيذه.</li>
+                                        <li>لا نعتمد على ترتيب التنفيذ بين عدة async scripts.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+<pre><code><span class="comment">// async — لا نفترض أن one.js سينفذ دائمًا قبل two.js</span>
+&lt;<span class="tag">script</span> <span class="keyword">async</span> <span class="attr">src</span>=<span class="string">"one.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+&lt;<span class="tag">script</span> <span class="keyword">async</span> <span class="attr">src</span>=<span class="string">"two.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+
+<span class="comment">// defer — ترتيب التنفيذ حسب ترتيب ظهورهما</span>
+&lt;<span class="tag">script</span> <span class="keyword">defer</span> <span class="attr">src</span>=<span class="string">"one.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+&lt;<span class="tag">script</span> <span class="keyword">defer</span> <span class="attr">src</span>=<span class="string">"two.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;</code></pre>
+                            </div>
+                        </article>
+
+                        <!-- Modern Approach -->
+                        <article class="method-card">
+                            <h2>🔹 ماذا نستخدم في المشاريع الحديثة؟</h2>
+                            <ul class="bullet-list">
+                                <li>في حالة ملف JavaScript خارجي عادي يعتمد على وجود عناصر HTML: <code>&lt;script src="script.js" defer&gt;&lt;/script&gt;</code> يعتبر اختيارًا ممتازًا.</li>
+                                <li>كما أن وضع script في نهاية body يظل طريقة بسيطة ومفهومة جدًا، خصوصًا أثناء تعلم الأساسيات.</li>
+                                <li>وفي المشاريع التي تستخدم JavaScript Modules: <code>&lt;script type="module" src="script.js"&gt;&lt;/script&gt;</code> — فالـ module scripts يتم التعامل معها بطريقة مختلفة، وتكون مؤجلة افتراضيًا.</li>
+                            </ul>
+                        </article>
+
+                        <!-- window.onload -->
+                        <article class="method-card">
+                            <h2>🔹 طيب هل نستخدم window.onload؟</h2>
+                            <p class="section-paragraph">ممكن.</p>
+
+                            <div class="code-block">
+<pre><code><span class="variable">window</span>.<span class="function">onload</span> = <span class="keyword">function</span> () {
+    <span class="keyword">let</span> <span class="variable">title</span> <span class="operator">=</span> document.<span class="function">querySelector</span>(<span class="string">"#title"</span>);
+    console.<span class="function">log</span>(title);
+};</code></pre>
+                            </div>
+
+                            <p class="section-paragraph">الفكرة هنا أن الكود ينتظر حدث load. لكن لازم نفرق بين: <strong>DOM أصبح جاهزًا</strong> و <strong>كل الصفحة والموارد أصبحت محملة</strong>.</p>
+
+                            <p class="section-paragraph">حدث load ينتظر تحميل الصفحة ومواردها مثل الصور وغيرها. لو هدفنا فقط هو انتظار بناء HTML والـ DOM، فإن <strong>DOMContentLoaded</strong> أكثر تحديدًا لهذا الغرض.</p>
+
+                            <div class="code-block">
+<pre><code>document.<span class="function">addEventListener</span>(<span class="string">"DOMContentLoaded"</span>, <span class="keyword">function</span> () {
+    <span class="keyword">let</span> <span class="variable">title</span> <span class="operator">=</span> document.<span class="function">querySelector</span>(<span class="string">"#title"</span>);
+    console.<span class="function">log</span>(title);
+});</code></pre>
+                            </div>
+
+                            <p class="section-paragraph">لكن لو استخدمنا defer مع ملف JavaScript خارجي، ففي حالات كثيرة لن نحتاج أصلًا إلى كتابة DOMContentLoaded.</p>
+
+                            <div class="warning-box">
+                                <div class="warning-header"><i class="fas fa-exclamation-triangle"></i> قاعدة مهمة</div>
+                                <p>لا تحفظ: "لازم دائمًا أستخدم window.onload."</p>
+                                <p>احفظ: "لازم أفهم متى يتم تنفيذ JavaScript، وهل العناصر التي أريد التعامل معها أصبحت موجودة أم لا."</p>
+                            </div>
+                        </article>
+
+                        <!-- Final Rule -->
+                        <article class="method-card highlight-card">
+                            <h2>🔹 قاعدة مهمة جدًا</h2>
+                            <p class="section-paragraph">في مشاريعنا سنفضل غالبًا:</p>
+
+                            <div class="highlight-formula">
+                                <span class="keyword">ملف JavaScript خارجي</span>
+                                <span class="operator">+</span>
+                                <span class="keyword">defer</span>
+                            </div>
+
+                            <div class="code-block">
+                                <pre><code>&lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="string">"./js/script.js"</span> <span class="keyword">defer</span>&gt;&lt;/<span class="tag">script</span>&gt;</code></pre>
+                            </div>
+
+                            <p class="section-paragraph">بدل الاعتماد على window.onload كحل لكل شيء.</p>
+                        </article>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 03: CONSOLE API
+                         ============================================================ -->
+                    <section class="code-section" id="console">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">🖥️</span>
+                            ثالثًا: ما هو Console؟
+                        </h1>
+                        <p class="section-paragraph">لما نفتح Developer Tools في المتصفح، سنجد تبويب اسمه Console. لكن ما هو الـ Console؟ هل هو جزء من JavaScript؟</p>
+
+                        <div class="error-box">
+                            <div class="error-header"><i class="fas fa-question-circle"></i> الإجابة</div>
+                            <p><strong>لا.</strong> الـ console ليس جزءًا من لغة JavaScript الأساسية نفسها. في المتصفح، console عبارة عن <strong>Web API</strong> يوفرها المتصفح للمطور.</p>
+                        </div>
+
+                        <h2 class="subsection-heading">📌 ما معنى API؟</h2>
+                        <p class="section-paragraph">API اختصار: <strong>Application Programming Interface</strong></p>
+                        <p class="section-paragraph">بمعنى مبسط: واجهة أو مجموعة من الأدوات والقواعد التي تسمح لبرنامج بالتعامل مع وظيفة أو نظام معين بطريقة محددة.</p>
+
+                        <div class="analogy-box">
+                            <div class="analogy-icon">🍽️</div>
+                            <div class="analogy-content">
+                                <p>تخيل أن عندك مطعم. أنت كعميل لا تدخل المطبخ وتبدأ تطبخ بنفسك. أنت تتعامل مع الـ Menu وتطلب ما تحتاجه.</p>
+                                <p>الـ Menu هنا تشبه فكرة الـ API. أنت تستخدم طريقة محددة للوصول إلى وظيفة معينة دون الحاجة لمعرفة كل التفاصيل الداخلية التي تنفذها.</p>
+                            </div>
+                        </div>
+
+                        <h2 class="subsection-heading">📌 ما هو Web API؟</h2>
+                        <p class="section-paragraph">Web APIs هي مجموعة من الواجهات التي يوفرها بيئة الويب والمتصفح لكي يستطيع JavaScript التعامل مع إمكانيات مختلفة. مثل:</p>
+
+                        <div class="api-grid">
+                            <div class="api-item"><i class="fas fa-code"></i> DOM API</div>
+                            <div class="api-item"><i class="fas fa-terminal"></i> Console API</div>
+                            <div class="api-item"><i class="fas fa-cloud-download-alt"></i> Fetch API</div>
+                            <div class="api-item"><i class="fas fa-map-marker-alt"></i> Geolocation API</div>
+                            <div class="api-item"><i class="fas fa-database"></i> Web Storage API</div>
+                        </div>
+
+                        <p class="section-paragraph">JavaScript هي اللغة. لكن المتصفح يوفر لها أدوات إضافية لكي تتعامل مع البيئة المحيطة بها.</p>
+
+                        <div class="code-block">
+                            <pre><code>console.<span class="function">log</span>(<span class="string">"Hello"</span>);</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">هنا: <code>console</code> هو object يوفره بيئة المتصفح. <code>log</code> هي method نستطيع استدعاءها.</p>
+                        <p class="section-paragraph">إذن console ليست "جزءًا من قواعد اللغة JavaScript"، وإنما المتصفح يوفرها لنا كواجهة للتعامل مع Developer Console.</p>
+
+                        <div class="info-box">
+                            <strong>مهم جدًا:</strong> لأن JavaScript نفسها يمكن أن تعمل في بيئات أخرى غير المتصفح، مثل Node.js، وهناك APIs وبيئة تشغيل مختلفة.
+                        </div>
+
+                        <h2 class="subsection-heading">📌 ماذا نستطيع أن نفعل بالـ Console؟</h2>
+                        <p class="section-paragraph">أغلب الطلاب يعرفون <code>console.log()</code>. لكن Console ليست فقط لتسجيل الأخطاء. يمكن استخدامها في:</p>
+                        <ul class="bullet-list">
+                            <li>عرض قيم المتغيرات.</li>
+                            <li>فحص نتائج العمليات.</li>
+                            <li>تتبع خطوات تنفيذ البرنامج.</li>
+                            <li>اكتشاف مكان المشكلة.</li>
+                            <li>عرض التحذيرات.</li>
+                            <li>عرض الأخطاء.</li>
+                            <li>عمل Counters.</li>
+                            <li>عمل Timers.</li>
+                            <li>عرض معلومات منظمة.</li>
+                            <li>التعامل مع بعض الكائنات أثناء Debugging.</li>
+                        </ul>
+
+                        <h2 class="subsection-heading">📌 أهم الدوال التي سنعرفها</h2>
+
+                        <div class="console-method">
+                            <h3><code>console.log()</code></h3>
+                            <p>لطباعة معلومات عادية.</p>
+                            <div class="code-block">
+                                <pre><code><span class="keyword">let</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">"Abdo"</span>;
+console.<span class="function">log</span>(name);</code></pre>
+                            </div>
+                            <div class="console-output">
+                                <div class="output-label">Console Output:</div>
+                                <div class="output-line">Abdo</div>
+                            </div>
+                        </div>
+
+                        <div class="console-method">
+                            <h3><code>console.error()</code></h3>
+                            <p>لعرض رسالة كخطأ.</p>
+                            <div class="code-block">
+                                <pre><code>console.<span class="function">error</span>(<span class="string">"Something went wrong"</span>);</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="console-method">
+                            <h3><code>console.warn()</code></h3>
+                            <p>لعرض تحذير.</p>
+                            <div class="code-block">
+                                <pre><code>console.<span class="function">warn</span>(<span class="string">"Be careful!"</span>);</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="console-method">
+                            <h3><code>console.table()</code></h3>
+                            <p>مفيد جدًا مع البيانات المنظمة والمصفوفات والكائنات.</p>
+                            <div class="code-block">
+                                <pre><code><span class="keyword">let</span> <span class="variable">students</span> <span class="operator">=</span> [<span class="string">"Ahmed"</span>, <span class="string">"Ali"</span>, <span class="string">"Omar"</span>];
+console.<span class="function">table</span>(students);</code></pre>
+                            </div>
+                            <p>بدل عرض البيانات بطريقة عادية، يمكن للمتصفح عرضها في شكل منظم.</p>
+                        </div>
+
+                        <div class="console-method">
+                            <h3><code>console.clear()</code></h3>
+                            <p>تستخدم لمسح محتوى الـ Console.</p>
+                        </div>
+
+                        <div class="console-method">
+                            <h3><code>console.count()</code></h3>
+                            <p>تساعدنا في معرفة عدد مرات تنفيذ نقطة معينة.</p>
+                            <div class="code-block">
+                                <pre><code>console.<span class="function">count</span>(<span class="string">"Button Clicked"</span>);</code></pre>
+                            </div>
+                            <p>كل مرة يتم تنفيذ السطر سيزيد العداد.</p>
+                        </div>
+
+                        <div class="console-method">
+                            <h3><code>console.time()</code> و <code>console.timeEnd()</code></h3>
+                            <p>يمكن استخدامهما لقياس الوقت الذي استغرقه جزء من الكود.</p>
+                            <div class="code-block">
+<pre><code>console.<span class="function">time</span>(<span class="string">"Test"</span>);
+
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> <span class="number">100000</span>; i++) {
+    <span class="comment">// some work</span>
+}
+
+console.<span class="function">timeEnd</span>(<span class="string">"Test"</span>);</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            وهكذا نفهم أن <strong>Console</strong> أداة مهمة جدًا في Debugging وليس مجرد مكان تظهر فيه الأخطاء.
+                        </div>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 04: ECMASCRIPT & ES6
+                         ============================================================ -->
+                    <section class="code-section" id="ecmascript">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">📜</span>
+                            رابعًا: ECMAScript و JavaScript
+                        </h1>
+                        <p class="section-paragraph">قبل ما نكتب JavaScript، لازم نعرف معلومة مهمة. JavaScript مرتبطة بمواصفة اسمها: <strong>ECMAScript</strong></p>
+
+                        <div class="two-col">
+                            <div class="col-card">
+                                <h4>ECMAScript</h4>
+                                <p>المواصفة والمعيار.</p>
+                            </div>
+                            <div class="col-card">
+                                <h4>JavaScript</h4>
+                                <p>واحدة من اللغات/التنفيذات التي تتبع هذا المعيار.</p>
+                            </div>
+                        </div>
+
+                        <p class="section-paragraph">المواصفة يتم تطويرها من خلال <strong>Ecma International</strong>، ويعمل على تطوير معيار ECMAScript فريق <strong>TC39</strong>.</p>
+
+                        <h2 class="subsection-heading">📌 ما هو ES6؟</h2>
+                        <p class="section-paragraph">ES6 هو اختصار: <strong>ECMAScript 6</strong> — وهو الإصدار السادس من معيار ECMAScript. ويعرف أيضًا باسم: <strong>ECMAScript 2015</strong> — لأنه صدر في عام 2015.</p>
+
+                        <p class="section-paragraph">ومن الأشياء المشهورة التي جاءت مع ES6:</p>
+
+                        <div class="features-grid">
+                            <div class="feature-item"><code>let</code></div>
+                            <div class="feature-item"><code>const</code></div>
+                            <div class="feature-item">Arrow Functions</div>
+                            <div class="feature-item">Template Literals</div>
+                            <div class="feature-item">Destructuring</div>
+                            <div class="feature-item">Default Parameters</div>
+                            <div class="feature-item">Rest Parameters</div>
+                            <div class="feature-item">Spread Syntax</div>
+                            <div class="feature-item">Classes</div>
+                            <div class="feature-item">Modules</div>
+                        </div>
+
+                        <p class="section-paragraph">إذن لما تسمع <strong>ES6</strong> لا تفكر أنها لغة جديدة. هي نسخة/إصدار مهم من معيار ECMAScript.</p>
+
+                        <div class="code-block">
+                            <pre><code><span class="keyword">let</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">"Abdo"</span>;
+
+<span class="keyword">const</span> <span class="variable">age</span> <span class="operator">=</span> <span class="number">23</span>;</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">let و const من الميزات التي أصبحت جزءًا مهمًا من JavaScript الحديثة مع ES6.</p>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 05: COMMENTS
+                         ============================================================ -->
+                    <section class="code-section" id="comments">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">💬</span>
+                            خامسًا: التعليقات Comments
+                        </h1>
+                        <p class="section-paragraph">أثناء كتابة الكود، أحيانًا نحتاج إلى كتابة ملاحظات داخل الملف. هذه الملاحظات لا يقوم JavaScript بتنفيذها. نسميها: <strong>Comments</strong> أو التعليقات.</p>
+
+                        <h2 class="subsection-heading">📌 لماذا نستخدم Comments؟</h2>
+                        <ul class="bullet-list">
+                            <li>لشرح فكرة معينة.</li>
+                            <li>لتوضيح جزء معقد.</li>
+                            <li>كتابة ملاحظات للمبرمجين الآخرين.</li>
+                            <li>تعطيل سطر مؤقتًا أثناء تجربة شيء ما.</li>
+                        </ul>
+
+                        <div class="info-box">
+                            لكن لا يجب أن نضع Comment لكل سطر بلا سبب. الـ Comment الجيد يشرح <strong>"لماذا"</strong> نفعل شيئًا عندما يكون السبب غير واضح، وليس فقط يعيد وصف الكود حرفيًا.
+                        </div>
+
+                        <h2 class="subsection-heading">📌 نوع التعليق الأول: Single-line Comment</h2>
+                        <p class="section-paragraph">يبدأ بـ: <code>//</code></p>
+
+                        <div class="code-block">
+                            <pre><code><span class="comment">// This is a comment</span>
+
+<span class="keyword">let</span> <span class="variable">age</span> <span class="operator">=</span> <span class="number">20</span>;</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">كل ما يأتي بعد // في نفس السطر يعتبر Comment.</p>
+
+                        <div class="code-block">
+                            <pre><code><span class="keyword">let</span> <span class="variable">age</span> <span class="operator">=</span> <span class="number">20</span>; <span class="comment">// Student age</span></code></pre>
+                        </div>
+
+                        <p class="section-paragraph">JavaScript ستنفذ: <code>let age = 20;</code> — أما <code>// Student age</code> فلن يتم تنفيذها.</p>
+
+                        <h2 class="subsection-heading">📌 نوع التعليق الثاني: Multi-line Comment</h2>
+                        <p class="section-paragraph">يبدأ بـ: <code>/*</code> وينتهي بـ: <code>*/</code></p>
+
+                        <div class="code-block">
+                            <pre><code><span class="comment">/*
+    This is a multi-line comment.
+    It can contain multiple lines.
+*/</span>
+
+<span class="keyword">let</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">"Abdo"</span>;</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">يمكن استخدامه عندما نحتاج إلى كتابة تعليق يمتد لأكثر من سطر.</p>
+
+                        <h2 class="subsection-heading">📌 مثال عملي</h2>
+                        <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">price</span> <span class="operator">=</span> <span class="number">100</span>;
+
+<span class="comment">// Apply discount</span>
+
+<span class="keyword">let</span> <span class="variable">discount</span> <span class="operator">=</span> <span class="number">20</span>;
+
+<span class="keyword">let</span> <span class="variable">finalPrice</span> <span class="operator">=</span> price <span class="operator">-</span> discount;</code></pre>
+                        </div>
+                        <p class="section-paragraph">هنا التعليق يساعدنا على فهم وظيفة الجزء التالي.</p>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 06: VARIABLES
+                         ============================================================ -->
+                    <section class="code-section" id="variables">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">📦</span>
+                            سادسًا: نبدأ JavaScript فعليًا
+                        </h1>
+                        <p class="section-paragraph">الآن أصبح عندنا الأساس الذي نحتاجه. نعرف: أين نكتب JavaScript. كيف نربط JavaScript بـ HTML. ما هو Console. ما معنى Web API. ما هو ECMAScript. ما معنى ES6. كيف نكتب Comments.</p>
+                        <p class="section-paragraph">والآن نبدأ مراجعة أساسيات اللغة.</p>
+
+                        <h2 class="subsection-heading">📌 ما هي JavaScript؟</h2>
+                        <p class="section-paragraph">JavaScript هي لغة برمجة تستخدم لإضافة السلوك والتفاعل إلى صفحات وتطبيقات الويب، ويمكن استخدامها أيضًا خارج المتصفح في بيئات تشغيل أخرى.</p>
+
+                        <div class="three-col">
+                            <div class="col-card html-card">
+                                <h4>HTML</h4>
+                                <p>هيكل الصفحة.</p>
+                            </div>
+                            <div class="col-card css-card">
+                                <h4>CSS</h4>
+                                <p>شكل وتصميم الصفحة.</p>
+                            </div>
+                            <div class="col-card js-card">
+                                <h4>JavaScript</h4>
+                                <p>السلوك والتفاعل والمنطق.</p>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <strong>مثال:</strong><br>
+                            HTML يقول: عندي Button.<br>
+                            CSS يقول: الـ Button شكله أزرق.<br>
+                            JavaScript تقول: عندما يضغط المستخدم على الـ Button، نفذ شيئًا معينًا.
+                        </div>
+
+                        <h2 class="subsection-heading">📌 Variables (المتغيرات)</h2>
+                        <p class="section-paragraph">المتغير Variable هو مكان منطقي نستخدمه لتخزين قيمة يمكن للبرنامج التعامل معها.</p>
+
+                        <div class="code-block">
+                            <pre><code><span class="keyword">let</span> <span class="variable">studentName</span> <span class="operator">=</span> <span class="string">"Ahmed"</span>;</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">هنا: <code>studentName</code> اسم المتغير. و <code>"Ahmed"</code> القيمة المخزنة.</p>
+
+                        <h3 class="mini-heading">لماذا نحتاج Variables؟</h3>
+                        <p class="section-paragraph">لأننا لا نريد أن نكتب نفس القيمة يدويًا في كل مكان.</p>
+
+                        <div class="code-block bad-code">
+                            <div class="code-label"><i class="fas fa-times-circle"></i> مثال سيئ</div>
+                            <pre><code>console.<span class="function">log</span>(<span class="string">"Ahmed"</span>);
+console.<span class="function">log</span>(<span class="string">"Ahmed"</span>);
+console.<span class="function">log</span>(<span class="string">"Ahmed"</span>);</code></pre>
+                        </div>
+
+                        <div class="code-block good-code">
+                            <div class="code-label"><i class="fas fa-check-circle"></i> الأفضل</div>
+                            <pre><code><span class="keyword">let</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">"Ahmed"</span>;
+
+console.<span class="function">log</span>(name);
+console.<span class="function">log</span>(name);
+console.<span class="function">log</span>(name);</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">إذا تغير الاسم، نغير القيمة في مكان واحد.</p>
+
+                        <h3 class="mini-heading">let</h3>
+                        <p class="section-paragraph">نستخدم let عندما نريد إنشاء متغير يمكن تغيير قيمته.</p>
+
+                        <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">age</span> <span class="operator">=</span> <span class="number">16</span>;
+
+age <span class="operator">=</span> <span class="number">17</span>;
+
+console.<span class="function">log</span>(age);</code></pre>
+                        </div>
+
+                        <div class="console-output">
+                            <div class="output-label">Console Output:</div>
+                            <div class="output-line">17</div>
+                        </div>
+
+                        <h3 class="mini-heading">const</h3>
+                        <p class="section-paragraph">نستخدم const عندما لا نريد إعادة إسناد قيمة جديدة للمتغير.</p>
+
+                        <div class="code-block error-code">
+<pre><code><span class="keyword">const</span> <span class="variable">birthYear</span> <span class="operator">=</span> <span class="number">2010</span>;
+
+birthYear <span class="operator">=</span> <span class="number">2011</span>; <span class="comment">// ❌ Error</span></code></pre>
+                        </div>
+
+                        <div class="error-box">
+                            <div class="error-header"><i class="fas fa-times-circle"></i> خطأ</div>
+                            <p>هذا سيؤدي إلى Error لأننا حاولنا إعادة إسناد قيمة لمتغير const.</p>
+                        </div>
+
+                        <div class="info-box">
+                            <strong>قاعدة بسيطة:</strong><br>
+                            <code>let</code> — يمكن إعادة إسناد قيمة له.<br>
+                            <code>const</code> — لا يمكن إعادة إسناد قيمة جديدة له.
+                        </div>
+
+                        <div class="info-box">
+                            <strong>ملاحظة مهمة:</strong> const لا يعني أن كل شيء داخل القيمة أصبح "غير قابل للتغيير" في كل الحالات. لكن بالنسبة للمستوى الحالي، أهم شيء أن الطالب يفهم أن إعادة إسناد متغير const ممنوعة.
+                        </div>
+
+                        <h2 class="subsection-heading">📌 قواعد تسمية المتغيرات</h2>
+                        <p class="section-paragraph">اسم المتغير يجب أن يكون واضحًا.</p>
+
+                        <div class="two-col">
+                            <div class="col-card good-card">
+                                <h4><i class="fas fa-check-circle"></i> جيد</h4>
+                                <code>let studentName = "Ali";</code>
+                            </div>
+                            <div class="col-card bad-card">
+                                <h4><i class="fas fa-times-circle"></i> سيئ</h4>
+                                <code>let x = "Ali";</code>
+                            </div>
+                        </div>
+
+                        <p class="section-paragraph">إذا كان x يمثل اسم الطالب، فمن الأفضل: <code>studentName</code>.</p>
+
+                        <p class="section-paragraph">يمكن استخدام: الحروف. الأرقام، لكن ليس في بداية الاسم. underscore: <code>student_name</code>. Dollar sign: <code>$student</code>.</p>
+
+                        <div class="code-block error-code">
+<pre><code><span class="comment">// ❌ غير صحيح</span>
+<span class="keyword">let</span> <span class="number">1name</span> <span class="operator">=</span> <span class="string">"Ali"</span>;
+
+<span class="comment">// ✅ صحيح</span>
+<span class="keyword">let</span> <span class="variable">name1</span> <span class="operator">=</span> <span class="string">"Ali"</span>;</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 07: DATA TYPES
+                         ============================================================ -->
+                    <section class="code-section" id="types">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">🏷️</span>
+                            سابعًا: Data Types
+                        </h1>
+                        <p class="section-paragraph">نوع البيانات يعني نوع القيمة التي يتعامل معها البرنامج.</p>
+                        <p class="section-paragraph">من أهم الأنواع التي سنراجعها: <strong>Number</strong> · <strong>String</strong> · <strong>Boolean</strong></p>
+
+                        <div class="three-col">
+                            <div class="col-card type-card">
+                                <h4>🔢 Number</h4>
+                                <p>الأرقام.</p>
+                                <div class="code-block">
+                                    <pre><code><span class="keyword">let</span> <span class="variable">age</span> <span class="operator">=</span> <span class="number">16</span>;
+<span class="keyword">let</span> <span class="variable">price</span> <span class="operator">=</span> <span class="number">99.5</span>;</code></pre>
+                                </div>
+                            </div>
+                            <div class="col-card type-card">
+                                <h4>📝 String</h4>
+                                <p>النصوص.</p>
+                                <div class="code-block">
+                                    <pre><code><span class="keyword">let</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">"Ahmed"</span>;
+<span class="keyword">let</span> <span class="variable">city</span> <span class="operator">=</span> <span class="string">"Damanhur"</span>;</code></pre>
+                                </div>
+                            </div>
+                            <div class="col-card type-card">
+                                <h4>✅ Boolean</h4>
+                                <p>قيمة من اثنتين: true أو false.</p>
+                                <div class="code-block">
+                                    <pre><code><span class="keyword">let</span> <span class="variable">isStudent</span> <span class="operator">=</span> <span class="keyword">true</span>;
+<span class="keyword">let</span> <span class="variable">isGraduated</span> <span class="operator">=</span> <span class="keyword">false</span>;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="subsection-heading">📌 typeof</h2>
+                        <p class="section-paragraph">يمكننا استخدام <code>typeof</code> لمعرفة نوع القيمة.</p>
+
+                        <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">age</span> <span class="operator">=</span> <span class="number">16</span>;
+console.<span class="function">log</span>(<span class="keyword">typeof</span> age); <span class="comment">// "number"</span>
+
+<span class="keyword">let</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">"Ahmed"</span>;
+console.<span class="function">log</span>(<span class="keyword">typeof</span> name); <span class="comment">// "string"</span>
+
+<span class="keyword">let</span> <span class="variable">isStudent</span> <span class="operator">=</span> <span class="keyword">true</span>;
+console.<span class="function">log</span>(<span class="keyword">typeof</span> isStudent); <span class="comment">// "boolean"</span></code></pre>
+                        </div>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 08: OPERATORS
+                         ============================================================ -->
+                    <section class="code-section" id="operators">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">🧮</span>
+                            ثامنًا: العمليات الحسابية
+                        </h1>
+                        <p class="section-paragraph">JavaScript تستطيع تنفيذ العمليات الحسابية.</p>
+
+                        <div class="operators-grid">
+                            <div class="op-item"><span class="op-symbol">+</span><span class="op-name">الجمع</span></div>
+                            <div class="op-item"><span class="op-symbol">-</span><span class="op-name">الطرح</span></div>
+                            <div class="op-item"><span class="op-symbol">*</span><span class="op-name">الضرب</span></div>
+                            <div class="op-item"><span class="op-symbol">/</span><span class="op-name">القسمة</span></div>
+                        </div>
+
+                        <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">10</span>;
+<span class="keyword">let</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">5</span>;
+
+console.<span class="function">log</span>(a <span class="operator">+</span> b); <span class="comment">// 15</span>
+console.<span class="function">log</span>(a <span class="operator">-</span> b); <span class="comment">// 5</span>
+console.<span class="function">log</span>(a <span class="operator">*</span> b); <span class="comment">// 50</span>
+console.<span class="function">log</span>(a <span class="operator">/</span> b); <span class="comment">// 2</span></code></pre>
+                        </div>
+
+                        <h3 class="mini-heading">مثال عملي</h3>
+                        <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">price</span> <span class="operator">=</span> <span class="number">100</span>;
+<span class="keyword">let</span> <span class="variable">quantity</span> <span class="operator">=</span> <span class="number">3</span>;
+
+<span class="keyword">let</span> <span class="variable">total</span> <span class="operator">=</span> price <span class="operator">*</span> quantity;
+
+console.<span class="function">log</span>(total); <span class="comment">// 300</span></code></pre>
+                        </div>
+
+                        <p class="section-paragraph">هنا استخدمنا Variables + Multiplication.</p>
+
+                        <h2 class="subsection-heading">📌 دمج النصوص</h2>
+                        <p class="section-paragraph">يمكن استخدام <code>+</code> لدمج النصوص.</p>
+
+                        <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">firstName</span> <span class="operator">=</span> <span class="string">"Ahmed"</span>;
+<span class="keyword">let</span> <span class="variable">lastName</span> <span class="operator">=</span> <span class="string">"Ali"</span>;
+
+<span class="keyword">let</span> <span class="variable">fullName</span> <span class="operator">=</span> firstName <span class="operator">+</span> <span class="string">" "</span> <span class="operator">+</span> lastName;
+
+console.<span class="function">log</span>(fullName); <span class="comment">// Ahmed Ali</span></code></pre>
+                        </div>
+
+                        <div class="warning-box">
+                            <div class="warning-header"><i class="fas fa-exclamation-triangle"></i> انتبه</div>
+                            <p><code>+</code> يمكن أن تستخدم للجمع أو لدمج النصوص حسب نوع البيانات.</p>
+                            <div class="code-block">
+                                <pre><code>console.<span class="function">log</span>(<span class="number">10</span> <span class="operator">+</span> <span class="number">5</span>); <span class="comment">// 15</span>
+console.<span class="function">log</span>(<span class="string">"10"</span> <span class="operator">+</span> <span class="string">"5"</span>); <span class="comment">// "105" — لأننا نتعامل مع Strings</span></code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 09: CONDITIONS
+                         ============================================================ -->
+                    <section class="code-section" id="conditions">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">⚖️</span>
+                            تاسعًا: Comparison Operators
+                        </h1>
+                        <p class="section-paragraph">نستخدم Comparison Operators لمقارنة القيم. أهمها:</p>
+
+                        <div class="operators-grid">
+                            <div class="op-item"><span class="op-symbol">==</span><span class="op-name">يساوي</span></div>
+                            <div class="op-item"><span class="op-symbol">===</span><span class="op-name">يساوي تمامًا</span></div>
+                            <div class="op-item"><span class="op-symbol">!=</span><span class="op-name">لا يساوي</span></div>
+                            <div class="op-item"><span class="op-symbol">&gt;</span><span class="op-name">أكبر من</span></div>
+                            <div class="op-item"><span class="op-symbol">&lt;</span><span class="op-name">أصغر من</span></div>
+                            <div class="op-item"><span class="op-symbol">&gt;=</span><span class="op-name">أكبر أو يساوي</span></div>
+                            <div class="op-item"><span class="op-symbol">&lt;=</span><span class="op-name">أصغر أو يساوي</span></div>
+                        </div>
+
+                        <p class="section-paragraph">والنتيجة غالبًا تكون: <code>true</code> أو <code>false</code>.</p>
+
+                        <h3 class="mini-heading">==</h3>
+                        <p class="section-paragraph">يقارن القيمة مع السماح بتحويل النوع في بعض الحالات.</p>
+
+                        <div class="code-block">
+                            <pre><code><span class="number">5</span> <span class="operator">==</span> <span class="string">"5"</span> <span class="comment">// true</span></code></pre>
+                        </div>
+
+                        <h3 class="mini-heading">===</h3>
+                        <p class="section-paragraph">يقارن القيمة والنوع.</p>
+
+                        <div class="code-block">
+<pre><code><span class="number">5</span> <span class="operator">===</span> <span class="string">"5"</span> <span class="comment">// false</span>
+<span class="comment">// لأن 5 → Number، و "5" → String</span></code></pre>
+                        </div>
+
+                        <div class="info-box">
+                            <strong>كقاعدة عملية:</strong> يفضل في JavaScript الحديثة استخدام <code>===</code> و <code>!==</code> عندما نريد مقارنة صارمة وواضحة.
+                        </div>
+
+                        <h2 class="subsection-heading">📌 Logical Operators</h2>
+                        <p class="section-paragraph">لدينا ثلاثة عوامل منطقية أساسية: <code>&amp;&amp;</code> · <code>||</code> · <code>!</code></p>
+
+                        <div class="three-col">
+                            <div class="col-card">
+                                <h4>AND — <code>&amp;&amp;</code></h4>
+                                <p>كل الشروط يجب أن تكون صحيحة.</p>
+                                <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">age</span> <span class="operator">=</span> <span class="number">16</span>;
+<span class="keyword">let</span> <span class="variable">hasCard</span> <span class="operator">=</span> <span class="keyword">true</span>;
+
+console.<span class="function">log</span>(age <span class="operator">&gt;=</span> <span class="number">15</span> <span class="operator">&amp;&amp;</span> hasCard <span class="operator">===</span> <span class="keyword">true</span>);</code></pre>
+                                </div>
+                            </div>
+                            <div class="col-card">
+                                <h4>OR — <code>||</code></h4>
+                                <p>يكفي تحقق شرط واحد على الأقل.</p>
+                                <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">hasMoney</span> <span class="operator">=</span> <span class="keyword">false</span>;
+<span class="keyword">let</span> <span class="variable">hasCard</span> <span class="operator">=</span> <span class="keyword">true</span>;
+
+console.<span class="function">log</span>(hasMoney <span class="operator">||</span> hasCard); <span class="comment">// true</span></code></pre>
+                                </div>
+                            </div>
+                            <div class="col-card">
+                                <h4>NOT — <code>!</code></h4>
+                                <p>تعكس القيمة المنطقية.</p>
+                                <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">isStudent</span> <span class="operator">=</span> <span class="keyword">true</span>;
+
+console.<span class="function">log</span>(<span class="operator">!</span>isStudent); <span class="comment">// false</span></code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="subsection-heading">📌 Input و Output</h2>
+                        <p class="section-paragraph">نريد أحيانًا استقبال بيانات من المستخدم. من الطرق البسيطة في المتصفح: <code>prompt()</code></p>
+
+                        <div class="code-block">
+                            <pre><code><span class="keyword">let</span> <span class="variable">name</span> <span class="operator">=</span> <span class="function">prompt</span>(<span class="string">"Enter your name:"</span>);
+console.<span class="function">log</span>(name);</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">هنا المستخدم يدخل قيمة، ونخزنها في المتغير name.</p>
+
+                        <p class="section-paragraph"><strong>Output:</strong> يمكننا عرض النتائج باستخدام <code>console.log()</code> ويمكننا أيضًا استخدام <code>alert()</code>.</p>
+
+                        <div class="code-block">
+                            <pre><code><span class="function">alert</span>(<span class="string">"Welcome!"</span>);</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">لكن في تدريبنا، سنستخدم console كثيرًا لأنها ممتازة أثناء التعلم والـ debugging.</p>
+
+                        <h2 class="subsection-heading">📌 Conditions</h2>
+                        <p class="section-paragraph">البرنامج أحيانًا يحتاج إلى اتخاذ قرار. مثال: إذا كانت درجة الطالب أكبر من أو تساوي 50: ناجح. وإلا: راسب.</p>
+
+                        <p class="section-paragraph">نستخدم: <code>if</code></p>
+
+                        <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">grade</span> <span class="operator">=</span> <span class="number">70</span>;
+
+<span class="keyword">if</span> (grade <span class="operator">&gt;=</span> <span class="number">50</span>) {
+    console.<span class="function">log</span>(<span class="string">"Pass"</span>);
+}</code></pre>
+                        </div>
+
+                        <h3 class="mini-heading">if + else</h3>
+                        <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">grade</span> <span class="operator">=</span> <span class="number">40</span>;
+
+<span class="keyword">if</span> (grade <span class="operator">&gt;=</span> <span class="number">50</span>) {
+    console.<span class="function">log</span>(<span class="string">"Pass"</span>);
+} <span class="keyword">else</span> {
+    console.<span class="function">log</span>(<span class="string">"Fail"</span>);
+}</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">إذا تحقق الشرط، نفذ الجزء الأول. وإلا، نفذ الجزء الثاني.</p>
+
+                        <h3 class="mini-heading">else if</h3>
+                        <p class="section-paragraph">عندما يكون لدينا أكثر من احتمال.</p>
+
+                        <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">grade</span> <span class="operator">=</span> <span class="number">85</span>;
+
+<span class="keyword">if</span> (grade <span class="operator">&gt;=</span> <span class="number">90</span>) {
+    console.<span class="function">log</span>(<span class="string">"Excellent"</span>);
+} <span class="keyword">else if</span> (grade <span class="operator">&gt;=</span> <span class="number">75</span>) {
+    console.<span class="function">log</span>(<span class="string">"Very Good"</span>);
+} <span class="keyword">else if</span> (grade <span class="operator">&gt;=</span> <span class="number">50</span>) {
+    console.<span class="function">log</span>(<span class="string">"Pass"</span>);
+} <span class="keyword">else</span> {
+    console.<span class="function">log</span>(<span class="string">"Fail"</span>);
+}</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">هنا البرنامج يفحص الشروط بالترتيب.</p>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 10: FUNCTIONS
+                         ============================================================ -->
+                    <section class="code-section" id="functions">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">⚙️</span>
+                            عاشرًا: Functions
+                        </h1>
+                        <p class="section-paragraph">الدالة Function عبارة عن مجموعة من التعليمات نضعها في مكان يمكن استدعاؤه لتنفيذ مهمة معينة.</p>
+
+                        <p class="section-paragraph">بدل أن نكرر نفس الكود:</p>
+
+                        <div class="code-block bad-code">
+                            <div class="code-label"><i class="fas fa-times-circle"></i> تكرار</div>
+                            <pre><code>console.<span class="function">log</span>(<span class="string">"Welcome Ahmed"</span>);
+console.<span class="function">log</span>(<span class="string">"Welcome Ahmed"</span>);
+console.<span class="function">log</span>(<span class="string">"Welcome Ahmed"</span>);</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">يمكننا عمل Function:</p>
+
+                        <div class="code-block good-code">
+<pre><code><span class="keyword">function</span> <span class="function">welcome</span>() {
+    console.<span class="function">log</span>(<span class="string">"Welcome Ahmed"</span>);
+}
+
+<span class="function">welcome</span>(); <span class="comment">// استدعاء الدالة</span></code></pre>
+                        </div>
+
+                        <h3 class="mini-heading">لماذا Functions؟</h3>
+                        <ul class="bullet-list">
+                            <li>إعادة استخدام الكود.</li>
+                            <li>تنظيم البرنامج.</li>
+                            <li>تقليل التكرار.</li>
+                            <li>تقسيم البرنامج إلى مهام صغيرة.</li>
+                        </ul>
+
+                        <h2 class="subsection-heading">📌 Parameter و Argument</h2>
+                        <div class="code-block">
+<pre><code><span class="keyword">function</span> <span class="function">welcome</span>(<span class="variable">name</span>) {
+    console.<span class="function">log</span>(<span class="string">"Welcome "</span> <span class="operator">+</span> name);
+}</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">هنا: <code>name</code> يسمى <strong>Parameter</strong>.</p>
+
+                        <p class="section-paragraph">وعندما نستدعي:</p>
+
+                        <div class="code-block">
+                            <pre><code><span class="function">welcome</span>(<span class="string">"Ahmed"</span>);</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">القيمة: <code>"Ahmed"</code> تسمى <strong>Argument</strong>.</p>
+
+                        <div class="info-box">
+                            <strong>بمعنى مبسط:</strong><br>
+                            Parameter = المتغير الموجود في تعريف الدالة.<br>
+                            Argument = القيمة التي نرسلها عند استدعاء الدالة.
+                        </div>
+
+                        <h2 class="subsection-heading">📌 return</h2>
+                        <p class="section-paragraph">يمكن للدالة أن تنتج قيمة ونرجعها باستخدام return.</p>
+
+                        <div class="code-block">
+<pre><code><span class="keyword">function</span> <span class="function">add</span>(a, b) {
+    <span class="keyword">return</span> a <span class="operator">+</span> b;
+}
+
+<span class="keyword">let</span> <span class="variable">result</span> <span class="operator">=</span> <span class="function">add</span>(<span class="number">10</span>, <span class="number">5</span>);
+
+console.<span class="function">log</span>(result); <span class="comment">// 15</span></code></pre>
+                        </div>
+
+                        <p class="section-paragraph">هنا الدالة لم تطبع النتيجة مباشرة. هي أعادت النتيجة باستخدام return. ثم خزنا النتيجة في result.</p>
+
+                        <div class="info-box">
+                            <strong>فرق مهم جدًا بين console.log() و return:</strong><br>
+                            <code>console.log</code> تعرض قيمة في الـ Console.<br>
+                            <code>return</code> تعيد قيمة من الدالة إلى المكان الذي استدعاها.
+                        </div>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 11: ARRAYS
+                         ============================================================ -->
+                    <section class="code-section" id="arrays">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">📊</span>
+                            حادي عشر: Arrays
+                        </h1>
+                        <p class="section-paragraph">Array تستخدم لتخزين مجموعة من القيم في متغير واحد.</p>
+
+                        <div class="code-block bad-code">
+                            <div class="code-label"><i class="fas fa-times-circle"></i> بدون Array</div>
+                            <pre><code><span class="keyword">let</span> <span class="variable">student1</span> <span class="operator">=</span> <span class="string">"Ahmed"</span>;
+<span class="keyword">let</span> <span class="variable">student2</span> <span class="operator">=</span> <span class="string">"Ali"</span>;
+<span class="keyword">let</span> <span class="variable">student3</span> <span class="operator">=</span> <span class="string">"Omar"</span>;</code></pre>
+                        </div>
+
+                        <div class="code-block good-code">
+                            <div class="code-label"><i class="fas fa-check-circle"></i> مع Array</div>
+                            <pre><code><span class="keyword">let</span> <span class="variable">students</span> <span class="operator">=</span> [<span class="string">"Ahmed"</span>, <span class="string">"Ali"</span>, <span class="string">"Omar"</span>];</code></pre>
+                        </div>
+
+                        <h2 class="subsection-heading">📌 Index</h2>
+                        <p class="section-paragraph">JavaScript تبدأ ترقيم عناصر Array من: <strong>0</strong> — وليس 1.</p>
+
+                        <div class="array-visual">
+                            <div class="array-item">
+                                <div class="array-value">Ahmed</div>
+                                <div class="array-index">index = 0</div>
+                            </div>
+                            <div class="array-item">
+                                <div class="array-value">Ali</div>
+                                <div class="array-index">index = 1</div>
+                            </div>
+                            <div class="array-item">
+                                <div class="array-value">Omar</div>
+                                <div class="array-index">index = 2</div>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+<pre><code>console.<span class="function">log</span>(students[<span class="number">0</span>]); <span class="comment">// Ahmed</span>
+console.<span class="function">log</span>(students[<span class="number">2</span>]); <span class="comment">// Omar</span></code></pre>
+                        </div>
+
+                        <h2 class="subsection-heading">📌 length</h2>
+                        <p class="section-paragraph">يمكننا معرفة عدد عناصر Array باستخدام <code>length</code>.</p>
+
+                        <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">students</span> <span class="operator">=</span> [<span class="string">"Ahmed"</span>, <span class="string">"Ali"</span>, <span class="string">"Omar"</span>];
+
+console.<span class="function">log</span>(students.<span class="variable">length</span>); <span class="comment">// 3</span></code></pre>
+                        </div>
+
+                        <div class="warning-box">
+                            <div class="warning-header"><i class="fas fa-exclamation-triangle"></i> مهم جدًا</div>
+                            <p>آخر index لا يساوي length. إذا كان عندنا 3 عناصر: <code>length = 3</code> — لكن آخر index: <code>2</code> — لأن العد يبدأ من صفر.</p>
+                        </div>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 12: LOOPS
+                         ============================================================ -->
+                    <section class="code-section" id="loops">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">🔄</span>
+                            ثاني عشر: while
+                        </h1>
+                        <p class="section-paragraph">while تستخدم للتكرار طالما الشرط صحيح.</p>
+
+                        <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">1</span>;
+
+<span class="keyword">while</span> (count <span class="operator">&lt;=</span> <span class="number">5</span>) {
+    console.<span class="function">log</span>(count);
+    count<span class="operator">++</span>;
+}</code></pre>
+                        </div>
+
+                        <div class="console-output">
+                            <div class="output-label">Console Output:</div>
+                            <div class="output-line">1</div>
+                            <div class="output-line">2</div>
+                            <div class="output-line">3</div>
+                            <div class="output-line">4</div>
+                            <div class="output-line">5</div>
+                        </div>
+
+                        <div class="error-box">
+                            <div class="error-header"><i class="fas fa-exclamation-triangle"></i> مهم جدًا</div>
+                            <p>مهم جدًا أن يكون لدينا شيء يؤدي في النهاية إلى توقف الشرط عن أن يكون true.</p>
+
+                            <div class="code-block error-code">
+<pre><code><span class="comment">// ❌ Infinite Loop</span>
+<span class="keyword">let</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">1</span>;
+
+<span class="keyword">while</span> (count <span class="operator">&lt;=</span> <span class="number">5</span>) {
+    console.<span class="function">log</span>(count);
+    <span class="comment">// count لا يتغير → الشرط سيبقى true للأبد</span>
+}</code></pre>
+                            </div>
+
+                            <p>القيمة count لن تتغير. وبالتالي الشرط سيظل: true — وقد يدخل البرنامج في Infinite Loop.</p>
+                        </div>
+
+                        <h2 class="subsection-heading">📌 for...of</h2>
+                        <p class="section-paragraph">تستخدم for...of للمرور على عناصر iterable مثل Array.</p>
+
+                        <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">students</span> <span class="operator">=</span> [<span class="string">"Ahmed"</span>, <span class="string">"Ali"</span>, <span class="string">"Omar"</span>];
+
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">student</span> <span class="keyword">of</span> students) {
+    console.<span class="function">log</span>(student);
+}</code></pre>
+                        </div>
+
+                        <div class="console-output">
+                            <div class="output-label">Console Output:</div>
+                            <div class="output-line">Ahmed</div>
+                            <div class="output-line">Ali</div>
+                            <div class="output-line">Omar</div>
+                        </div>
+
+                        <p class="section-paragraph">الميزة هنا أننا لا نحتاج أن نتعامل مع الـ index بأنفسنا إذا كان هدفنا فقط المرور على العناصر.</p>
+
+                        <h2 class="subsection-heading">📌 تطبيق شامل على الحصة الأولى</h2>
+                        <p class="section-paragraph">سنفترض أننا نريد برنامجًا بسيطًا يستقبل أسماء الطلاب ويعرض رسالة.</p>
+
+                        <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">students</span> <span class="operator">=</span> [<span class="string">"Ahmed"</span>, <span class="string">"Ali"</span>, <span class="string">"Omar"</span>];
+
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">student</span> <span class="keyword">of</span> students) {
+    console.<span class="function">log</span>(<span class="string">"Welcome "</span> <span class="operator">+</span> student);
+}</code></pre>
+                        </div>
+
+                        <p class="section-paragraph">هنا استخدمنا: Variable · Array · for...of · String · Concatenation · console.log()</p>
+
+                        <div class="info-box">
+                            وهذا هو أسلوبنا في التعلم: <strong>لا نحفظ كل مفهوم منفصلًا. بل نربط المفاهيم ببعضها.</strong>
+                        </div>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 13: PROBLEMS
+                         ============================================================ -->
+                    <section class="code-section" id="problems">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">🧪</span>
+                            الحصة الثانية من المراجعة
+                        </h1>
+                        <p class="section-paragraph">في الحصة الثانية لن نبدأ من الصفر. سنراجع بسرعة ما تعلمناه، ثم نبدأ في ربط المفاهيم.</p>
+                        <p class="section-paragraph">سنركز على: Conditions · Logical Operators · Functions · Return · Arrays · while · for...of</p>
+                        <p class="section-paragraph">ثم نبدأ في حل <strong>Problems</strong> تجمع أكثر من Concept.</p>
+
+                        <!-- Problem 1 -->
+                        <article class="problem-card">
+                            <header class="problem-header">
+                                <span class="problem-number">Problem 1</span>
+                                <span class="problem-level easy">Easy</span>
+                            </header>
+                            <p class="problem-text">اكتب برنامجًا يحتوي على متغير age. إذا كان العمر أكبر من أو يساوي 16: اطبع <code>You can join.</code> وإلا: اطبع <code>You cannot join.</code></p>
+                            <button class="btn-solution" onclick="toggleSolution(this)">عرض الحل</button>
+                            <div class="solution-box">
+                                <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">age</span> <span class="operator">=</span> <span class="number">16</span>;
+
+<span class="keyword">if</span> (age <span class="operator">&gt;=</span> <span class="number">16</span>) {
+    console.<span class="function">log</span>(<span class="string">"You can join."</span>);
+} <span class="keyword">else</span> {
+    console.<span class="function">log</span>(<span class="string">"You cannot join."</span>);
+}</code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Problem 2 -->
+                        <article class="problem-card">
+                            <header class="problem-header">
+                                <span class="problem-number">Problem 2</span>
+                                <span class="problem-level medium">Medium</span>
+                            </header>
+                            <p class="problem-text">لدينا درجات الطلاب: <code>[80, 45, 90, 30, 70]</code>. نريد المرور على كل درجة. إذا كانت الدرجة أكبر من أو تساوي 50: اطبع <code>Pass</code> وإلا: اطبع <code>Fail</code>.</p>
+                            <div class="problem-hint">
+                                <strong>الفكرة:</strong> Array + for...of + if
+                            </div>
+                            <button class="btn-solution" onclick="toggleSolution(this)">عرض الحل</button>
+                            <div class="solution-box">
+                                <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">grades</span> <span class="operator">=</span> [<span class="number">80</span>, <span class="number">45</span>, <span class="number">90</span>, <span class="number">30</span>, <span class="number">70</span>];
+
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">grade</span> <span class="keyword">of</span> grades) {
+    <span class="keyword">if</span> (grade <span class="operator">&gt;=</span> <span class="number">50</span>) {
+        console.<span class="function">log</span>(<span class="string">"Pass"</span>);
+    } <span class="keyword">else</span> {
+        console.<span class="function">log</span>(<span class="string">"Fail"</span>);
+    }
+}</code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Problem 3 -->
+                        <article class="problem-card">
+                            <header class="problem-header">
+                                <span class="problem-number">Problem 3</span>
+                                <span class="problem-level easy">Easy</span>
+                            </header>
+                            <p class="problem-text">نريد Function تستقبل السعر والكمية وتحسب السعر الإجمالي.</p>
+                            <button class="btn-solution" onclick="toggleSolution(this)">عرض الحل</button>
+                            <div class="solution-box">
+                                <div class="code-block">
+<pre><code><span class="keyword">function</span> <span class="function">calculateTotal</span>(price, quantity) {
+    <span class="keyword">return</span> price <span class="operator">*</span> quantity;
+}
+
+<span class="keyword">let</span> <span class="variable">total</span> <span class="operator">=</span> <span class="function">calculateTotal</span>(<span class="number">100</span>, <span class="number">3</span>);
+
+console.<span class="function">log</span>(total); <span class="comment">// 300</span></code></pre>
+                                </div>
+                                <p>هنا: <code>price</code> و <code>quantity</code> Parameters. و <code>100</code> و <code>3</code> Arguments. والنتيجة يتم إرجاعها باستخدام return.</p>
+                            </div>
+                        </article>
+
+                        <!-- Problem 4 -->
+                        <article class="problem-card">
+                            <header class="problem-header">
+                                <span class="problem-number">Problem 4</span>
+                                <span class="problem-level medium">Medium</span>
+                            </header>
+                            <p class="problem-text">نريد Function تستقبل درجة الطالب وتعيد <code>"Pass"</code> إذا كانت الدرجة 50 أو أكثر، و <code>"Fail"</code> إذا كانت أقل من 50.</p>
+                            <button class="btn-solution" onclick="toggleSolution(this)">عرض الحل</button>
+                            <div class="solution-box">
+                                <div class="code-block">
+<pre><code><span class="keyword">function</span> <span class="function">checkGrade</span>(grade) {
+    <span class="keyword">if</span> (grade <span class="operator">&gt;=</span> <span class="number">50</span>) {
+        <span class="keyword">return</span> <span class="string">"Pass"</span>;
+    } <span class="keyword">else</span> {
+        <span class="keyword">return</span> <span class="string">"Fail"</span>;
+    }
+}
+
+<span class="keyword">let</span> <span class="variable">result</span> <span class="operator">=</span> <span class="function">checkGrade</span>(<span class="number">75</span>);
+
+console.<span class="function">log</span>(result); <span class="comment">// "Pass"</span></code></pre>
+                                </div>
+                                <p>لاحظ أننا بدأنا نربط: Function + Parameter + Condition + return</p>
+                            </div>
+                        </article>
+
+                        <!-- Problem 5 -->
+                        <article class="problem-card">
+                            <header class="problem-header">
+                                <span class="problem-number">Problem 5</span>
+                                <span class="problem-level medium">Medium</span>
+                            </header>
+                            <p class="problem-text">نريد المرور على Array من الأرقام وطباعة الأرقام الأكبر من 10 فقط.</p>
+                            <button class="btn-solution" onclick="toggleSolution(this)">عرض الحل</button>
+                            <div class="solution-box">
+                                <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">numbers</span> <span class="operator">=</span> [<span class="number">5</span>, <span class="number">12</span>, <span class="number">8</span>, <span class="number">20</span>, <span class="number">3</span>, <span class="number">15</span>];
+
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">number</span> <span class="keyword">of</span> numbers) {
+    <span class="keyword">if</span> (number <span class="operator">&gt;</span> <span class="number">10</span>) {
+        console.<span class="function">log</span>(number);
+    }
+}</code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Problem 6 -->
+                        <article class="problem-card">
+                            <header class="problem-header">
+                                <span class="problem-number">Problem 6</span>
+                                <span class="problem-level easy">Easy</span>
+                            </header>
+                            <p class="problem-text">استخدم while لطباعة الأرقام من 1 إلى 5.</p>
+                            <button class="btn-solution" onclick="toggleSolution(this)">عرض الحل</button>
+                            <div class="solution-box">
+                                <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">number</span> <span class="operator">=</span> <span class="number">1</span>;
+
+<span class="keyword">while</span> (number <span class="operator">&lt;=</span> <span class="number">5</span>) {
+    console.<span class="function">log</span>(number);
+    number<span class="operator">++</span>;
+}</code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Problem 7 -->
+                        <article class="problem-card">
+                            <header class="problem-header">
+                                <span class="problem-number">Problem 7</span>
+                                <span class="problem-level medium">Medium</span>
+                            </header>
+                            <p class="problem-text">نريد استخدام Logical Operators. إذا كان الطالب عمره 16 سنة أو أكثر، ولديه بطاقة الطالب، يسمح له بالدخول.</p>
+                            <button class="btn-solution" onclick="toggleSolution(this)">عرض الحل</button>
+                            <div class="solution-box">
+                                <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">age</span> <span class="operator">=</span> <span class="number">16</span>;
+<span class="keyword">let</span> <span class="variable">hasStudentCard</span> <span class="operator">=</span> <span class="keyword">true</span>;
+
+<span class="keyword">if</span> (age <span class="operator">&gt;=</span> <span class="number">16</span> <span class="operator">&amp;&amp;</span> hasStudentCard <span class="operator">===</span> <span class="keyword">true</span>) {
+    console.<span class="function">log</span>(<span class="string">"Allowed"</span>);
+} <span class="keyword">else</span> {
+    console.<span class="function">log</span>(<span class="string">"Not allowed"</span>);
+}</code></pre>
+                                </div>
+                                <p>هنا استخدمنا: Comparison Operator · Logical AND · if / else · Boolean</p>
+                            </div>
+                        </article>
+
+                        <!-- Problem Shamel -->
+                        <article class="problem-card shamel">
+                            <header class="problem-header">
+                                <span class="problem-number">Problem شامل</span>
+                                <span class="problem-level hard">Hard</span>
+                            </header>
+                            <p class="problem-text">لدينا: <code>["Ahmed", "Ali", "Omar"]</code>. ونريد Function تستقبل اسم الطالب وتطبع رسالة ترحيب.</p>
+                            <button class="btn-solution" onclick="toggleSolution(this)">عرض الحل</button>
+                            <div class="solution-box">
+                                <div class="code-block">
+<pre><code><span class="keyword">let</span> <span class="variable">students</span> <span class="operator">=</span> [
+    <span class="string">"Ahmed"</span>,
+    <span class="string">"Ali"</span>,
+    <span class="string">"Omar"</span>
+];
+
+<span class="keyword">function</span> <span class="function">welcomeStudent</span>(name) {
+    <span class="keyword">return</span> <span class="string">"Welcome "</span> <span class="operator">+</span> name;
+}
+
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">student</span> <span class="keyword">of</span> students) {
+    console.<span class="function">log</span>(<span class="function">welcomeStudent</span>(student));
+}</code></pre>
+                                </div>
+                                <p>هنا جمعنا: Array · for...of · Function · Parameter · Argument · return · String · Concatenation · console.log()</p>
+                                <div class="info-box">
+                                    وهذا هو الهدف الحقيقي من المراجعة. ليس أن الطالب يحفظ تعريف كل عنصر بشكل منفصل. ولكن أن يستطيع استخدامهم معًا لحل مشكلة.
+                                </div>
+                            </div>
+                        </article>
+                    </section>
+
+                    <!-- ============================================================
+                         SECTION 14: HOMEWORK
+                         ============================================================ -->
+                    <section class="code-section" id="homework">
+                        <h1 class="section-heading">
+                            <span class="heading-icon">📝</span>
+                            الواجب العملي
+                        </h1>
+                        <p class="section-paragraph">قبل الدخول إلى منهج الصف الثاني الثانوي، يجب أن يكون الطالب قادرًا على فهم واستخدام ما يلي:</p>
+
+                        <div class="checklist-grid">
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>let</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>const</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> قواعد تسمية المتغيرات</div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> Number</div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> String</div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> Boolean</div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> العمليات الحسابية + - * /</div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> دمج النصوص باستخدام +</div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>==</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>===</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>!=</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>&gt;</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>&lt;</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>&gt;=</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>&lt;=</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>&amp;&amp;</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>||</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>!</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>prompt</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>console.log</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>if</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>else if</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>else</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> Function</div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> Parameter</div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> Argument</div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>return</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> Array</div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> Index</div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>length</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>while</code></div>
+                            <div class="check-item"><i class="fas fa-check-circle"></i> <code>for...of</code></div>
+                        </div>
+
+                        <h2 class="subsection-heading">📌 كما يجب أن يفهم:</h2>
+                        <ul class="bullet-list">
+                            <li>ما هو HTML؟</li>
+                            <li>ما هي JavaScript؟</li>
+                            <li>أين نضع JavaScript؟</li>
+                            <li>ما الفرق بين inline و external JavaScript؟</li>
+                            <li>ما معنى defer؟</li>
+                            <li>ما مشكلة تنفيذ JavaScript قبل بناء عناصر HTML؟</li>
+                            <li>ما هو Console؟</li>
+                            <li>ما معنى Web API؟</li>
+                            <li>ما علاقة ECMAScript بـ JavaScript؟</li>
+                            <li>ما هو ES6؟</li>
+                            <li>ما هي Comments؟</li>
+                            <li>وما الفرق بين Prettier و ESLint؟</li>
+                        </ul>
+
+                        <h2 class="subsection-heading">📌 الفكرة التي يجب أن يخرج بها الطالب</h2>
+                        <div class="philosophy-box">
+                            <p>JavaScript ليست مجموعة أوامر نحفظها. JavaScript هي أداة نستخدمها لحل المشكلات.</p>
+                            <p>عندما نواجه مشكلة، نفكر:</p>
+                            <ul class="bullet-list">
+                                <li>ما البيانات التي أحتاجها؟</li>
+                                <li>هل أحتاج Variables؟</li>
+                                <li>هل أحتاج Condition؟</li>
+                                <li>هل أحتاج Loop؟</li>
+                                <li>هل أحتاج Function؟</li>
+                                <li>هل أحتاج Array؟</li>
+                            </ul>
+                            <p>ثم نكتب الكود الذي يحول الحل الذي فكرنا فيه إلى خطوات يستطيع الكمبيوتر تنفيذها.</p>
+                            <p><strong>البرمجة تبدأ بالتفكير. ثم يأتي الكود.</strong></p>
+                            <p>وهذا هو السبب في أن هدفنا في مادة البرمجة ليس أن نحفظ Syntax فقط. هدفنا أن نتعلم:</p>
+                            <div class="philosophy-flow">
+                                <span>Logic</span>
+                                <i class="fas fa-arrow-left"></i>
+                                <span>Code</span>
+                                <i class="fas fa-arrow-left"></i>
+                                <span>Problem Solving</span>
+                                <i class="fas fa-arrow-left"></i>
+                                <span>Innovation</span>
+                            </div>
+                        </div>
+
+                        <h2 class="subsection-heading">📌 ملحوظة للطالب</h2>
+                        <div class="warning-box">
+                            <div class="warning-header"><i class="fas fa-lightbulb"></i> نصيحة ذهبية</div>
+                            <p>لا تحفظ الكود كما هو. حاول دائمًا أن تفهم:</p>
+                            <ul class="bullet-list">
+                                <li>لماذا كتبنا هذا السطر؟</li>
+                                <li>ماذا سيحدث لو غيرناه؟</li>
+                                <li>ماذا سيحدث لو حذفناه؟</li>
+                                <li>ما نوع البيانات التي نتعامل معها؟</li>
+                                <li>وما النتيجة التي نتوقعها قبل تشغيل البرنامج؟</li>
+                            </ul>
+                            <p>إذا استطعت توقع نتيجة البرنامج قبل تشغيله، فأنت لا تحفظ الكود فقط، بل بدأت تفهم طريقة عمله.</p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <!-- STATUS BAR -->
+                <footer class="status-bar">
+                    <div class="status-left">
+                        <span class="status-item"><i class="fas fa-code-branch"></i> main</span>
+                        <span class="status-item"><i class="fas fa-sync-alt"></i> 0</span>
+                        <span class="status-item"><i class="fas fa-exclamation-circle"></i> 0</span>
+                        <span class="status-item"><i class="fas fa-times-circle"></i> 0</span>
+                    </div>
+                    <div class="status-right">
+                        <span class="status-item">Ln <span id="lineNumber">1</span>, Col 1</span>
+                        <span class="status-item">Spaces: 4</span>
+                        <span class="status-item">UTF-8</span>
+                        <span class="status-item"><i class="fab fa-js-square"></i> JavaScript</span>
+                        <span class="status-item"><i class="fas fa-bell"></i></span>
+                    </div>
+                </footer>
+
+            </main>
+        </div>
+
+    </div>
+
+    <script src="vscode-script.js"></script>
+</body>
+</html>
