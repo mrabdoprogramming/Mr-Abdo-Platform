@@ -575,7 +575,7 @@ const courses = {
               htmlUrl: "2-1-4.html"
             }
             {
-              id: "lesson4",
+              id: "lesson5",
               title: "جزء العملي الخاص باولى ثانوي",
               description: "شرح عناصر الجافاسكريبت الخاصه بمنهج اولى ثانوي",
               duration: "",
