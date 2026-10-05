@@ -579,7 +579,7 @@ const courses = {
               title: "جزء العملي الخاص باولى ثانوي",
               description: "شرح عناصر الجافاسكريبت الخاصه بمنهج اولى ثانوي",
               duration: "",
-              driveUrl: ",
+              driveUrl: "",
               htmlUrl: "1se_js_ex.html"
             }
           ]
