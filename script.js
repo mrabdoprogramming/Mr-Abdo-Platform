@@ -91,6 +91,24 @@ const students = [
     grade: "secondSecondary",
     active: true
   },
+   {
+    id: "student005",
+    username: "raed",
+    password: "24898",
+    name: " رائد لبيب الحربي",
+    phone: "01038124898",
+    grade: "secondSecondary",
+    active: true
+  },
+   {
+    id: "student005",
+    username: "mahmoudsuror",
+    password: "26803",
+    name: " محمود احمد سرور",
+    phone: "01157026803",
+    grade: "secondSecondary",
+    active: true
+  },
   {
     id: "student003",
     username: "hamza-ahmed",
