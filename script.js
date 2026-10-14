@@ -613,21 +613,24 @@ const courses = {
               title: "تقنيات التشفير والمصادقة",
               description: "التعرف على تقنيات التشفير والمصادقة ودورها في حماية المعلومات.",
               duration: "",
-              driveUrl: ""
+              driveUrl: "https://drive.google.com/drive/folders/1hVZpjnec4KHusJYL-owfsJd_jqlC91sF?usp=sharing",
+               htmlUrl: "2-2-1.html"
             },
             {
               id: "lesson2",
               title: "تصميم أمن الشبكات",
               description: "التعرف على المبادئ الأساسية لتصميم شبكات آمنة.",
               duration: "",
-              driveUrl: ""
+              driveUrl: "https://drive.google.com/drive/folders/1OgLGsSsebUHoSvkebHyUoZExGYJQFND6?usp=drive_link",
+               htmlUrl: "2-2-2.html"
             },
             {
               id: "lesson3",
               title: "الاستجابة للحوادث وإدارة المخاطر",
               description: "التعرف على أساليب الاستجابة للحوادث وإدارة المخاطر السيبرانية.",
               duration: "",
-              driveUrl: ""
+              driveUrl: "https://drive.google.com/drive/folders/1gPA_BH8K0aSwGTx0iSSW7ZDFfm-g4eJ3?usp=sharing",
+               htmlUrl: "2-2-3.html"
             }
           ]
         },
