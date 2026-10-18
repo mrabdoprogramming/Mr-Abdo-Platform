@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستر عبدو برمجة - أمان الشبكات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #e8ecf1;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 1366px;
+            max-width: 98vw;
+            height: 768px;
+            max-height: 98vh;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cover-decoration {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.04;
+            font-family: 'Cairo', sans-serif;
+            color: #1e293b;
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        .cover-decoration.top-right {
+            top: 30px;
+            right: 40px;
+            text-align: right;
+            font-size: 13px;
+            opacity: 0.05;
+        }
+
+        .cover-decoration.bottom-left {
+            bottom: 30px;
+            left: 40px;
+            font-size: 13px;
+            opacity: 0.05;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            padding: 28px 48px 20px 48px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .trainer-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+            border-bottom: 3px solid #f0f2f5;
+            flex-shrink: 0;
+        }
+
+        .trainer-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .trainer-avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1e293b, #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            font-weight: 900;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+            border: 3px solid #f59e0b;
+        }
+
+        .trainer-details h4 {
+            color: #1e293b;
+            font-size: 22px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        .trainer-details h4 span {
+            color: #f59e0b;
+        }
+
+        .trainer-details .sub {
+            color: #6b7280;
+            font-size: 16px;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .trainer-details .sub i {
+            color: #f59e0b;
+            margin-left: 6px;
+        }
+
+        .slide-counter {
+            color: #9ca3af;
+            font-size: 18px;
+            font-weight: 700;
+            background: #f3f4f6;
+            padding: 6px 22px;
+            border-radius: 24px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 6px 0;
+        }
+
+        .slide-title {
+            font-size: 40px;
+            font-weight: 900;
+            color: #1e293b;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .slide-title .icon {
+            font-size: 38px;
+        }
+
+        .slide-title .subtitle-line {
+            font-size: 18px;
+            font-weight: 400;
+            color: #9ca3af;
+            margin-right: 14px;
+        }
+
+        .divider {
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(90deg, #f59e0b, #1e293b);
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 26px 32px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f2f5;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 40px rgba(245, 158, 11, 0.08);
+            transform: translateY(-2px);
+            border-color: #f59e0b;
+        }
+
+        .card p,
+        .card li {
+            color: #1f2937;
+            font-size: 24px;
+            line-height: 2;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card ul li {
+            padding: 6px 0;
+            padding-right: 34px;
+            position: relative;
+            font-size: 23px;
+        }
+
+        .card ul li::before {
+            content: "▸";
+            position: absolute;
+            right: 0;
+            color: #f59e0b;
+            font-weight: 700;
+            font-size: 26px;
+        }
+
+        .example-box {
+            background: #fffbeb;
+            border-radius: 16px;
+            padding: 18px 24px;
+            margin-top: 14px;
+            border-right: 5px solid #f59e0b;
+        }
+
+        .example-box .label {
+            color: #6b7280;
+            font-size: 18px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .example-box .content {
+            color: #1f2937;
+            font-size: 22px;
+            line-height: 1.8;
+        }
+
+        .punchline {
+            margin-top: 16px;
+            padding: 14px 22px;
+            background: #fffbeb;
+            border-radius: 14px;
+            border-right: 5px solid #f59e0b;
+            font-size: 24px;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .punchline i {
+            color: #f59e0b;
+            margin-left: 12px;
+            font-size: 26px;
+        }
+
+        .concept-map {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 10px 0;
+        }
+
+        .concept-map .node {
+            background: #fffbeb;
+            padding: 10px 30px;
+            border-radius: 14px;
+            border: 2px solid #fde68a;
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .concept-map .node:hover {
+            border-color: #f59e0b;
+            background: #fde68a;
+        }
+
+        .concept-map .node.highlight {
+            border-color: #f59e0b;
+            background: #fde68a;
+        }
+
+        .concept-map .arrow {
+            color: #f59e0b;
+            font-size: 28px;
+            opacity: 0.6;
+        }
+
+        .concept-map .row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== BIG IMAGE PLACEHOLDER ===== */
+        .big-image-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #fffbeb;
+            border: 3px dashed #f59e0b;
+            border-radius: 20px;
+            padding: 24px;
+            margin: 20px auto;
+            width: 100%;
+            max-width: 700px;
+            min-height: 320px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .big-image-placeholder:hover {
+            background: #fef3c7;
+            border-color: #d97706;
+        }
+
+        .big-image-placeholder img {
+            width: 100%;
+            height: auto;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 14px;
+            display: block;
+        }
+
+        .big-image-placeholder .placeholder-icon {
+            font-size: 64px;
+            color: #f59e0b;
+            margin-bottom: 12px;
+            opacity: 0.6;
+        }
+
+        .big-image-placeholder .placeholder-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .big-image-placeholder .placeholder-desc {
+            font-size: 15px;
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 8px;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        .big-image-placeholder .placeholder-path {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #f59e0b;
+            background: #ffffff;
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid #fde68a;
+            direction: ltr;
+            margin-top: 8px;
+        }
+
+        .big-image-placeholder .placeholder-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #f59e0b;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== TABLE ===== */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 12px;
+            border-radius: 14px;
+            border: 1px solid #f0f2f5;
+        }
+
+        .table-wrapper table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 17px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .table-wrapper thead {
+            background: #f59e0b;
+            color: #fff;
+        }
+
+        .table-wrapper th {
+            padding: 12px 16px;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 800;
+            border: 1px solid #f59e0b;
+        }
+
+        .table-wrapper td {
+            padding: 10px 14px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            color: #1f2937;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .table-wrapper tr:nth-child(even) {
+            background: #fffbeb;
+        }
+
+        .table-wrapper tr:hover {
+            background: #fde68a;
+        }
+
+        /* ===== TWO COL ===== */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 10px;
+        }
+
+        .two-col .card {
+            height: 100%;
+        }
+
+        .two-col .card h4 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 3px solid #f0f2f5;
+            flex-shrink: 0;
+        }
+
+        .dots {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #d1d5db;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: #f59e0b;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+            width: 36px;
+            border-radius: 8px;
+        }
+
+        .dot:hover {
+            background: #f59e0b;
+            opacity: 0.6;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            color: #374151;
+            padding: 10px 22px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background: #e5e7eb;
+            border-color: #f59e0b;
+            color: #1e293b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-primary {
+            background: #1e293b;
+            border: none;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #f59e0b;
+            color: #fff;
+            box-shadow: 0 6px 24px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-icon {
+            width: 48px;
+            height: 48px;
+            padding: 0;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 18px;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-enter {
+            animation: slideEnter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes slideEnter {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-content::-webkit-scrollbar {
+            width: 5px;
+        }
+        .slide-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .slide-content::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+
+        /* ===== NOTE BOXES ===== */
+        .note-box {
+            background: #fef2f2;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin-top: 10px;
+            border-right: 4px solid #ef4444;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .note-box .icon {
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .note-box .content {
+            font-size: 17px;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        .note-box .content strong {
+            color: #ef4444;
+        }
+
+        .note-box.tip {
+            background: #eff6ff;
+            border-right-color: #3b82f6;
+        }
+
+        .note-box.tip .content strong {
+            color: #3b82f6;
+        }
+
+        .note-box.tech {
+            background: #f0fdf4;
+            border-right-color: #22c55e;
+        }
+
+        .note-box.tech .content strong {
+            color: #22c55e;
+        }
+
+        .note-box.warn {
+            background: #fff7ed;
+            border-right-color: #f97316;
+        }
+
+        .note-box.warn .content strong {
+            color: #f97316;
+        }
+
+        /* ===== STEPS ===== */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .step-item {
+            background: #fffbeb;
+            padding: 18px 20px;
+            border-radius: 14px;
+            border-right: 4px solid #f59e0b;
+            transition: all 0.3s ease;
+        }
+
+        .step-item:hover {
+            background: #fde68a;
+            transform: translateY(-3px);
+        }
+
+        .step-item .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: #f59e0b;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .step-item .step-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .step-item .step-desc {
+            font-size: 15px;
+            color: #4b5563;
+            line-height: 1.7;
+        }
+
+        /* ===== 4 COL GRID ===== */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        .grid-4-item {
+            background: #fffbeb;
+            padding: 16px 14px;
+            border-radius: 14px;
+            text-align: center;
+            border: 1px solid #fde68a;
+            transition: all 0.3s ease;
+        }
+
+        .grid-4-item:hover {
+            transform: translateY(-3px);
+            background: #fde68a;
+            border-color: #f59e0b;
+        }
+
+        .grid-4-item .emoji-big {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .grid-4-item h5 {
+            color: #1e293b;
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .grid-4-item .desc {
+            color: #6b7280;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* Quiz Styles */
+        .quiz-section-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .quiz-section-title .icon {
+            font-size: 36px;
+        }
+
+        .quiz-section-title .sub {
+            font-size: 18px;
+            color: #6b7280;
+            font-weight: 400;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .quiz-item {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 20px 26px;
+            margin-bottom: 16px;
+            border: 2px solid #eef2f6;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .quiz-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .quiz-item:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.08);
+        }
+
+        .quiz-item .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .quiz-item .question-text {
+            font-size: 20px;
+            color: #1e293b;
+            font-weight: 700;
+            line-height: 1.8;
+            flex: 1;
+        }
+
+        .quiz-item .question-text .q-num {
+            color: #f59e0b;
+            font-weight: 900;
+            margin-left: 8px;
+        }
+
+        .quiz-item .question-text .sub-q {
+            font-weight: 400;
+            color: #4b5563;
+            font-size: 18px;
+            display: block;
+            padding-right: 30px;
+            margin-top: 4px;
+        }
+
+        .quiz-item .question-text .sub-q .letter {
+            color: #f59e0b;
+            font-weight: 700;
+        }
+
+        .btn-show-answer {
+            background: #1e293b;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .btn-show-answer:hover {
+            background: #f59e0b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-show-answer.showing {
+            background: #22c55e;
+        }
+
+        .btn-show-answer.showing:hover {
+            background: #16a34a;
+        }
+
+        .answer-box {
+            margin-top: 12px;
+            padding: 14px 20px;
+            background: #fffbeb;
+            border-radius: 12px;
+            border-right: 4px solid #f59e0b;
+            display: none;
+            font-size: 18px;
+            color: #1f2937;
+            line-height: 1.8;
+        }
+
+        .answer-box.show {
+            display: block;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .answer-box .ans-label {
+            color: #f59e0b;
+            font-weight: 700;
+        }
+
+        .answer-box .explanation {
+            color: #6b7280;
+            font-size: 17px;
+            margin-top: 4px;
+        }
+
+        .answer-box .explanation i {
+            color: #f59e0b;
+            margin-left: 6px;
+        }
+
+        .quiz-divider {
+            border: none;
+            border-top: 2px dashed #fde68a;
+            margin: 18px 0;
+        }
+
+        @media (max-width: 1024px) {
+            .slide-title {
+                font-size: 32px;
+            }
+            .card p,
+            .card li {
+                font-size: 20px;
+            }
+            .concept-map .node {
+                font-size: 18px;
+                padding: 8px 20px;
+                min-width: 150px;
+            }
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+            .steps-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .grid-4 {
+                grid-template-columns: 1fr 1fr;
+            }
+            .big-image-placeholder {
+                max-width: 600px;
+                min-height: 260px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .presentation-container {
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+                max-width: 100vw;
+            }
+            .slide-content {
+                padding: 14px 16px 10px 16px;
+            }
+            .slide-title {
+                font-size: 24px;
+            }
+            .card p,
+            .card li {
+                font-size: 17px;
+            }
+            .card ul li {
+                font-size: 17px;
+                padding-right: 24px;
+            }
+            .two-col,
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+            .grid-4 {
+                grid-template-columns: 1fr 1fr;
+            }
+            .trainer-avatar {
+                width: 42px;
+                height: 42px;
+                font-size: 18px;
+            }
+            .trainer-details h4 {
+                font-size: 17px;
+            }
+            .trainer-details .sub {
+                font-size: 13px;
+            }
+            .btn span {
+                display: none;
+            }
+            .cover-decoration {
+                display: none;
+            }
+            .concept-map .node {
+                font-size: 15px;
+                padding: 6px 14px;
+                min-width: 120px;
+            }
+            .concept-map .arrow {
+                font-size: 20px;
+            }
+            .punchline {
+                font-size: 18px;
+            }
+            .slide-counter {
+                font-size: 14px;
+                padding: 4px 14px;
+            }
+            .quiz-item .question-text {
+                font-size: 16px;
+            }
+            .quiz-item .question-text .sub-q {
+                font-size: 15px;
+                padding-right: 0;
+            }
+            .btn-show-answer {
+                font-size: 13px;
+                padding: 6px 14px;
+            }
+            .answer-box {
+                font-size: 16px;
+                padding: 10px 14px;
+            }
+            .quiz-section-title {
+                font-size: 24px;
+            }
+            .table-wrapper table {
+                font-size: 15px;
+            }
+            .table-wrapper th,
+            .table-wrapper td {
+                padding: 8px 10px;
+                font-size: 15px;
+            }
+            .big-image-placeholder {
+                max-width: 100%;
+                min-height: 200px;
+                padding: 16px;
+            }
+            .big-image-placeholder .placeholder-icon {
+                font-size: 48px;
+            }
+            .big-image-placeholder .placeholder-title {
+                font-size: 16px;
+            }
+            .big-image-placeholder .placeholder-desc {
+                font-size: 13px;
+            }
+            .big-image-placeholder .placeholder-path {
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide-title {
+                font-size: 20px;
+            }
+            .card {
+                padding: 14px 16px;
+            }
+            .card p,
+            .card li {
+                font-size: 15px;
+            }
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            .quiz-item .question-text {
+                font-size: 15px;
+            }
+            .answer-box {
+                font-size: 14px;
+            }
+            .table-wrapper table {
+                font-size: 13px;
+            }
+            .table-wrapper th,
+            .table-wrapper td {
+                padding: 6px 8px;
+                font-size: 13px;
+            }
+            .big-image-placeholder {
+                min-height: 160px;
+                padding: 12px;
+            }
+            .big-image-placeholder .placeholder-icon {
+                font-size: 36px;
+            }
+            .big-image-placeholder .placeholder-title {
+                font-size: 14px;
+            }
+            .big-image-placeholder .placeholder-desc {
+                font-size: 11px;
+            }
+            .big-image-placeholder .placeholder-path {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container" id="app">
+        <!-- Decorative Elements -->
+        <div class="cover-decoration top-right">
+            // مستر عبدو برمجة<br>
+            // From Logic to Innovation
+        </div>
+        <div class="cover-decoration bottom-left">
+            🛡️ أمان الشبكات<br>
+            🔥 جدار الحماية<br>
+            🔒 VPN<br>
+            🏰 DMZ
+        </div>
+
+        <div class="slide-content" id="slideContent">
+            <!-- Trainer Bar -->
+            <div class="trainer-bar">
+                <div class="trainer-info">
+                    <div class="trainer-avatar">ع</div>
+                    <div class="trainer-details">
+                        <h4>مستر <span>عبدو</span> برمجة</h4>
+                        <div class="sub"><i class="fas fa-code"></i> أمان الشبكات · الصف الثاني الثانوي · الوحدة الثانية · الدرس الثاني</div>
+                    </div>
+                </div>
+                <div class="slide-counter" id="slideCounter">٠١ / ٠٩</div>
+            </div>
+
+            <!-- Slide Body -->
+            <div class="slide-body" id="slideBody"></div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <div class="dots" id="dotsContainer"></div>
+                <div class="btn-group">
+                    <button class="btn btn-icon" id="prevBtn" title="السابق"><i class="fas fa-chevron-right"></i></button>
+                    <button class="btn btn-icon" id="nextBtn" title="التالي"><i class="fas fa-chevron-left"></i></button>
+                    <button class="btn" id="autoBtn" title="تشغيل تلقائي"><i class="fas fa-play"></i> <span>تلقائي</span></button>
+                    <button class="btn btn-primary btn-icon" id="fullscreenBtn" title="عرض كامل"><i class="fas fa-expand"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  DATA - أمان الشبكات
+        // ============================================================
+        const slides = [{
+            id: 0,
+            title: 'أمان الشبكات',
+            icon: '🛡️',
+            content: `
+                <div style="text-align:center;padding:4px 0;">
+                    <div style="font-size:52px;margin-bottom:4px;">🔒</div>
+                    <div style="font-family:'Cairo',sans-serif;color:#f59e0b;font-size:22px;font-weight:700;letter-spacing:2px;">
+                        Network Security
+                    </div>
+                    <div style="width:100px;height:4px;background:linear-gradient(90deg,#f59e0b,#1e293b);margin:12px auto;"></div>
+                    <div style="font-size:20px;color:#6b7280;margin-bottom:8px;">الوحدة الثانية · الدرس الثاني · الصف الثاني الثانوي</div>
+
+                    <!-- الخريطة المفاهيمية -->
+                    <div class="concept-map">
+                        <div class="row">
+                            <div class="node highlight">🔥 جدار الحماية</div>
+                            <div class="arrow">⬇</div>
+                            <div class="node">🔒 الشبكة الافتراضية الخاصة (VPN)</div>
+                        </div>
+                        <div class="row" style="margin-top:6px;">
+                            <div class="node">🏰 المنطقة المعزولة (DMZ)</div>
+                            <div class="arrow">⬇</div>
+                            <div class="node">🛡️ الدفاع في العمق</div>
+                        </div>
+                        <div class="row" style="margin-top:6px;">
+                            <div class="node">🚫 نهج انعدام الثقة</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px;display:flex;justify-content:center;gap:30px;flex-wrap:wrap;">
+                        <div style="background:#f8fafc;padding:12px 28px;border-radius:14px;border:1px solid #eef2f6;">
+                            <span style="color:#6b7280;font-size:15px;">المادة</span>
+                            <h3 style="color:#1e293b;font-size:20px;">البرمجة والذكاء الاصطناعي</h3>
+                        </div>
+                        <div style="background:#f8fafc;padding:12px 28px;border-radius:14px;border:1px solid #eef2f6;">
+                            <span style="color:#6b7280;font-size:15px;">المقدم</span>
+                            <h3 style="color:#1e293b;font-size:20px;">مستر عبدو برمجة</h3>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px;color:#9ca3af;font-size:16px;">
+                        <i class="fas fa-arrow-left" style="color:#f59e0b;"></i> اضغط "التالي" للبدء
+                    </div>
+                </div>
+            `
+        }, {
+            id: 1,
+            title: 'خريطة الدرس والمفاهيم الأساسية',
+            icon: '🗺️',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:8px;">🗺️ خريطة الدرس</div>
+
+                    <div style="background:#fffbeb;padding:14px 20px;border-radius:14px;border-right:4px solid #f59e0b;margin-bottom:12px;">
+                        <div style="font-size:18px;font-weight:800;color:#1e293b;margin-bottom:4px;">🎯 الفكرة الأساسية للدرس</div>
+                        <div style="font-size:17px;color:#1f2937;line-height:1.8;">
+                            يأتي أمان الشبكات القوي من تكديس الإجراءات الحماية: جدار الحماية، والشبكة الافتراضية الخاصة، والمنطقة المعزولة، وحماية الأجهزة الطرفية، ومن التحقق من كل عملية وصول (نهج انعدام الثقة)، وليس من حاجز واحد.
+                        </div>
+                    </div>
+
+                    <div style="background:#f0fdf4;padding:14px 20px;border-radius:14px;border-right:4px solid #22c55e;">
+                        <div style="font-size:18px;font-weight:800;color:#16a34a;margin-bottom:6px;">📚 المفاهيم الأساسية</div>
+                        <div style="font-size:15px;color:#1f2937;line-height:1.9;">
+                            • جدار الحماية<br>
+                            • الشبكة الافتراضية الخاصة VPN - Virtual Private Network<br>
+                            • المنطقة المعزولة (DMZ)<br>
+                            • الدفاع في العمق<br>
+                            • نهج انعدام الثقة<br>
+                            • المحيط الأمني
+                        </div>
+                    </div
+                </div>
+            `
+        }, {
+            id: 2,
+            title: 'مقدمة: الحاجة إلى أمان الشبكات',
+            icon: '📖',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:10px;">📖 مقدمة الدرس</div>
+                    <div style="color:#1f2937;font-size:19px;line-height:1.9;margin-bottom:14px;">
+                        في الدرس 1-2 تعلمت كيف تحمي تقنيات التشفير والمصادقة الاتصال والحسابات. في هذا الدرس ستتوسّع الحماية إلى تصميم الشبكة نفسها.
+                    </div>
+
+                    <div style="background:#fffbeb;padding:14px 20px;border-radius:14px;border-right:4px solid #f59e0b;margin-bottom:14px;">
+                        <div style="font-size:18px;color:#1f2937;line-height:1.8;">
+                            تحتفظ شبكات المؤسسات ببيانات وخدمات مهمة قد يحاول مهاجم الوصول إليها. ولا تكفي وسيلة حماية واحدة؛ فإذا فشلت، قد تتعرض موارد أخرى للخطر. لذلك يُستخدم <strong>الدفاع في العمق</strong>، فتعمل طبقات متعددة على تقليل احتمال الاختراق والحد من أثره.
+                        </div>
+                    </div>
+
+                    <div style="background:#eff6ff;padding:14px 20px;border-radius:14px;border-right:4px solid #3b82f6;">
+                        <div style="font-size:18px;font-weight:800;color:#3b82f6;margin-bottom:4px;">❓ السؤال الرئيسي</div>
+                        <div style="font-size:17px;color:#1f2937;line-height:1.8;">
+                            كيف يمكن لمؤسسة أن تصمم شبكتها بحيث، حتى لو تم اختراق أحد الدفاعات، يظل النظام محميًّا؟
+                        </div>
+                    </div>
+                </div>
+            `
+        }, {
+            id: 3,
+            title: 'جدار الحماية والشبكة الافتراضية الخاصة',
+            icon: '🔥',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:10px;">🔥 جدار الحماية (Firewall)</div>
+
+                    <div style="background:#fffbeb;padding:16px 22px;border-radius:14px;border-right:4px solid #f59e0b;margin-bottom:14px;">
+                        <div style="font-size:18px;color:#1f2937;line-height:1.8;">
+                            نظام أو برنامج يراقب حركة مرور الشبكة ويسمح بها أو يمنعها وفق قواعد أمنية. وقد يوجد عند حدود الشبكة أو بين أجزائها أو على جهاز مضيف.
+                            <br><br>
+                            <strong>مثال:</strong> السماح بالوصول إلى خادم الويب مع منع الوصول الخارجي المباشر إلى قاعدة البيانات.
+                        </div>
+                    </div>
+
+                    <hr class="quiz-divider">
+
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:10px;">🔒 الشبكة الافتراضية الخاصة (VPN)</div>
+
+                    <div style="background:#fffbeb;padding:16px 22px;border-radius:14px;border-right:4px solid #f59e0b;margin-bottom:14px;">
+                        <div style="font-size:18px;color:#1f2937;line-height:1.8;">
+                            اتصال أو شبكة منطقية خاصة عبر شبكة عامة مثل الإنترنت. تستخدم عادةً التشفير وتقنيات النفق لحماية البيانات بين الطرفين.
+                        </div>
+                    </div>
+
+                    <div style="font-size:18px;font-weight:700;color:#1e293b;margin-bottom:8px;">🎯 الاستخدامات الرئيسية للشبكة الافتراضية الخاصة:</div>
+                    <ul>
+                        <li><strong>العمل عن بُعد:</strong> الاتصال بأمان بشبكة المؤسسة من المنزل أو أثناء التنقل.</li>
+                        <li><strong>ربط الفروع:</strong> ربط المكاتب في مواقع مختلفة بأمان.</li>
+                    </ul>
+                    <div style="margin-top:10px;background:#f0fdf4;padding:10px 16px;border-radius:12px;border-right:4px solid #22c55e;">
+                        <span style="color:#16a34a;font-weight:700;">✅ ملاحظة:</span>
+                        <span style="color:#1f2937;font-size:17px;">نظرًا لأن محتوى الاتصال يُشفَّر عند استخدام الشبكة الافتراضية الخاصة، تقل مخاطر التنصت حتى عند استخدام شبكة Wi-Fi عامة.</span>
+                    </div>
+                </div>
+            `
+        }, {
+            id: 4,
+            title: 'المنطقة المعزولة (DMZ)',
+            icon: '🏰',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:10px;">🏰 المنطقة المعزولة (DMZ – Demilitarized Zone)</div>
+
+                    <div style="background:#fffbeb;padding:16px 22px;border-radius:14px;border-right:4px solid #f59e0b;margin-bottom:14px;">
+                        <div style="font-size:18px;color:#1f2937;line-height:1.8;">
+                            منطقة تُوضع فيها الخوادم المعرَّضة للشبكة الخارجية (خوادم الويب، خوادم البريد، إلخ) بشكل منفصل عن الشبكة الداخلية.
+                        </div>
+                    </div>
+
+                    <div style="background:#eff6ff;padding:14px 20px;border-radius:14px;border-right:4px solid #3b82f6;margin-bottom:14px;">
+                        <div style="font-size:18px;color:#1f2937;line-height:1.8;">
+                            <strong>مصطلح أساسي:</strong> المنطقة المعزولة (DMZ) – منطقة للخوادم المواجهة للجمهور، منفصلة عن الشبكة الداخلية.
+                        </div>
+                    </div>
+
+                    <div style="background:#f0fdf4;padding:14px 20px;border-radius:14px;border-right:4px solid #22c55e;margin-bottom:14px;">
+                        <div style="font-size:17px;color:#1f2937;line-height:1.8;">
+                            ✅ يساعد فصل الخوادم العامة في منطقة معزولة على تقليل احتمال وصول الهجوم منها إلى الشبكة الداخلية إذا تعرض أحدها للاختراق.
+                        </div>
+                    </div>
+
+                    <div class="big-image-placeholder" style="min-height: 320px;">
+                        <span class="placeholder-badge">📷 صورة توضيحية</span>
+                        <div class="placeholder-icon">🏰</div>
+                        <div class="placeholder-title">الشكل 2.2.1 – تكوين شبكة المنطقة المعزولة (DMZ)</div>
+                        <div class="placeholder-desc">
+                            يوضح الشكل ثلاث مناطق تفصل بينها جدران حماية:
+                            <br>• <strong>الشبكة الخارجية (الإنترنت):</strong> تضم الإنترنت والمستخدمين والمهاجمين.
+                            <br>• <strong>المنطقة المعزولة DMZ:</strong> تضم خادم الويب وخادم البريد الإلكتروني.
+                            <br>• <strong>الشبكة الداخلية (المنظمة):</strong> تضم جهاز الكمبيوتر الشخصي وخادم قاعدة بيانات وبيانات سرية.
+                            <br><br>
+                            <strong>الملاحظة أسفل الشكل:</strong> إذا تمت مهاجمة خادم عام، فإن الشبكة الداخلية لا تزال محمية.
+                        </div>
+                        <img src="images/dmz.png" alt="الشكل 2.2.1 – تكوين شبكة المنطقة المعزولة (DMZ)" onerror="this.style.display='none'">
+                        <div class="placeholder-path">images/dmz.png</div>
+                    </div>
+
+                    <div class="note-box tip" style="margin-top:14px;">
+                        <div class="icon">💡</div>
+                        <div class="content">
+                            <strong>توقّف وفكّر:</strong> لماذا يكون وضع خادم ويب عام في المنطقة المعزولة (DMZ) أكثر أمانًا من وضعه داخل الشبكة الداخلية؟
+                        </div>
+                    </div>
+                </div>
+            `
+        }, {
+            id: 5,
+            title: 'الدفاع في العمق (Defense in Depth)',
+            icon: '🛡️',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:10px;">🛡️ الدفاع في العمق (Defense in Depth)</div>
+
+                    <div style="background:#fffbeb;padding:16px 22px;border-radius:14px;border-right:4px solid #f59e0b;margin-bottom:14px;">
+                        <div style="font-size:18px;color:#1f2937;line-height:1.8;">
+                            استخدام طبقات متعددة من الضوابط الأمنية، بحيث تساعد طبقات أخرى على تقليل الخطر والحد من أثر الاختراق إذا فشلت إحدى الطبقات.
+                        </div>
+                    </div>
+
+                    <div style="font-size:18px;font-weight:700;color:#1e293b;margin-top:14px;margin-bottom:8px;">📊 طبقات الدفاع في أمان الشبكات:</div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width:25%;">الطبقة</th>
+                                    <th style="width:25%;">الموقع</th>
+                                    <th style="width:50%;">الإجراء</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>1</strong></td>
+                                    <td>مدخل الشبكة</td>
+                                    <td>منع الاتصال غير المصرح به باستخدام <strong>جدار الحماية</strong>.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2</strong></td>
+                                    <td>مسار الاتصال</td>
+                                    <td>تشفير الاتصال باستخدام <strong>الشبكة الافتراضية الخاصة (VPN)</strong>.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>3</strong></td>
+                                    <td>وضع الخوادم</td>
+                                    <td>فصل الخوادم المواجهة للجمهور عن الشبكة الداخلية باستخدام <strong>المنطقة المعزولة (DMZ)</strong>.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>4</strong></td>
+                                    <td>الأجهزة الطرفية</td>
+                                    <td>تثبيت برنامج <strong>مكافحة الفيروسات</strong> والحفاظ على تحديث نظام التشغيل.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "إذا فشلت طبقة، تبقى الطبقات الأخرى تحمي النظام"</div>
+            `
+        }, {
+            id: 6,
+            title: 'نهج انعدام الثقة (Zero Trust)',
+            icon: '🚫',
+            content: `
+                <div class="card">
+                    <div style="font-size:22px;font-weight:700;color:#1e293b;margin-bottom:10px;">🚫 نهج انعدام الثقة (Zero Trust)</div>
+
+                    <div style="background:#fffbeb;padding:16px 22px;border-radius:14px;border-right:4px solid #f59e0b;margin-bottom:14px;">
+                        <div style="font-size:18px;color:#1f2937;line-height:1.8;">
+                            نهج أمني لا يمنح الثقة تلقائيًا لمستخدم أو جهاز لمجرد وجوده داخل الشبكة أو ملكيته للمؤسسة. تُفحص الهوية والصلاحيات والسياق عند طلب الوصول إلى الموارد وفق سياسة المؤسسة.
+                        </div>
+                    </div>
+
+                    <div style="background:#fef2f2;padding:14px 20px;border-radius:14px;border-right:4px solid #ef4444;margin-bottom:14px;">
+                        <div style="font-size:17px;color:#1f2937;line-height:1.8;">
+                            صُمم أمان الشبكات التقليدي بشكل أساسي حول حماية المحيط الأمني، بناءً على فرضية أن "داخل" شبكة المؤسسة آمن، وخارجها "خطر". ومع ذلك، مع انتشار الخدمات السحابية والعمل عن بُعد، أصبحت الحدود بين "الداخل" و"الخارج" غير واضحة، وأصبحت التصاميم التي تحمي المحيط الأمني فقط غير كافية.
+                        </div>
+                    </div>
+
+                    <div class="big-image-placeholder" style="min-height: 320px;">
+                        <span class="placeholder-badge">📷 صورة توضيحية</span>
+                        <div class="placeholder-icon">🚫</div>
+                        <div class="placeholder-title">الشكل 2.2.2 – الأمان التقليدي مقابل نهج انعدام الثقة</div>
+                        <div class="placeholder-desc">
+                            <strong>الأمان التقليدي:</strong> يوجد جدار حماية يفصل بين "الخارجي" و"الداخلي".
+                            <br>• الخارجي (غير موثوق): المستخدم الخارجي، والجهاز.
+                            <br>• الداخلي (موثوق بدون تحقق): المستخدم، والكمبيوتر الشخصي، والبيانات.
+                            <br><br>
+                            <strong>الثقة الصفرية (انعدام الثقة):</strong> لا يوجد حاجز داخلي / خارجي؛ المستخدم الخارجي، والمستخدم الداخلي، والجهاز كلها خلف قفل، ويتم "تحقق من كل وصول" قبل الوصول إلى التطبيق والبيانات.
+                            <br><br>
+                            <strong>الملاحظة أسفل الشكل:</strong> مع تلاشي خط الفاصل بين "الداخلي/الخارجي" بسبب الحوسبة السحابية والعمل عن بُعد، يتم التحقق من كل وصول.
+                        </div>
+                        <img src="images/zero-trust-vs-traditional.png" alt="الشكل 2.2.2 – الأمان التقليدي مقابل نهج انعدام الثقة" onerror="this.style.display='none'">
+                        <div class="placeholder-path">images/zero-trust-vs-traditional.png</div>
+                    </div>
+                </div>
+                <div class="punchline"><i class="fas fa-quote-right"></i> "لا تثق بأي شيء، تحقق من كل شيء"</div>
+            `
+        }, {
+            id: 7,
+            title: '📝 اختبر تركيزك - الجزء الأول',
+            icon: '📝',
+            content: `
+                <div class="quiz-section-title">
+                    <span class="icon">📝</span> اختبر تركيزك - الجزء الأول
+                    <span class="sub">اضغط على زر "إظهار الإجابة" بجانب كل سؤال لمعرفة الإجابة</span>
+                </div>
+
+                <!-- السؤال 1 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">1.</span> ما المصطلح الذي يصف نظامًا أو برنامجًا يراقب حركة مرور الشبكة ويسمح بها أو يمنعها وفق قواعد أمنية؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> جدار الحماية (Firewall)
+                    </div>
+                </div>
+
+                <!-- السؤال 2 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">2.</span> ما الاختصار الذي يصف اتصالًا منطقيًا خاصًا يحمي البيانات عبر شبكة عامة؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> VPN (الشبكة الافتراضية الخاصة)
+                    </div>
+                </div>
+
+                <!-- السؤال 3 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">3.</span> ما الاختصار المكوّن من ثلاثة أحرف للمنطقة التي تُوضع فيها الخوادم المعرَّضة للخارج بشكل منفصل عن الشبكة الداخلية؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> DMZ (المنطقة المعزولة)
+                    </div>
+                </div>
+
+                <!-- السؤال 4 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">4.</span> ما المصطلح الذي يُطلق على مفهوم تكديس عدة إجراءات أمنية؟
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span> الدفاع في العمق (Defense in Depth)
+                    </div>
+                </div>
+
+                <!-- السؤال 5 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">5.</span> ضع علامة ○ أمام كل عبارة (أ - د) إذا كانت صحيحة، أو علامة × إذا كانت خاطئة:
+                            <span class="sub-q"><span class="letter">(أ)</span> يسمح جدار الحماية بالاتصال أو يمنعه استنادًا إلى قواعد محددة مسبقًا.</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> يمكن أن يقلل استخدام الشبكة الافتراضية الخاصة من مخاطر التنصت على شبكة Wi-Fi عامة.</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> المنطقة المعزولة نظام يعرّض جميع الخوادم للخارج.</span>
+                            <span class="sub-q"><span class="letter">(د)</span> الدفاع في العمق هو مفهوم تكديس عدة إجراءات أمنية في طبقات متعددة.</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        (أ) <strong>○</strong> — يتحكم جدار الحماية في الاتصال استنادًا إلى القواعد.<br>
+                        (ب) <strong>○</strong> — تشفّر VPN الاتصال، مما يقلل من مخاطر التنصت.<br>
+                        (ج) <strong>×</strong> — المنطقة المعزولة هي منطقة توضع فيها الخوادم المواجهة للجمهور، وليست نظامًا يعرّض جميع الخوادم.<br>
+                        (د) <strong>○</strong> — تعريف صحيح للدفاع في العمق.
+                    </div>
+                </div>
+
+                <hr class="quiz-divider">
+
+                <!-- السؤال 6 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">6.</span> طابق كل وصف (أ - ج) بأنسب مصطلح من الخيارات التالية:
+                            <span class="sub-q">(أ) تقنية تنشئ خطًا خاصًا افتراضيًا مشفرًا عبر الإنترنت للاتصال الآمن من موقع بعيد.</span>
+                            <span class="sub-q">(ب) منطقة تُوضع فيها الخوادم المعرَّضة للخارج بشكل منفصل عن الشبكة الداخلية.</span>
+                            <span class="sub-q">(ج) نظام يسمح بالاتصال أو يمنعه استنادًا إلى قواعد محددة مسبقًا.</span>
+                            <span class="sub-q"><strong>الخيارات:</strong> [أ] جدار الحماية · [ب] الشبكة الافتراضية الخاصة · [ج] المنطقة المعزولة</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        (أ) → <strong>[ب]</strong> الشبكة الافتراضية الخاصة<br>
+                        (ب) → <strong>[ج]</strong> المنطقة المعزولة<br>
+                        (ج) → <strong>[أ]</strong> جدار الحماية
+                    </div>
+                </div>
+
+                <hr class="quiz-divider">
+
+                <div style="text-align:center;color:#6b7280;font-size:16px;margin-top:8px;">
+                    <i class="fas fa-lightbulb" style="color:#f59e0b;"></i> حاول الإجابة بنفسك قبل الضغط على زر الإجابة
+                </div>
+            `
+        }, {
+            id: 8,
+            title: '📝 اختبر تركيزك - الجزء الثاني',
+            icon: '📝',
+            content: `
+                <div class="quiz-section-title">
+                    <span class="icon">📝</span> اختبر تركيزك - الجزء الثاني
+                    <span class="sub">اضغط على زر "إظهار الإجابة" بجانب كل سؤال لمعرفة الإجابة</span>
+                </div>
+
+                <!-- السؤال 7 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">7.</span> من بين الخيارات التالية (أ - د)، اختر الخيار الذي لا يمثل استخدامًا مناسبًا للشبكة الافتراضية الخاصة:
+                            <span class="sub-q"><span class="letter">(أ)</span> الاتصال بأمان من المنزل بشبكة المؤسسة</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> ربط المكاتب في مواقع مختلفة بأمان</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> الحذف التلقائي للملفات المصابة بالفيروسات</span>
+                            <span class="sub-q"><span class="letter">(د)</span> تشفير محتوى الاتصال على شبكة Wi-Fi العامة</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة: (ج)</span>
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> الحذف التلقائي للملفات المصابة بالفيروسات وظيفة برنامج مكافحة الفيروسات (حماية الأجهزة الطرفية) وليس وظيفة الشبكة الافتراضية الخاصة. أما (أ) و(ب) فهما الاستخدامان الرئيسيان للشبكة الافتراضية الخاصة، و(د) صحيح لأنها تشفّر الاتصال.</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 8 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">8.</span> لكل إجراء أمني (أ - د)، بيّن أي طبقة من طبقات الدفاع المتعدد (أ - د) ينتمي إليها:
+                            <span class="sub-q"><span class="letter">(أ)</span> منع الاتصال غير المصرح به باستخدام جدار الحماية</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> تشفير الاتصال باستخدام الشبكة الافتراضية الخاصة</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> تثبيت برنامج مكافحة الفيروسات</span>
+                            <span class="sub-q"><span class="letter">(د)</span> فصل الخوادم المواجهة للجمهور عن الشبكة الداخلية باستخدام المنطقة المعزولة (DMZ)</span>
+                            <span class="sub-q"><strong>الطبقات:</strong> [أ] مدخل الشبكة · [ب] مسار الاتصال · [ج] وضع الخوادم · [د] الأجهزة الطرفية</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        (أ) → <strong>[أ]</strong> مدخل الشبكة<br>
+                        (ب) → <strong>[ب]</strong> مسار الاتصال<br>
+                        (ج) → <strong>[د]</strong> الأجهزة الطرفية<br>
+                        (د) → <strong>[ج]</strong> وضع الخوادم
+                    </div>
+                </div>
+
+                <!-- السؤال 9 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">9.</span> اقرأ الفقرة التالية وأجب عن كل سؤال:
+                            <span class="sub-q">"لحماية شبكة مؤسسة، تُستخدم طبقات متعددة. يراقب (أ) حركة الشبكة ويسمح بها أو يمنعها وفق قواعد، وتوضع الخوادم العامة في (ب) منفصلة عن الشبكة الداخلية، ويُحمى الاتصال البعيد عبر (ج)، ويسمى استخدام طبقات متعددة من الضوابط الأمنية (د)."</span>
+                            <span class="sub-q">• املأ الفراغات (أ) - (د).</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة:</span>
+                        (أ) جدار الحماية<br>
+                        (ب) المنطقة المعزولة (DMZ)<br>
+                        (ج) الشبكة الافتراضية الخاصة (VPN)<br>
+                        (د) الدفاع في العمق
+                    </div>
+                </div>
+
+                <!-- السؤال 10 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">10.</span> من بين الخيارات التالية (أ - د)، اختر السبب الأنسب لاستخدام منطقة معزولة (DMZ):
+                            <span class="sub-q"><span class="letter">(أ)</span> لتحسين سرعة الاتصال</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> لتعريض جميع الخوادم للخارج</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> لمنع الضرر عن الشبكة الداخلية حتى لو تعرض خادم مواجه للجمهور للهجوم</span>
+                            <span class="sub-q"><span class="letter">(د)</span> للكشف عن الفيروسات وإزالتها تلقائيًا</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة: (ج)</span>
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> فصل الخوادم العامة في منطقة معزولة يقلل احتمال وصول الهجوم من الخادم المخترق إلى الشبكة الداخلية.</div>
+                    </div>
+                </div>
+
+                <!-- السؤال 11 -->
+                <div class="quiz-item">
+                    <div class="question-header">
+                        <div class="question-text">
+                            <span class="q-num">11.</span> من بين الخيارات التالية (أ - د)، اختر الخيار الذي يصف مفهوم نهج انعدام الثقة بأنسب طريقة:
+                            <span class="sub-q"><span class="letter">(أ)</span> الوصول من داخل شبكة المؤسسة آمن، لذا فإن التحقق غير ضروري</span>
+                            <span class="sub-q"><span class="letter">(ب)</span> جدار الحماية وحده كافٍ لحماية الشبكة</span>
+                            <span class="sub-q"><span class="letter">(ج)</span> لا تُمنح الثقة تلقائيًا بناءً على موقع المستخدم أو الجهاز، ويُتحقق من كل طلب وصول وفق الهوية والصلاحيات والسياق</span>
+                            <span class="sub-q"><span class="letter">(د)</span> يحتاج فقط الوصول من الخارج إلى المراقبة</span>
+                        </div>
+                        <button class="btn-show-answer" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+                    </div>
+                    <div class="answer-box">
+                        <span class="ans-label">✅ الإجابة: (ج)</span>
+                        <div class="explanation"><i class="fas fa-arrow-left"></i> نهج انعدام الثقة لا يثق بأي مستخدم أو جهاز تلقائيًا حتى لو كان داخل الشبكة، بل يتحقق من الهوية والصلاحيات والسياق عند كل طلب وصول.</div>
+                    </div>
+                </div>
+
+                <hr class="quiz-divider">
+
+                <div style="text-align:center;color:#6b7280;font-size:16px;margin-top:8px;">
+                    <i class="fas fa-lightbulb" style="color:#f59e0b;"></i> حاول الإجابة بنفسك قبل الضغط على زر الإجابة
+                </div>
+            `
+        }];
+
+        // ============================================================
+        //  STATE
+        // ============================================================
+        let currentSlide = 0;
+        let autoPlay = false;
+        let autoInterval = null;
+
+        // ============================================================
+        //  DOM REFS
+        // ============================================================
+        const slideBody = document.getElementById('slideBody');
+        const dotsContainer = document.getElementById('dotsContainer');
+        const slideCounter = document.getElementById('slideCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const autoBtn = document.getElementById('autoBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        // ============================================================
+        //  TOGGLE ANSWER FUNCTION
+        // ============================================================
+        function toggleAnswer(button) {
+            const answerBox = button.closest('.quiz-item').querySelector('.answer-box');
+            const isShowing = answerBox.classList.contains('show');
+
+            if (isShowing) {
+                answerBox.classList.remove('show');
+                button.textContent = 'إظهار الإجابة';
+                button.classList.remove('showing');
+            } else {
+                answerBox.classList.add('show');
+                button.textContent = 'إخفاء الإجابة';
+                button.classList.add('showing');
+            }
+        }
+
+        // ============================================================
+        //  RENDER
+        // ============================================================
+        function renderSlide(index) {
+            const slide = slides[index];
+            if (!slide) return;
+
+            let html = `
+                <div class="slide-title slide-enter">
+                    <span class="icon">${slide.icon}</span>
+                    ${slide.title}
+                    <span class="subtitle-line">// ${String(index + 1).padStart(2, '0')}</span>
+                </div>
+                <div class="divider"></div>
+                <div class="fade-in" style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+                    ${slide.content}
+                </div>
+            `;
+            slideBody.innerHTML = html;
+
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            slideCounter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+
+            prevBtn.disabled = index === 0;
+            prevBtn.style.opacity = index === 0 ? '0.3' : '1';
+        }
+
+        function renderDots() {
+            dotsContainer.innerHTML = '';
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === currentSlide ? ' active' : '');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        // ============================================================
+        //  NAVIGATION
+        // ============================================================
+        function goToSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            currentSlide = index;
+            renderSlide(currentSlide);
+            renderDots();
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                goToSlide(currentSlide + 1);
+            } else if (autoPlay) {
+                goToSlide(0);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) goToSlide(currentSlide - 1);
+        }
+
+        // ============================================================
+        //  AUTOPLAY
+        // ============================================================
+        function toggleAutoPlay() {
+            autoPlay = !autoPlay;
+            if (autoPlay) {
+                autoInterval = setInterval(nextSlide, 6000);
+                autoBtn.innerHTML = '<i class="fas fa-pause"></i> <span>إيقاف</span>';
+                autoBtn.classList.add('btn-primary');
+            } else {
+                clearInterval(autoInterval);
+                autoBtn.innerHTML = '<i class="fas fa-play"></i> <span>تلقائي</span>';
+                autoBtn.classList.remove('btn-primary');
+            }
+        }
+
+        // ============================================================
+        //  FULLSCREEN
+        // ============================================================
+        function toggleFullscreen() {
+            const container = document.querySelector('.presentation-container');
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {});
+            } else {
+                document.exitFullscreen().catch(err => {});
+            }
+        }
+
+        // ============================================================
+        //  KEYBOARD SHORTCUTS
+        // ============================================================
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === ' ' || e.key === 'Space') {
+                e.preventDefault();
+                toggleAutoPlay();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+
+        // ============================================================
+        //  EVENT LISTENERS
+        // ============================================================
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+        autoBtn.addEventListener('click', toggleAutoPlay);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        // ============================================================
+        //  INIT
+        // ============================================================
+        renderDots();
+        renderSlide(0);
+    </script>
+
+</body>
+</html>
