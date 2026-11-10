@@ -75,10 +75,10 @@ const students = [
   },
    {
     id: "student004",
-    username: "zeyad",
-    password: "50143",
-    name: "زياد احمد",
-    phone: "01200650143",
+    username: "mohammed",
+    password: "5414",
+    name: "محمد احمد عبدالسميع",
+    phone: "01221395414",
     grade: "secondSecondary",
     active: true
   },
@@ -89,7 +89,7 @@ const students = [
     name: " محمود مدحت حسين",
     phone: "01017785244",
     grade: "secondSecondary",
-    active: true
+    active: false
   },
    {
     id: "student005",
@@ -98,7 +98,7 @@ const students = [
     name: " رائد لبيب الحربي",
     phone: "01038124898",
     grade: "secondSecondary",
-    active: true
+    active: false
   },
    {
     id: "student005",
