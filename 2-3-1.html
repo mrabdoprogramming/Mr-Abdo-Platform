@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>البنية العامة لتطبيقات الويب - مستر عبدو برمجة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0f2a3d;--acc:#0e7490;--soft:#e4f3f7;--line:#dbe7ec;--sh:0 8px 24px rgba(15,42,61,.10);
+--fc:#7c3aed;--fs:#f1eafe;--bc:#ea580c;--bs:#fff0e6;--dc:#16a34a;--ds:#e8f7ed}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;font-family:'Cairo',Tahoma,sans-serif;color:var(--ink);background:#fff;overflow:hidden}
+body:before,body:after{content:"";position:fixed;border-radius:50%;z-index:0;pointer-events:none}
+body:before{width:380px;height:380px;background:var(--soft);top:-140px;left:-120px}
+body:after{width:260px;height:260px;border:30px solid #eef4f6;bottom:-90px;right:-70px}
+header{position:fixed;top:0;inset-inline:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:5;background:#ffffffee}
+.brand b{font-size:clamp(18px,2vw,26px);font-weight:900;color:var(--acc)}
+.brand small{display:block;font-size:clamp(11px,1.1vw,14px);color:#666}
+.hbtn{display:flex;gap:8px}
+button{font-family:inherit;cursor:pointer}
+.ic{background:#fff;border:2px solid var(--line);border-radius:12px;padding:6px 14px;font-size:16px;font-weight:700;color:var(--ink)}
+.ic:hover,.ic.on{border-color:var(--acc);color:var(--acc)}
+main{position:fixed;inset:64px 0 74px 0;z-index:1}
+.slide{position:absolute;inset:0;padding:10px clamp(16px,5vw,80px);overflow-y:auto;opacity:0;visibility:hidden;transition:opacity .35s}
+.slide.act{opacity:1;visibility:visible}
+h1{font-size:clamp(30px,5vw,64px);font-weight:900;line-height:1.3}
+h2{font-size:clamp(26px,3.6vw,48px);font-weight:900;margin-bottom:14px;padding-inline-start:16px;border-inline-start:8px solid var(--acc)}
+h3{font-size:clamp(20px,2.4vw,32px);font-weight:700;color:var(--acc);margin:8px 0}
+p,li{font-size:clamp(17px,2.1vw,28px);line-height:1.8}
+ul,ol{padding-inline-start:28px}
+.card{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px 22px;box-shadow:var(--sh);margin:10px 0}
+.card.hl{border-color:var(--acc);background:var(--soft)}
+.card.warn{border-color:#f59e0b;background:#fff8e6}
+.card.warn h3{color:#b45309}
+.card.gold{border-color:var(--acc);background:linear-gradient(135deg,var(--soft),#fff)}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.acc{color:var(--acc);font-weight:900}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block;font-weight:700}
+.center{text-align:center}
+.cover{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;text-align:center;gap:14px}
+.tag{font-size:clamp(16px,1.8vw,24px);color:#555}
+.map{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin:10px 0}
+.node{background:#fff;border:2px solid var(--acc);border-radius:30px;padding:8px 18px;font-weight:700;font-size:clamp(14px,1.7vw,22px);box-shadow:var(--sh)}
+.arr{color:var(--acc);font-size:26px;font-weight:900}
+table{border-collapse:collapse;width:100%;background:#fff;box-shadow:var(--sh);border-radius:14px;overflow:hidden;margin:8px 0}
+th,td{border:1px solid var(--line);padding:6px clamp(8px,1.4vw,20px);text-align:center;font-size:clamp(14px,1.7vw,24px);line-height:1.6}
+th{background:var(--ink);color:#fff}
+td.l{text-align:start}
+.chip{display:inline-block;border-radius:20px;padding:0 14px;font-weight:900;white-space:nowrap}
+.chip.f{background:var(--fs);color:var(--fc);border:2px solid var(--fc)}
+.chip.b{background:var(--bs);color:var(--bc);border:2px solid var(--bc)}
+.chip.d{background:var(--ds);color:var(--dc);border:2px solid var(--dc)}
+.lay{border-radius:18px;padding:14px 20px;border:3px solid;box-shadow:var(--sh)}
+.lay.f{border-color:var(--fc);background:var(--fs)}.lay.f h3{color:var(--fc)}
+.lay.b{border-color:var(--bc);background:var(--bs)}.lay.b h3{color:var(--bc)}
+.lay.d{border-color:var(--dc);background:var(--ds)}.lay.d h3{color:var(--dc)}
+.lay .em{font-size:44px;text-align:center}
+.svgbox{background:#fff;border:2px dashed var(--line);border-radius:18px;padding:8px;margin:10px 0}
+.svgbox svg{width:100%;height:auto;display:block;font-family:'Cairo',Tahoma,sans-serif}
+.steps{display:flex;flex-direction:column;gap:8px}
+.step{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--line);border-radius:14px;padding:6px 14px}
+.step .n{flex:none;width:38px;height:38px;border-radius:50%;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:20px;margin-top:6px}
+.step.go .n{background:var(--fc)}.step.back .n{background:var(--dc)}
+.step p{font-size:clamp(16px,1.9vw,25px);line-height:1.6;margin:4px 0}
+.q{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.q .t{font-size:clamp(17px,2vw,26px);font-weight:600;flex:1;min-width:220px;line-height:1.7}
+.ans{display:none;width:100%;margin-top:8px;padding:10px 16px;background:var(--soft);border-inline-start:6px solid var(--acc);border-radius:10px;font-size:clamp(16px,1.8vw,24px);line-height:1.8}
+.ans.show{display:block}
+.show-btn{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:8px 18px;font-size:clamp(14px,1.5vw,20px);font-weight:700}
+.show-btn.open{background:var(--ink)}
+.qh{background:var(--ink);color:#fff;border-radius:14px;padding:8px 18px;margin:18px 0 6px;font-size:clamp(18px,2.2vw,30px);font-weight:700}
+.qh em{font-style:normal;color:#9fe3f2}
+.qs{font-weight:700;margin:8px 0;font-size:clamp(17px,2vw,26px);line-height:1.7}
+.opts{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:clamp(15px,1.8vw,23px);margin-top:4px}
+.ok{color:var(--dc);font-weight:900}.no{color:#dc2626;font-weight:900}
+nav{position:fixed;bottom:0;inset-inline:0;height:74px;z-index:5;display:flex;align-items:center;justify-content:center;gap:18px;background:#ffffffee;border-top:1px solid var(--line)}
+nav .ic{font-size:clamp(15px,1.8vw,22px);padding:8px 22px}
+.dots{display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:62vw}
+.dots b{width:12px;height:12px;border-radius:50%;background:#cfdde3;cursor:pointer;transition:.25s}
+.dots b.act{background:var(--acc);transform:scale(1.35)}
+.cnt{font-weight:700;min-width:50px;text-align:center}
+#bar{position:fixed;top:64px;inset-inline-start:0;height:4px;background:var(--acc);z-index:6;width:0;transition:width .3s}
+@media(max-width:600px){nav{gap:8px}.dots b{width:8px;height:8px}.dots{gap:4px}.cnt{display:none}}
+@media(prefers-reduced-motion:reduce){.slide,.dots b,#bar{transition:none}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<header>
+ <div class="brand"><b>مستر عبدو برمجة</b><small>يرى مالا يُكتب، يبحث عما لا يظهر</small></div>
+ <div class="hbtn"><button class="ic" id="auto" title="تشغيل تلقائي (6 ثوانٍ)">▶ تشغيل تلقائي</button><button class="ic" id="fs" title="عرض كامل (F)">⛶ ملء الشاشة</button></div>
+</header>
+
+<main id="deck">
+
+<!-- 1 غلاف -->
+<section class="slide act"><div class="cover">
+ <div style="font-size:64px">🌐</div>
+ <h1>البنية العامة لتطبيقات الويب</h1>
+ <p class="tag">الوحدة الثالثة · الدرس الأول (3-1) · الصف الثاني الثانوي</p>
+ <div class="map">
+  <div class="node">📘 ما هو تطبيق الويب؟</div><span class="arr">←</span>
+  <div class="node">🧱 الطبقات الثلاث</div><span class="arr">←</span>
+  <div class="node">🔄 رحلة الطلب</div><span class="arr">←</span>
+  <div class="node">🧩 خدمات مختلفة</div><span class="arr">←</span>
+  <div class="node">🛠️ تشخيص الأعطال</div><span class="arr">←</span>
+  <div class="node">❓ الأسئلة</div>
+ </div>
+ <p class="tag">المادة: البرمجة والذكاء الاصطناعي · المقدم: <b class="acc">مستر عبدو برمجة</b></p>
+</div></section>
+
+<!-- 2 الفكرة الأساسية + تعريف -->
+<section class="slide">
+ <h2>أولًا: ما هو تطبيق الويب؟</h2>
+ <div class="card gold"><h3>🎯 الفكرة الأساسية</h3>
+  <p>تطبيق الويب يتكوّن من <b class="acc">ثلاث طبقات</b> تتعاون مع بعض عشان تحوّل أي حاجة يعملها المستخدم إلى نتيجة يشوفها.</p></div>
+ <div class="card hl"><h3>📌 التعريف</h3>
+  <p><b>تطبيق الويب (Web Application):</b> برنامج بتستخدمه <b class="acc">غالبًا من خلال المتصفح</b> (Chrome مثلًا) من غير ما تحتاج تثبّته على جهازك.</p></div>
+ <div class="card"><h3>🧪 أمثلة</h3>
+  <div class="map"><div class="node">▶️ يوتيوب</div><div class="node">🛒 موقع تسوق</div><div class="node">✉️ جيميل</div><div class="node">🗺️ الخرائط</div></div></div>
+ <div class="card warn"><h3>⚠️ خد بالك</h3>
+  <p>الكتاب بيقول <b>"عادةً"</b> و<b>"غالبًا"</b> لأن بعض تطبيقات الويب ممكن تتثبّت على الجهاز فعلًا. الكلمتين دول مهمين في الامتحان.</p></div>
+</section>
+
+<!-- 3 الطبقات الثلاث -->
+<section class="slide">
+ <h2>ثانيًا: الطبقات الثلاث</h2>
+ <div class="svgbox" id="svg-main"></div>
+ <div class="grid">
+  <div class="lay f"><div class="em">🖥️</div><h3>الواجهة الأمامية</h3><p>الجزء اللي <b>المستخدم بيشوفه</b> ويتعامل معاه في المتصفح؛ تعرض المحتوى وتستقبل اللي بتكتبه أو بتختاره.</p><p><b>أمثلة:</b> شاشة البحث، صفحات المنتجات، نماذج الإدخال.</p></div>
+  <div class="lay b"><div class="em">⚙️</div><h3>الواجهة الخلفية</h3><p>الجزء اللي <b>بيشتغل على الخادم</b>؛ تعالج الطلبات وتطبّق قواعد التطبيق.</p><p><b>أمثلة:</b> البحث عن المنتجات، التحقق من تسجيل الدخول.</p></div>
+  <div class="lay d"><div class="em">🗄️</div><h3>قاعدة البيانات</h3><p>الطبقة اللي <b>بتحفظ البيانات</b> وتوفرها وقت الحاجة.</p><p><b>أمثلة:</b> معلومات المنتجات، المستخدمين، سجل الطلبات.</p></div>
+ </div>
+</section>
+
+<!-- 4 تشبيه المطعم + القاعدة الذهبية -->
+<section class="slide">
+ <h2>تشبيه المطعم 🍽️</h2>
+ <div class="grid">
+  <div class="lay f"><div class="em">🍽️🧑‍🍳</div><h3>الصالة والنادل</h3><p>الصالة وقائمة الطعام والنادل اللي بياخد طلبك = <span class="chip f">الواجهة الأمامية</span></p></div>
+  <div class="lay b"><div class="em">👨‍🍳🔥</div><h3>الطاهي</h3><p>الطاهي اللي بيجهز الطلب حسب قواعد المطعم = <span class="chip b">الواجهة الخلفية</span></p></div>
+  <div class="lay d"><div class="em">📦🥕</div><h3>المخزن</h3><p>المخزن اللي فيه المكونات = <span class="chip d">قاعدة البيانات</span></p></div>
+ </div>
+ <div class="card gold center"><h3>🔑 القاعدة الذهبية (احفظها)</h3>
+  <p><span class="chip f">الأمامية</span> تعرض وتجمع &nbsp;–&nbsp; <span class="chip b">الخلفية</span> تقرر وتعالج &nbsp;–&nbsp; <span class="chip d">قاعدة البيانات</span> تخزن وتسترجع</p></div>
+</section>
+
+<!-- 5 من يعمل أين -->
+<section class="slide">
+ <h2>من يعمل أين؟ 📍</h2>
+ <div class="svgbox"><svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg">
+  <rect x="520" y="20" width="360" height="210" rx="18" fill="#f1eafe" stroke="#7c3aed" stroke-width="3" stroke-dasharray="8 6"/>
+  <text x="700" y="55" text-anchor="middle" font-size="24" font-weight="900" fill="#7c3aed">🌍 جهاز المستخدم (المتصفح)</text>
+  <rect x="580" y="90" width="240" height="100" rx="14" fill="#fff" stroke="#7c3aed" stroke-width="3"/>
+  <text x="700" y="148" text-anchor="middle" font-size="24" font-weight="900" fill="#7c3aed">🖥️ الواجهة الأمامية</text>
+  <rect x="20" y="20" width="440" height="210" rx="18" fill="#fff7f0" stroke="#ea580c" stroke-width="3" stroke-dasharray="8 6"/>
+  <text x="240" y="55" text-anchor="middle" font-size="24" font-weight="900" fill="#ea580c">☁️ الخادم (Server)</text>
+  <rect x="250" y="90" width="190" height="100" rx="14" fill="#fff" stroke="#ea580c" stroke-width="3"/>
+  <text x="345" y="148" text-anchor="middle" font-size="21" font-weight="900" fill="#ea580c">⚙️ الخلفية</text>
+  <rect x="40" y="90" width="190" height="100" rx="14" fill="#fff" stroke="#16a34a" stroke-width="3"/>
+  <text x="135" y="148" text-anchor="middle" font-size="21" font-weight="900" fill="#16a34a">🗄️ التخزين</text>
+ </svg></div>
+ <div class="card hl"><p>🔎 أسرع طريقة للتفريق لو جاك سؤال <b>"أيهما يعمل على المتصفح؟"</b> ← <span class="chip f">الأمامية</span> هي اللي في المتصفح، و<span class="chip b">الخلفية</span> هي اللي على الخادم.</p></div>
+ <div class="card"><h3>➕ معلومة إضافية</h3>
+  <p>"قاعدة البيانات" في الكتاب أوسع من مجرد جداول؛ ممكن تشمل تخزين ملفات (زي الصور) أو ذاكرة مخبأة أو خدمات بيانات خارجية.</p></div>
+</section>
+
+<!-- 6 رحلة الطلب SVG -->
+<section class="slide">
+ <h2>ثالثًا: كيف تتعاون الطبقات؟ 🔄</h2>
+ <div class="card hl"><p><b>المثال:</b> البحث عن منتج في متجر إلكتروني 🛍️🔍</p></div>
+ <div class="svgbox"><svg viewBox="0 0 900 330" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+   <marker id="mg" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#7c3aed"/></marker>
+   <marker id="mb" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#16a34a"/></marker>
+  </defs>
+  <g font-size="19" font-weight="900" text-anchor="middle">
+   <rect x="715" y="15" width="150" height="62" rx="14" fill="#0f2a3d"/><text x="790" y="53" fill="#fff">👤 المستخدم</text>
+   <rect x="485" y="15" width="150" height="62" rx="14" fill="#7c3aed"/><text x="560" y="53" fill="#fff">الأمامية</text>
+   <rect x="255" y="15" width="150" height="62" rx="14" fill="#ea580c"/><text x="330" y="53" fill="#fff">الخلفية</text>
+   <rect x="25" y="15" width="150" height="62" rx="14" fill="#16a34a"/><text x="100" y="53" fill="#fff">قاعدة البيانات</text>
+  </g>
+  <g stroke="#cfdde3" stroke-width="2" stroke-dasharray="6 6"><line x1="790" y1="80" x2="790" y2="310"/><line x1="560" y1="80" x2="560" y2="310"/><line x1="330" y1="80" x2="330" y2="310"/><line x1="100" y1="80" x2="100" y2="310"/></g>
+  <text x="450" y="112" text-anchor="middle" font-size="19" font-weight="900" fill="#7c3aed">🔵 رحلة الذهاب</text>
+  <g stroke="#7c3aed" stroke-width="4" marker-end="url(#mg)"><line x1="790" y1="150" x2="570" y2="150"/><line x1="560" y1="195" x2="340" y2="195"/><line x1="330" y1="240" x2="110" y2="240"/></g>
+  <g font-size="15" font-weight="700" text-anchor="middle" fill="#7c3aed"><text x="675" y="138">إدخال كلمات البحث</text><text x="445" y="183">إرسال الطلب</text><text x="215" y="228">طلب المنتجات</text></g>
+  <g font-size="18" font-weight="900" text-anchor="middle" fill="#fff"><circle cx="790" cy="150" r="15" fill="#7c3aed"/><text x="790" y="157">1</text><circle cx="560" cy="195" r="15" fill="#7c3aed"/><text x="560" y="202">2</text><circle cx="330" cy="240" r="15" fill="#7c3aed"/><text x="330" y="247">3</text></g>
+  <text x="450" y="283" text-anchor="middle" font-size="19" font-weight="900" fill="#16a34a">🟢 رحلة العودة ↓ (انظر الشرائح التالية)</text>
+ </svg></div>
+ <p class="center">لاحظ أن كل طبقة تتحدث مع <b class="acc">الطبقة المجاورة لها فقط</b>.</p>
+</section>
+
+<!-- 7 خطوات الذهاب والعودة -->
+<section class="slide">
+ <h2>رحلة الطلب خطوة بخطوة (6 خطوات)</h2>
+ <div class="grid">
+  <div><h3 style="color:var(--fc)">🔵 رحلة الذهاب (نحو البيانات)</h3><div class="steps">
+   <div class="step go"><div class="n">1</div><p><span class="chip f">الأمامية</span> تستقبل كلمات البحث اللي كتبها المستخدم.</p></div>
+   <div class="step go"><div class="n">2</div><p><span class="chip f">الأمامية</span> ترسلها إلى <span class="chip b">الخلفية</span>.</p></div>
+   <div class="step go"><div class="n">3</div><p><span class="chip b">الخلفية</span> تطلب من <span class="chip d">قاعدة البيانات</span> المنتجات المطابقة.</p></div></div></div>
+  <div><h3 style="color:var(--dc)">🟢 رحلة العودة (نحو المستخدم)</h3><div class="steps">
+   <div class="step back"><div class="n">4</div><p><span class="chip d">قاعدة البيانات</span> تعيد النتائج إلى <span class="chip b">الخلفية</span>.</p></div>
+   <div class="step back"><div class="n">5</div><p><span class="chip b">الخلفية</span> تجهّز النتائج وترسلها إلى <span class="chip f">الأمامية</span>.</p></div>
+   <div class="step back"><div class="n">6</div><p><span class="chip f">الأمامية</span> تعرض النتائج على شاشة المستخدم.</p></div></div></div>
+ </div>
+ <div class="card hl center"><p class="ltr" style="display:block;font-size:clamp(14px,1.9vw,26px)">المستخدم ⇄ الأمامية ⇄ الخلفية ⇄ قاعدة البيانات</p></div>
+ <div class="card"><h3>📌 نقاط مهمة</h3><ul><li><b>الواجهة الخلفية هي الوسيط</b> في المنتصف.</li><li>الواجهة الأمامية <b>لا تتصل بقاعدة البيانات مباشرة</b> في هذا النموذج.</li></ul></div>
+ <div class="card warn"><h3>⚠️ فخ الامتحان</h3><p>مين اللي بيبحث في البيانات عن المنتجات؟ الإجابة: <b>الواجهة الخلفية</b> (هي اللي بتعالج الطلب وتطلب المطابق). قاعدة البيانات <b>مكان التخزين بس</b>.</p></div>
+</section>
+
+<!-- 8 خدمات مختلفة -->
+<section class="slide">
+ <h2>رابعًا: النموذج على خدمات مختلفة 🧩</h2>
+ <table>
+  <tr><th>الخدمة</th><th style="background:var(--fc)">الأمامية (عرض وتفاعل)</th><th style="background:var(--bc)">الخلفية (معالجة وتحكم)</th><th style="background:var(--dc)">قاعدة البيانات (تخزين)</th></tr>
+  <tr><td><b>▶️ مشاركة الفيديو</b></td><td>شاشات التشغيل والبحث</td><td>اختيار الفيديوهات الموصى بها، تجميع المشاهدات</td><td>بيانات الفيديو والمستخدمين وسجل المشاهدة</td></tr>
+  <tr><td><b>💬 التواصل الاجتماعي</b></td><td>الخط الزمني وشاشات النشر</td><td>تحديد الجمهور المستهدف، التحكم في الإشعارات</td><td>المنشورات وعلاقات المتابعة والرسائل</td></tr>
+  <tr><td><b>🛒 التجارة الإلكترونية</b></td><td>قوائم المنتجات وسلة التسوق</td><td>التحقق من المخزون، معالجة الدفع</td><td>المنتجات وسجل الطلبات ومعلومات العملاء</td></tr>
+ </table>
+ <div class="card hl"><p>💡 <b>ما الذي يتغير؟</b> لا يتغير <b>عدد الطبقات</b> (دائمًا 3)، بل يتغير <b>ما تقوم به كل طبقة</b> حسب نوع الخدمة.</p></div>
+</section>
+
+<!-- 9 حيلة الحفظ -->
+<section class="slide">
+ <h2>💡 حيلة سريعة للحفظ</h2>
+ <div class="card gold center"><p style="font-size:clamp(20px,2.8vw,36px)">اسأل نفسك عن أي شيء: <b class="acc">"ده شاشة؟ قرار؟ ولا تخزين؟"</b></p></div>
+ <table>
+  <tr><th>لو الشيء...</th><th>يبقى</th></tr>
+  <tr><td>🖥️ شاشة أو شيء تشوفه</td><td><span class="chip f">أمامية</span></td></tr>
+  <tr><td>🧠 قرار أو حساب أو تحقق (مخزون، دفع، توصية)</td><td><span class="chip b">خلفية</span></td></tr>
+  <tr><td>🗄️ معلومات محفوظة (سجل، بيانات، علاقات)</td><td><span class="chip d">قاعدة بيانات</span></td></tr>
+ </table>
+ <div class="card"><p>لو جاك خدمة جديدة في الامتحان (زي <b>تطبيق طقس</b> أو <b>عيادة</b>)، طبّق نفس القاعدة.</p></div>
+ <div class="card warn"><h3>⚠️ ملاحظة مهمة جدًا</h3><p>هذا <b>نموذج تعليمي مبسط</b> وليس بنية إلزامية لكل تطبيق؛ قد تختلف البنية الفعلية من تطبيق لآخر، وقد لا توجد قاعدة بيانات تقليدية أصلًا. <br>سؤال ممكن يجي: <i>"هل البنية الثلاثية إلزامية؟"</i> ← <b class="no">لا</b>.</p></div>
+</section>
+
+<!-- 10 المصطلحات -->
+<section class="slide">
+ <h2>📚 المصطلحات الأساسية</h2>
+ <table>
+  <tr><th style="width:30%">المصطلح</th><th>المعنى</th></tr>
+  <tr><td><b>تطبيق الويب</b></td><td class="l">تطبيق يُستخدم عادةً عبر متصفح الويب، وقد يمكن تثبيت بعضها على الجهاز</td></tr>
+  <tr><td><span class="chip f">الواجهة الأمامية</span></td><td class="l">الشاشة اللي يراها المستخدمون ويتفاعلون معها</td></tr>
+  <tr><td><span class="chip b">الواجهة الخلفية</span></td><td class="l">المعالجة الخفية من جانب الخادم</td></tr>
+  <tr><td><span class="chip d">قاعدة البيانات</span></td><td class="l">حيث تُخزَّن البيانات وتُدار</td></tr>
+  <tr><td><b>بنية الطبقات الثلاث</b></td><td class="l">الأمامية + الخلفية + قاعدة البيانات تتعاون معًا</td></tr>
+ </table>
+</section>
+
+<!-- 11 تشخيص الأعطال -->
+<section class="slide">
+ <h2>🛠️ طريقة تشخيص الأعطال</h2>
+ <div class="card hl"><p>لو حصلت مشكلة (مثلًا: <b>صفحة حجز مواعيد مش بتظهر أوقات متاحة</b>)، <b>تتبّع الطلب خطوة بخطوة</b> من الشاشة ← للخلفية ← للبيانات ← ورجوعًا. ابدأ بسؤال: <b class="acc">"إيه اللي وصل لكل طبقة؟"</b></p></div>
+ <div class="svgbox"><svg viewBox="0 0 900 330" xmlns="http://www.w3.org/2000/svg">
+  <g font-weight="900" text-anchor="middle">
+   <rect x="560" y="10" width="330" height="70" rx="35" fill="#0f2a3d"/><text x="725" y="38" font-size="17" fill="#fff">هل أرسلت الخلفية أوقاتًا</text><text x="725" y="62" font-size="17" fill="#fff">إلى الأمامية؟</text>
+   <rect x="20" y="110" width="270" height="70" rx="14" fill="#f1eafe" stroke="#7c3aed" stroke-width="3"/><text x="155" y="138" font-size="17" fill="#7c3aed">نعم ← المشكلة في العرض</text><text x="155" y="162" font-size="17" fill="#7c3aed">🖥️ الواجهة الأمامية</text>
+   <rect x="360" y="110" width="330" height="70" rx="35" fill="#0f2a3d"/><text x="525" y="138" font-size="17" fill="#fff">لا ← هل أعادت قاعدة البيانات</text><text x="525" y="162" font-size="17" fill="#fff">نتائج للخلفية؟</text>
+   <rect x="400" y="235" width="290" height="80" rx="14" fill="#fff0e6" stroke="#ea580c" stroke-width="3"/><text x="545" y="265" font-size="17" fill="#ea580c">نعم ← الخلفية لا تحسب</text><text x="545" y="290" font-size="17" fill="#ea580c">أو لا ترسل ⚙️ الواجهة الخلفية</text>
+   <rect x="30" y="235" width="290" height="80" rx="14" fill="#e8f7ed" stroke="#16a34a" stroke-width="3"/><text x="175" y="265" font-size="17" fill="#16a34a">لا ← لا بيانات أو لا استجابة</text><text x="175" y="290" font-size="17" fill="#16a34a">🗄️ قاعدة البيانات</text>
+  </g>
+  <defs><marker id="ma" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#0f2a3d"/></marker></defs>
+  <g stroke="#0f2a3d" stroke-width="3" fill="none" marker-end="url(#ma)"><path d="M620 80 Q560 100 295 135"/><path d="M640 80 L640 100 L525 108"/><path d="M500 180 L500 215 L520 232"/><path d="M420 180 Q300 200 250 232"/></g>
+ </svg></div>
+ <div class="card"><p>الطبقة التي <b>اختفت عندها البيانات</b> هي <b class="acc">موضع المشكلة</b>.</p></div>
+</section>
+
+<!-- 12 هيكل إجابة 6 درجات -->
+<section class="slide">
+ <h2>✍️ هيكل إجابة سؤال الـ 6 درجات</h2>
+ <div class="card hl"><p><b>"اشرح كيف تتعاون الطبقات"</b> — مثال: عندما ينشر المستخدم صورة</p></div>
+ <div class="steps">
+  <div class="step go"><div class="n">1</div><p><span class="chip f">الأمامية:</span> تستقبل المدخلات (الصورة والتعليق) وترسلها.</p></div>
+  <div class="step go"><div class="n">2</div><p><span class="chip b">الخلفية:</span> تعالج وتطبّق القواعد وتطلب من البيانات.</p></div>
+  <div class="step go"><div class="n">3</div><p><span class="chip d">قاعدة البيانات:</span> تخزّن أو تسترجع وتعيد النتيجة.</p></div>
+  <div class="step back"><div class="n">4</div><p><span class="chip b">الخلفية</span> ترسل الاستجابة ← <span class="chip f">الأمامية</span> تعرض النتيجة.</p></div>
+  <div class="step back"><div class="n">5</div><p><b>جملة ختامية:</b> "وهكذا تتعاون الطبقات الثلاث لتحويل إجراء المستخدم إلى نتيجة."</p></div>
+ </div>
+</section>
+
+<!-- 13 ملخص -->
+<section class="slide">
+ <h2>🧠 مفاتيح الدرس (ملخص للمراجعة)</h2>
+ <div class="grid">
+  <div class="card hl"><h3>1) ثلاث طبقات</h3><p>المستخدم ← الأمامية ← الخلفية ← قاعدة البيانات</p></div>
+  <div class="card hl"><h3>2) من يعمل أين؟</h3><p>الأمامية في <b>المتصفح</b>، الخلفية في <b>الخادم</b>، البيانات في <b>التخزين</b>.</p></div>
+  <div class="card hl"><h3>3) الرحلة 6 خطوات</h3><p>ذهاب (1 إدخال، 2 إرسال للخلفية، 3 طلب من البيانات) – عودة (4 إعادة البيانات، 5 تجهيز وإرسال، 6 عرض النتيجة).</p></div>
+  <div class="card hl"><h3>4) الوسيط</h3><p><b>الخلفية هي الوسيط</b>؛ الأمامية لا تتصل بقاعدة البيانات مباشرة.</p></div>
+ </div>
+ <div class="card gold center"><p><span class="chip f">الأمامية</span> تعرض وتجمع – <span class="chip b">الخلفية</span> تقرر وتعالج – <span class="chip d">البيانات</span> تخزن وتسترجع</p></div>
+</section>
+
+<!-- الأسئلة -->
+<section class="slide" id="q1"><h2>❓ القسم الأول: مثال محلول</h2><div class="qbox"></div></section>
+<section class="slide" id="q2"><h2>✏️ القسم الثاني: تدرّب</h2><div class="qbox"></div></section>
+<section class="slide" id="q3"><h2>🧑‍💻 القسم الثالث: فكّر كمهندس</h2><div class="qbox"></div></section>
+<section class="slide" id="q4"><h2>🌦️ القسم الرابع: طبّق ما تعلمته</h2><div class="qbox"></div></section>
+<section class="slide" id="q5"><h2>📝 القسم الخامس: تمارين</h2><div class="qbox"></div></section>
+<section class="slide" id="q6"><h2>🏆 سؤال على نمط الامتحان (6 درجات)</h2><div class="qbox"></div></section>
+<section class="slide" id="q7"><h2>🤔 مهارات التفكير</h2><div class="qbox"></div></section>
+
+</main>
+
+<nav>
+ <button class="ic" id="prev">▶ سابق</button>
+ <div class="dots" id="dots"></div><span class="cnt" id="cnt"></span>
+ <button class="ic" id="next">تالي ◀</button>
+</nav>
+
+<script>
+const F='<span class="chip f">الواجهة الأمامية</span>',B='<span class="chip b">الواجهة الخلفية</span>',D='<span class="chip d">قاعدة البيانات</span>';
+const T='<span class="ok">(✓)</span>',X='<span class="no">(×)</span>';
+
+/* رسم تخطيطي للطبقات: u,f,b,d = نص تحت كل صندوق */
+function flow(sf,sb,sd,title){
+ const cols=[[790,'👤 المستخدم','#0f2a3d',''],[560,'الواجهة الأمامية','#7c3aed',sf],[330,'الواجهة الخلفية','#ea580c',sb],[100,'قاعدة البيانات','#16a34a',sd]];
+ let s='<svg viewBox="0 0 900 270" xmlns="http://www.w3.org/2000/svg"><defs><marker id="m1" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto-start-reverse"><path d="M0,0 L9,4.5 L0,9z" fill="#0e7490"/></marker></defs>';
+ if(title)s+='<text x="450" y="20" text-anchor="middle" font-size="17" font-weight="900" fill="#0e7490">'+title+'</text>';
+ cols.forEach(c=>{s+='<rect x="'+(c[0]-75)+'" y="35" width="150" height="62" rx="14" fill="'+c[2]+'"/><text x="'+c[0]+'" y="73" text-anchor="middle" font-size="17" font-weight="900" fill="#fff">'+c[1]+'</text>';
+  if(c[3]){const L=c[3].split('|');L.forEach((t,i)=>{s+='<text x="'+c[0]+'" y="'+(125+i*22)+'" text-anchor="middle" font-size="15" font-weight="700" fill="'+c[2]+'">'+t+'</text>'})}});
+ [[715,635],[485,405],[255,175]].forEach(a=>{s+='<line x1="'+a[0]+'" y1="66" x2="'+a[1]+'" y2="66" stroke="#0e7490" stroke-width="4" marker-start="url(#m1)" marker-end="url(#m1)"/>'});
+ s+='<g font-size="14" font-weight="700" text-anchor="middle" fill="#fff"><rect x="500" y="205" width="120" height="30" rx="15" fill="#7c3aed"/><text x="560" y="226">🌍 المتصفح</text><rect x="270" y="205" width="120" height="30" rx="15" fill="#ea580c"/><text x="330" y="226">☁️ الخادم</text><rect x="40" y="205" width="120" height="30" rx="15" fill="#16a34a"/><text x="100" y="226">💾 التخزين</text></g></svg>';
+ return s;
+}
+document.getElementById('svg-main').innerHTML=flow('تعرض وتجمع|(ما يراه المستخدم)','تقرر وتعالج|(قواعد التطبيق)','تخزن وتسترجع|(البيانات)','المستخدم ⇄ الأمامية ⇄ الخلفية ⇄ قاعدة البيانات');
+
+/* بناء الأسئلة */
+let n=0;
+function render(id,blocks){
+ let h='';
+ blocks.forEach(b=>{
+  if(b.h)h+='<div class="qh">'+b.h+(b.e?' <em>— '+b.e+'</em>':'')+'</div>';
+  else if(b.s)h+='<p class="qs">'+b.s+'</p>';
+  else if(b.raw)h+=b.raw;
+  else if(b.q){n++;h+='<div class="card q"><div class="t">'+b.q+(b.o?'<div class="opts">'+b.o.map(x=>'<span>'+x+'</span>').join('')+'</div>':'')+'</div><button class="show-btn" data-a="a'+n+'">إظهار الإجابة</button><div class="ans" id="a'+n+'">'+b.a+'</div></div>'}
+ });
+ document.querySelector('#'+id+' .qbox').innerHTML=h;
+}
+const tf=(q,ok,a)=>({q:q,a:(ok?T:X)+' — '+a});
+
+render('q1',[
+ {h:'السؤال (1)',e:'ضع علامة (✓) إذا كانت العبارة صحيحة أو (×) إذا كانت خاطئة'},
+ tf('أ. الواجهة الأمامية هي مكوّن الشاشة الذي يراه المستخدمون مباشرة',1,'تعريف صحيح.'),
+ tf('ب. الواجهة الخلفية هي الجزء الذي يعمل على المتصفح',0,'الواجهة الخلفية تعمل على <b>الخادم</b>، لا على المتصفح.'),
+ tf('ج. قاعدة البيانات هي نظام ينظم البيانات ويخزنها ويديرها',1,'تعريف صحيح لقاعدة البيانات.'),
+ tf('د. يعمل تطبيق الويب بالواجهة الأمامية وحدها',0,'يعمل بثلاث طبقات: الأمامية، والخلفية، وقاعدة البيانات.'),
+ {h:'السؤال (2)',e:'اربط كل وصف بالمصطلح الأنسب (أ: الأمامية، ب: الخلفية، ج: قاعدة البيانات)'},
+ {q:'1. الجزء المسؤول عن المعالجة من جانب الخادم التي لا يراها المستخدمون',a:'(ب) '+B},
+ {q:'2. مكوّن الشاشة الذي يتفاعل معه المستخدمون مباشرة',a:'(أ) '+F},
+ {q:'3. نظام ينظم البيانات ويخزنها ويديرها',a:'(ج) '+D}
+]);
+
+render('q2',[
+ {h:'السؤال 1',e:'أجب عن الأسئلة التالية'},
+ {q:'1) ما المصطلح الذي يُطلق على تطبيق يُستخدم عبر متصفح الويب؟',a:'<b>تطبيق الويب.</b>'},
+ {q:'2) ما المصطلح الذي يُطلق على مكوّن الشاشة الذي يراه المستخدمون مباشرة؟',a:F},
+ {q:'3) ما المصطلح الذي يُطلق على الجزء المسؤول عن المعالجة من جانب الخادم التي لا يراها المستخدمون؟',a:B},
+ {q:'4) ما المصطلح الذي يُطلق على نظام ينظم البيانات ويخزنها ويديرها؟',a:D},
+ {h:'السؤال 2',e:'أجب عن الأسئلة التالية'},
+ {q:'(1) عند البحث عن منتج على موقع تسوق إلكتروني، أي مما يلي مسؤول عن البحث في البيانات عن المنتجات المطابقة لكلمات البحث؟',o:['(أ) الواجهة الأمامية','(ب) الواجهة الخلفية','(ج) قاعدة البيانات'],a:'<b>الإجابة الصحيحة: (ب) الواجهة الخلفية</b><br>السبب: الواجهة الخلفية هي التي تعالج الطلب وتطلب المنتجات المطابقة من طبقة البيانات. (قاعدة البيانات مكان التخزين فقط.)'},
+ {s:'(2) لكل من 1 – 6، حدد إلى أي طبقة من طبقات موقع التجارة الإلكترونية ينتمي (أ: الأمامية، ب: الخلفية، ج: قاعدة البيانات):'},
+ {q:'1. صفحة عرض المنتجات',a:'(أ) '+F},{q:'2. معالجة التحقق من المخزون',a:'(ب) '+B},{q:'3. تخزين معلومات العملاء',a:'(ج) '+D},
+ {q:'4. شاشة سلة التسوق',a:'(أ) '+F},{q:'5. معالجة الدفع',a:'(ب) '+B},{q:'6. تخزين سجل الطلبات',a:'(ج) '+D}
+]);
+
+render('q3',[
+ {raw:'<div class="card hl"><h3>📋 السيناريو</h3><p>تريد عيادة تطبيق ويب يحجز فيه المرضى المواعيد، ويتحققون من الأوقات المتاحة، ويطّلعون على زياراتهم السابقة. أنت تخطط لطبقاته الثلاث.</p></div><div class="svgbox">'+flow('نموذج الحجز','التحقق من الأوقات','الزيارات السابقة','🏥 تطبيق العيادة')+'</div>'},
+ {h:'1 · وزّع المهام',e:'حدد أي طبقة تتولى كل ميزة، ولماذا'},
+ {q:'نموذج الحجز',a:F+'<br>شاشة يراها المريض ويكتب فيها بياناته ويختار موعده.'},
+ {q:'التحقق من الأوقات المتاحة',a:B+'<br>تطبّق قواعد التطبيق وتعالج الطلب وتطلب من قاعدة البيانات الأوقات المحجوزة والمتاحة.'},
+ {q:'تخزين الزيارات السابقة',a:D+'<br>الطبقة التي تحفظ البيانات وتوفرها عند الحاجة.'},
+ {h:'2 · شخّص العطل',e:'تفتح صفحة الحجز، لكن لا تظهر أوقات متاحة'},
+ {q:'ما الأجزاء التي قد تكون سبب المشكلة؟ وما المعلومة التي تحتاج إليها لتتأكد؟',a:'<ul><li>'+F+' قد لا تعرض الأوقات رغم وصولها.</li><li>'+B+' قد لا تحسب الأوقات المتاحة أو لا ترسلها بشكل صحيح.</li><li>'+D+' قد لا تحتوي أوقاتًا، أو لا تستجيب للطلب.</li></ul><b>المعلومة المطلوبة:</b> ما الذي أرسلته الخلفية للأمامية؟ فإن كانت أرسلت الأوقات فالمشكلة في العرض، وإن لم ترسل شيئًا فأتحقق هل أعادت قاعدة البيانات نتائج للخلفية.'},
+ {h:'3 · قرّر',e:'اختر الأنسب ثم اذكر سببين يدعمان اختيارك'},
+ {q:'☐ خلط مسؤوليات العرض والمعالجة والبيانات دون فصل واضح<br>☐ تنظيم مسؤوليات العرض والمعالجة والبيانات في طبقات واضحة',a:'<b>الإجابة المقترحة: الخيار الثاني</b> — تنظيم المسؤوليات في طبقات واضحة.<ul><li><b>سهولة تشخيص الأعطال:</b> إذا لم تظهر الأوقات نعرف من أي طبقة نبدأ الفحص.</li><li><b>سهولة التعديل والتطوير:</b> نغيّر شكل الشاشة دون المساس بقواعد الحجز أو البيانات، والعكس.</li></ul>'}
+]);
+
+render('q4',[
+ {raw:'<div class="card hl"><p>يتيح تطبيق طقس للمستخدمين كتابة اسم مدينة ورؤية توقعات الطقس. باستخدام نموذج الطبقات الثلاث، سمِّ أي طبقة تقوم بكل مهمة، وحدّد مهمة واحدة <b>لا يمكن</b> للواجهة الأمامية القيام بها وحدها.</p></div><div class="svgbox">'+flow('أخذ اسم المدينة','البحث عن التوقعات','تخزين التوقعات السابقة','🌦️ تطبيق الطقس')+'</div>'},
+ {q:'أي طبقة تقوم بكل مهمة؟ (أخذ اسم المدينة، البحث عن بيانات التوقعات، تخزين التوقعات السابقة)',a:'<table><tr><th>المهمة</th><th>الطبقة</th></tr><tr><td>أخذ اسم المدينة</td><td>'+F+'</td></tr><tr><td>البحث عن بيانات التوقعات</td><td>'+B+' (تعالج الطلب وتطلب البيانات من طبقة البيانات)</td></tr><tr><td>تخزين التوقعات السابقة</td><td>'+D+'</td></tr></table>'},
+ {q:'حدّد مهمة واحدة لا تستطيع الواجهة الأمامية القيام بها وحدها',a:'<b>تخزين التوقعات السابقة</b> أو <b>البحث عن بيانات التوقعات</b>؛ لأن الأمامية <b>تعرض وتجمع فقط</b>، أما التخزين فمن عمل قاعدة البيانات، والمعالجة من عمل الواجهة الخلفية.'}
+]);
+
+render('q5',[
+ {h:'1) اختبر فهمك'},
+ {q:'1. ما تعريف تطبيق الويب؟',a:'تطبيق يُستخدم <b>عادةً</b> من خلال متصفح الويب.'},
+ {q:'2. ما الطبقات الثلاث لتطبيق الويب؟',a:'الواجهة الأمامية، والواجهة الخلفية، وقاعدة البيانات.'},
+ {q:'3. أي طبقة تعمل على الخادم؟',a:B},
+ {q:'4. أي طبقة يراها المستخدم؟',a:F},
+ {q:'5. من الوسيط بين الواجهة الأمامية وقاعدة البيانات؟',a:B},
+ {q:'6. هل البنية الثلاثية إلزامية لكل تطبيق؟',a:'<b class="no">لا</b>، هي نموذج تعليمي مبسط وقد تختلف البنية الفعلية.'},
+ {h:'2) اقرأ الفقرة التالية وأجب'},
+ {q:'<i>يمكن شرح كثير من تطبيقات الويب بنموذج مبسط من ثلاث طبقات. تسمى الواجهة التي يراها المستخدم ويتعامل معها <b>(1)</b>، ويسمى الجزء الذي يعمل على الخادم ويعالج الطلبات <b>(2)</b>، وتسمى الطبقة التي تحفظ البيانات وتوفرها <b>(3)</b>. وتتعاون هذه الأجزاء لتنفيذ طلب المستخدم.</i>',a:'(1) '+F+'<br>(2) '+B+'<br>(3) '+D},
+ {h:'3) أجب عن الأسئلة التالية'},
+ {s:'(1) لكل من 1 – 6، حدد إلى أي طبقة من طبقات شبكة تواصل اجتماعي ينتمي:'},
+ {q:'1. شاشة الخط الزمني',a:'(أ) '+F},{q:'2. معالجة تحديد الجمهور المستهدف للمنشور',a:'(ب) '+B},{q:'3. تخزين بيانات المنشورات',a:'(ج) '+D},
+ {q:'4. شاشة النشر',a:'(أ) '+F},{q:'5. معالجة الإشعارات',a:'(ب) '+B},{q:'6. تخزين علاقات المتابعة',a:'(ج) '+D},
+ {q:'(2) اختر الخيار الذي يصف بشكل أنسب بنية الطبقات الثلاث لتطبيق الويب:',o:['أ. الواجهة الأمامية لها دور تخزين البيانات وإدارتها.','ب. الواجهة الخلفية هي الجزء الذي يتفاعل معه المستخدمون مباشرة على المتصفح.','ج. استجابةً لإجراءات المستخدم، تتعاون الأمامية والخلفية وقاعدة البيانات لتنفيذ المعالجة.','د. قاعدة البيانات لها دور عرض الشاشات للمستخدمين.'],a:'<b>الإجابة الصحيحة: (ج)</b><br>السبب: الخيارات (أ) و(ب) و(د) تخلط أدوار الطبقات، أما (ج) فتصف التعاون الصحيح بين الطبقات.'}
+]);
+
+render('q6',[
+ {raw:'<div class="card hl"><p>اشرح كيف تتعاون الطبقات الثلاث لتطبيق الويب عندما ينشر المستخدم صورة على تطبيق تواصل اجتماعي. (أشِر إلى: دور الواجهة الأمامية، والواجهة الخلفية، وقاعدة البيانات)</p></div><div class="svgbox">'+flow('شاشة النشر|استقبال الصورة','الجمهور المستهدف|الإشعارات','تخزين المنشور','💬 نشر صورة')+'</div>'},
+ {q:'اكتب إجابتك ثم قارنها بالنموذجية',a:'<p>عندما ينشر المستخدم صورة، تعرض '+F+' شاشة النشر وتستقبل الصورة التي اختارها المستخدم وما كتبه معها، ثم ترسلها إلى '+B+'.</p><p>تعالج '+B+' الطلب وتطبق قواعد التطبيق، مثل تحديد الجمهور المستهدف للمنشور والتحكم في الإشعارات الفورية، ثم تطلب من '+D+' تخزين بيانات المنشور.</p><p>تخزّن '+D+' المنشور وتحفظه وتوفره عند الحاجة، وتعيد النتيجة إلى الواجهة الخلفية.</p><p>تجهّز '+B+' الاستجابة وترسلها إلى '+F+'، التي تعرض المنشور على الخط الزمني للمستخدم.</p><p><b>وهكذا تتعاون الطبقات الثلاث لتحويل إجراء المستخدم إلى نتيجة.</b></p>'}
+]);
+
+render('q7',[
+ {h:'توقّف وفكّر (1)'},
+ {q:'عندما تكتب في مربع البحث وترى النتائج، أي طبقة جمعت المدخلات، وأي طبقة وجدت الإجابة؟',a:F+' هي التي جمعت المدخلات (كلمات البحث). أما الإجابة نفسها (المنتجات المطابقة) فتوجد في <b>طبقة البيانات</b>، وتطلبها الواجهة الخلفية وتجهزها ثم تعيدها للعرض.'},
+ {h:'توقّف وفكّر (2)'},
+ {q:'في جدول الخدمات، تستخدم كل خدمة نفس الطبقات الثلاث، فما الذي يتغيّر من خدمة إلى أخرى؟',a:'لا يتغير <b>عدد الطبقات</b>، بل يتغير <b>ما تقوم به كل طبقة</b> (نوع الشاشات المعروضة، ونوع المعالجة، ونوع البيانات المخزنة) بحسب نوع الخدمة.'},
+ {h:'تأمل'},
+ {q:'أي طبقة تعتقد أن فشلها يكون أكثر وضوحًا للمستخدم عندما يحدث خطأ ما، ولماذا؟',a:'<b>إجابة مقترحة:</b> '+F+'، لأنها الجزء الذي يراه المستخدم مباشرة (شاشة لا تظهر أو زر لا يعمل). لكن فشل الخلفية أو قاعدة البيانات يظهر أيضًا للمستخدم في صورة نتائج ناقصة أو رسالة خطأ. <i>(تُقبل إجابة الطالب المبررة.)</i>'},
+ {h:'التحدي'},
+ {q:'اذكر خدمة واحدة تستخدمها وصف ما تقوم به واجهتها الأمامية وواجهتها الخلفية وقاعدة بياناتها.',a:'<b>إجابة مقترحة (متجر إلكتروني):</b><ul><li>'+F+': تعرض المنتجات وسلة التسوق.</li><li>'+B+': تتحقق من المخزون وتعالج الدفع.</li><li>'+D+': تخزن المنتجات وسجل الطلبات ومعلومات العملاء.</li></ul>'}
+]);
+
+document.getElementById('deck').addEventListener('click',e=>{const b=e.target.closest('.show-btn');if(!b)return;
+ const a=document.getElementById(b.dataset.a);const o=a.classList.toggle('show');
+ b.textContent=o?'إخفاء الإجابة':'إظهار الإجابة';b.classList.toggle('open',o)});
+
+/* التنقل */
+const S=[...document.querySelectorAll('.slide')],dots=document.getElementById('dots'),cnt=document.getElementById('cnt'),bar=document.getElementById('bar');
+let cur=0,timer=null;
+S.forEach((_,i)=>{const d=document.createElement('b');d.onclick=()=>go(i);dots.appendChild(d)});
+function go(i){cur=Math.max(0,Math.min(S.length-1,i));
+ S.forEach((s,k)=>s.classList.toggle('act',k===cur));
+ [...dots.children].forEach((d,k)=>d.classList.toggle('act',k===cur));
+ S[cur].scrollTop=0;cnt.textContent=(cur+1)+' / '+S.length;
+ bar.style.width=((cur+1)/S.length*100)+'%';
+ if(timer&&cur===S.length-1)toggleAuto()}
+const next=()=>go(cur+1),prev=()=>go(cur-1);
+function toggleAuto(){const b=document.getElementById('auto');
+ if(timer){clearInterval(timer);timer=null;b.classList.remove('on');b.textContent='▶ تشغيل تلقائي'}
+ else{if(cur===S.length-1)go(0);timer=setInterval(next,6000);b.classList.add('on');b.textContent='⏸ إيقاف'}}
+function toggleFS(){try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}}
+document.getElementById('next').onclick=next;document.getElementById('prev').onclick=prev;
+document.getElementById('auto').onclick=toggleAuto;document.getElementById('fs').onclick=toggleFS;
+document.addEventListener('keydown',e=>{
+ if(e.key==='ArrowLeft'){next()}else if(e.key==='ArrowRight'){prev()}
+ else if(e.key===' '&&!e.target.closest('button')){e.preventDefault();next()}
+ else if(e.key==='f'||e.key==='F'){toggleFS()}});
+go(0);
+</script>
+</body>
+</html>

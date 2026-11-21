@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>الاستجابة للحوادث وإدارة المخاطر - مستر عبدو برمجة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1e1b4b;--acc:#4f46e5;--soft:#eceeff;--line:#e0e1f2;--sh:0 8px 24px rgba(30,27,75,.10);--red:#dc2626;--grn:#16a34a;--amb:#d97706}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;font-family:'Cairo',Tahoma,sans-serif;color:var(--ink);background:#fff;overflow:hidden}
+body:before,body:after{content:"";position:fixed;border-radius:50%;z-index:0;pointer-events:none}
+body:before{width:380px;height:380px;background:var(--soft);top:-140px;left:-120px}
+body:after{width:260px;height:260px;border:30px solid #f1f1fa;bottom:-90px;right:-70px}
+header{position:fixed;top:0;inset-inline:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:5;background:#ffffffee}
+.brand b{font-size:clamp(18px,2vw,26px);font-weight:900;color:var(--acc)}
+.brand small{display:block;font-size:clamp(11px,1.1vw,14px);color:#666}
+.hbtn{display:flex;gap:8px}
+button{font-family:inherit;cursor:pointer}
+.ic{background:#fff;border:2px solid var(--line);border-radius:12px;padding:6px 14px;font-size:16px;font-weight:700;color:var(--ink)}
+.ic:hover,.ic.on{border-color:var(--acc);color:var(--acc)}
+main{position:fixed;inset:64px 0 74px 0;z-index:1}
+.slide{position:absolute;inset:0;padding:10px clamp(16px,5vw,80px);overflow-y:auto;opacity:0;visibility:hidden;transition:opacity .35s}
+.slide.act{opacity:1;visibility:visible}
+h1{font-size:clamp(30px,5vw,64px);font-weight:900;line-height:1.3}
+h2{font-size:clamp(26px,3.6vw,48px);font-weight:900;margin-bottom:14px;padding-inline-start:16px;border-inline-start:8px solid var(--acc)}
+h3{font-size:clamp(20px,2.4vw,32px);font-weight:700;color:var(--acc);margin:8px 0}
+p,li{font-size:clamp(17px,2.1vw,28px);line-height:1.8}
+ul,ol{padding-inline-start:28px}
+.card{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px 22px;box-shadow:var(--sh);margin:10px 0}
+.card.hl{border-color:var(--acc);background:var(--soft)}
+.card.warn{border-color:#f59e0b;background:#fff8e6}.card.warn h3{color:#b45309}
+.card.tip{border-color:#10b981;background:#ecfdf5}.card.tip h3{color:#047857}
+.card.gold{border-color:var(--acc);background:linear-gradient(135deg,var(--soft),#fff)}
+.card.stop{border-color:#ec4899;background:#fdf2f8}.card.stop h3{color:#be185d}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.acc{color:var(--acc);font-weight:900}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block;font-weight:700}
+.center{text-align:center}
+.cover{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;text-align:center;gap:14px}
+.tag{font-size:clamp(16px,1.8vw,24px);color:#555}
+.map{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin:10px 0}
+.node{background:#fff;border:2px solid var(--acc);border-radius:30px;padding:8px 18px;font-weight:700;font-size:clamp(14px,1.7vw,22px);box-shadow:var(--sh)}
+.arr{color:var(--acc);font-size:26px;font-weight:900}
+table{border-collapse:collapse;width:100%;background:#fff;box-shadow:var(--sh);border-radius:14px;overflow:hidden;margin:8px 0}
+th,td{border:1px solid var(--line);padding:6px clamp(8px,1.4vw,20px);text-align:center;font-size:clamp(14px,1.7vw,24px);line-height:1.6}
+th{background:var(--ink);color:#fff}
+td.l{text-align:start}
+.chip{display:inline-block;border-radius:20px;padding:0 12px;font-weight:900;color:#fff;font-size:.85em;white-space:nowrap}
+.svgbox{background:#fff;border:2px dashed var(--line);border-radius:18px;padding:8px;margin:10px 0}
+.svgbox svg{width:100%;height:auto;display:block;font-family:'Cairo',Tahoma,sans-serif}
+.cap{text-align:center;font-weight:700;color:#555;font-size:clamp(14px,1.6vw,20px)}
+.steps{display:flex;flex-direction:column;gap:8px}
+.step{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--line);border-radius:14px;padding:6px 14px}
+.step .n{flex:none;width:38px;height:38px;border-radius:50%;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:20px;margin-top:6px}
+.step p{font-size:clamp(16px,1.9vw,25px);line-height:1.6;margin:4px 0}
+.q{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.q .t{font-size:clamp(17px,2vw,26px);font-weight:600;flex:1;min-width:220px;line-height:1.7}
+.ans{display:none;width:100%;margin-top:8px;padding:10px 16px;background:var(--soft);border-inline-start:6px solid var(--acc);border-radius:10px;font-size:clamp(16px,1.8vw,24px);line-height:1.8}
+.ans.show{display:block}
+.show-btn{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:8px 18px;font-size:clamp(14px,1.5vw,20px);font-weight:700}
+.show-btn.open{background:var(--ink)}
+.qh{background:var(--ink);color:#fff;border-radius:14px;padding:8px 18px;margin:18px 0 6px;font-size:clamp(18px,2.2vw,30px);font-weight:700}
+.qh em{font-style:normal;color:#c7caff}
+.qs{font-weight:700;margin:8px 0;font-size:clamp(17px,2vw,26px);line-height:1.7}
+.opts{display:flex;flex-direction:column;gap:2px;font-size:clamp(15px,1.8vw,23px);margin-top:4px;font-weight:400}
+.ok{color:var(--grn);font-weight:900}.no{color:var(--red);font-weight:900}
+nav{position:fixed;bottom:0;inset-inline:0;height:74px;z-index:5;display:flex;align-items:center;justify-content:center;gap:18px;background:#ffffffee;border-top:1px solid var(--line)}
+nav .ic{font-size:clamp(15px,1.8vw,22px);padding:8px 22px}
+.dots{display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:62vw}
+.dots b{width:12px;height:12px;border-radius:50%;background:#d3d4ea;cursor:pointer;transition:.25s}
+.dots b.act{background:var(--acc);transform:scale(1.35)}
+.cnt{font-weight:700;min-width:50px;text-align:center}
+#bar{position:fixed;top:64px;inset-inline-start:0;height:4px;background:var(--acc);z-index:6;width:0;transition:width .3s}
+@media(max-width:600px){nav{gap:8px}.dots b{width:8px;height:8px}.dots{gap:4px}.cnt{display:none}}
+@media(prefers-reduced-motion:reduce){.slide,.dots b,#bar{transition:none}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<header>
+ <div class="brand"><b>مستر عبدو برمجة</b><small>يرى مالا يُكتب، يبحث عما لا يظهر</small></div>
+ <div class="hbtn"><button class="ic" id="auto" title="تشغيل تلقائي (6 ثوانٍ)">▶ تشغيل تلقائي</button><button class="ic" id="fs" title="عرض كامل (F)">⛶ ملء الشاشة</button></div>
+</header>
+
+<main id="deck">
+
+<!-- 1 -->
+<section class="slide act"><div class="cover">
+ <div style="font-size:64px">🚨</div>
+ <h1>الاستجابة للحوادث وإدارة المخاطر</h1>
+ <p class="tag">الوحدة الثانية · الدرس الثالث (2-3) · الأمن السيبراني</p>
+ <div class="map">
+  <div class="node">🗺️ خريطة الدرس</div><span class="arr">←</span>
+  <div class="node">⚠️ الحادث الأمني</div><span class="arr">←</span>
+  <div class="node">🔁 المراحل الست</div><span class="arr">←</span>
+  <div class="node">📊 تقييم المخاطر</div><span class="arr">←</span>
+  <div class="node">✅ الخلاصة</div><span class="arr">←</span>
+  <div class="node">❓ الأسئلة</div>
+ </div>
+ <p class="tag">المقدم: <b class="acc">مستر عبدو برمجة</b></p>
+</div></section>
+
+<!-- 2 خريطة + مقدمة -->
+<section class="slide">
+ <h2>🗺️ خريطة الدرس والمقدمة</h2>
+ <div class="card gold"><h3>🎯 الفكرة الأساسية</h3><p>تمثل مراحل الاستجابة الست <b class="acc">تسلسلًا عامًا</b> يساعد على تنظيم الاستجابة، مع إمكانية تداخل بعض الأنشطة أو العودة إلى مراحل سابقة بحسب الحادث. ويحدد تقييم المخاطر الأولويات بناءً على <b class="acc">التأثير × الاحتمالية</b>.</p></div>
+ <div class="grid">
+  <div class="card"><h3>🔑 المفاهيم الأساسية</h3><ul><li>الحادث الأمني</li><li>المراحل الست</li><li>الاحتواء / الاستئصال</li><li>المخاطرة = التأثير × الاحتمالية</li></ul></div>
+  <div class="card hl"><h3>📖 المقدمة</h3><p>حتى مع تقنيات الحماية والدفاع في العمق، قد يقع حادث أمني. لذلك ننتقل من <b>الوقاية</b> إلى <b>الاستجابة وإدارة المخاطر</b>.</p></div>
+ </div>
+ <div class="card"><h3>🧰 المؤسسة تستخدم خطة منظمة من أجل:</h3>
+  <div class="map"><div class="node">🛑 وقف انتشار المشكلة</div><div class="node">🧹 إزالة التهديد</div><div class="node">🔄 استعادة الخدمة</div><div class="node">🎓 التعلم وتحسين الحماية</div></div>
+  <p>الفريق لا يستطيع معالجة كل المخاطر في الوقت نفسه، فنُقيِّم المخاطر لتحديد أولويات المعالجة.</p></div>
+ <div class="card warn"><h3>❓ السؤال الرئيسي</h3><p>كيف ينبغي للمؤسسة أن تنظّم استجابتها عندما يقع حادث أمني عبر مراحلها العامة، وكيف تقرر أي المخاطر تعالجها أولًا؟</p></div>
+</section>
+
+<!-- 3 الحادث الأمني -->
+<section class="slide">
+ <h2>1️⃣ ما هو الحادث الأمني؟</h2>
+ <div class="card hl"><h3>📌 مصطلح أساسي</h3><p><b>الحادث الأمني:</b> حدث يؤثر في <b class="acc">سرية</b> المعلومات أو <b class="acc">سلامتها</b> أو <b class="acc">توافرها</b>، أو يهددها بجدية، أو يخالف سياسة أمنية.</p></div>
+ <div class="svgbox" id="svg-cia"></div>
+ <h3>أمثلة نموذجية</h3>
+ <table><tr><th>النوع</th><th>الوصف</th></tr>
+  <tr><td><b>🔓 تسرب المعلومات</b></td><td class="l">تسرب المعلومات الشخصية أو السرية إلى الخارج</td></tr>
+  <tr><td><b>✏️ التلاعب بالبيانات</b></td><td class="l">تعديل البيانات داخل نظام ما دون تصريح</td></tr>
+  <tr><td><b>⛔ انقطاع الخدمة</b></td><td class="l">تصبح الخدمة غير متاحة بسبب هجمات على الخادم، إلخ</td></tr></table>
+</section>
+
+<!-- 4 نفحات -->
+<section class="slide">
+ <h2>✨ نفحات مستر عبدو: تبسيط</h2>
+ <table><tr><th>العنصر</th><th>المعنى</th><th>ربطه بالأمثلة</th></tr>
+  <tr><td><b>🤫 السرية</b></td><td class="l">ألا يطلع على المعلومة إلا المصرح له</td><td>تسرب المعلومات</td></tr>
+  <tr><td><b>🛡️ السلامة</b></td><td class="l">ألا تتغير المعلومة دون تصريح</td><td>التلاعب بالبيانات</td></tr>
+  <tr><td><b>🟢 التوافر</b></td><td class="l">أن تظل الخدمة والمعلومة متاحة وقت الحاجة</td><td>انقطاع الخدمة</td></tr></table>
+ <div class="card tip"><h3>💡 حتة زيادة</h3><ul>
+  <li><b>حفظ سريع:</b> س – س – ت (سرية، سلامة، توافر).</li>
+  <li><b>تحديث البرنامج</b> لإضافة ميزات جديدة <b class="no">ليس</b> حادثًا أمنيًا: عملية عادية لا تمس السرية ولا السلامة ولا التوافر ولا تخالف سياسة.</li>
+  <li><b>هجوم برنامج الفدية</b> يضرب أكثر من عنصر: يضر <b>التوافر</b> (الملفات مشفرة ولا يمكن استخدامها)، وقد يمس <b>السرية</b> أيضًا.</li></ul></div>
+</section>
+
+<!-- 5 المراحل الست -->
+<section class="slide">
+ <h2>2️⃣ تدفق الاستجابة للحوادث (6 مراحل)</h2>
+ <div class="svgbox" id="svg-stages"></div>
+ <p class="cap">الشكل 2.3.1 – نموذج تعليمي مبسط للاستجابة للحوادث من ست مراحل</p>
+ <table><tr><th style="width:26%">المرحلة</th><th>الوصف</th></tr>
+  <tr><td>① <b>التحضير</b></td><td class="l">إنشاء إجراءات وهياكل استجابة مسبقًا استعدادًا للحوادث</td></tr>
+  <tr><td>② <b>الاكتشاف</b></td><td class="l">اكتشاف الحدث والتأكد من وقوعه</td></tr>
+  <tr><td>③ <b>الاحتواء</b></td><td class="l">تحديد نطاق التأثير بحيث لا ينتشر الضرر أكثر</td></tr>
+  <tr><td>④ <b>إزالة التهديد (الاستئصال)</b></td><td class="l">إزالة التهديد ومسبباته، مثل حذف البرمجيات الخبيثة ومعالجة الثغرة المستغلة</td></tr>
+  <tr><td>⑤ <b>الاستعادة</b></td><td class="l">إعادة الأنظمة والخدمات إلى حالة تشغيل آمنة وطبيعية (قد تشمل الاستعادة من نسخة احتياطية سليمة)</td></tr>
+  <tr><td>⑥ <b>الدروس المستفادة والتحسين</b></td><td class="l">تحليل ما حدث، وتوثيق الدروس، وتحسين الضوابط لتقليل احتمال التكرار وأثره</td></tr></table>
+ <div class="card warn"><h3>⚠️ ملاحظة</h3><p>في الشكل سُمّيت المرحلة السادسة <b>"الوقاية"</b>، وفي الجدول <b>"الدروس المستفادة والتحسين"</b>، والمقصود واحد: <b>منع تكرار الحادث</b>.</p></div>
+</section>
+
+<!-- 6 صور الاحتواء والاستعادة -->
+<section class="slide">
+ <h2>🖼️ صورتا الاحتواء والاستعادة</h2>
+ <div class="grid">
+  <div><div class="svgbox" id="svg-contain"></div><div class="card hl"><h3>③ الاحتواء</h3><p>جهاز مصاب <b>معزول داخل حاجز زجاجي</b> عن باقي الأجهزة المتصلة بالشبكة. المعنى: اعزل الجزء المتأثر أو قيّد أثره بالطريقة المناسبة لمنع انتشار المشكلة.</p></div></div>
+  <div><div class="svgbox" id="svg-recover"></div><div class="card hl"><h3>⑤ الاستعادة</h3><p>إعادة الأنظمة والخدمات إلى حالة تشغيل <b>آمنة وطبيعية</b>، وقد تشمل الاستعادة من <b>نسخة احتياطية سليمة</b>.</p></div></div>
+ </div>
+</section>
+
+<!-- 7 التسلسل مقابل الواقع -->
+<section class="slide">
+ <h2>التسلسل مقابل الواقع 🔁</h2>
+ <div class="svgbox" id="svg-loop"></div>
+ <div class="card hl"><p>يساعد ترتيب المراحل على فهم <b>التسلسل العام</b>، لكن الاستجابة الفعلية قد تتضمن <b>تداخلًا أو تكرارًا</b> بين بعض الأنشطة. مثلًا، قد يكشف الاسترداد عن <b>بقايا للتهديد</b> تستلزم العودة إلى الاحتواء أو إزالة التهديد.</p></div>
+ <div class="card warn"><h3>⚠️ نقطة دقيقة</h3><p>أسفل الشكل مكتوب "يجب تنفيذ المراحل الست بالترتيب"، بينما نص الدرس يوضح أن الأنشطة قد تتداخل أو تتكرر. <b>الصحيح في الامتحان:</b> الترتيب العام ثابت، لكن العودة لمرحلة سابقة واردة (خصوصًا إذا ظهرت بقايا للتهديد أثناء الاستعادة).</p></div>
+ <div class="card stop"><h3>🛑 توقّف وفكّر</h3><p><b>لماذا يجب أن يأتي الاحتواء قبل الاستئصال في الاستجابة ذات المراحل الست؟</b></p>
+  <button class="show-btn" data-a="ap1" style="margin-top:6px">إظهار الإجابة</button>
+  <div class="ans" id="ap1">لأن إزالة التهديد تحتاج وقتًا، وإن لم نحصر الضرر أولًا فقد ينتشر التهديد إلى أجهزة وأنظمة أخرى أثناء محاولة إزالته. لذلك نوقف الانتشار أولًا (الاحتواء) ثم نزيل السبب (الاستئصال).</div></div>
+</section>
+
+<!-- 8 نفحات الحفظ -->
+<section class="slide">
+ <h2>✨ طريقة سهلة لحفظ الترتيب</h2>
+ <div class="card gold center"><p style="font-size:clamp(18px,2.6vw,34px)"><b class="acc">جهّز ← اكتشف ← احصر ← أزل ← أعد التشغيل ← تعلّم</b></p></div>
+ <h3>🚰 مثال يقرب الفكرة: تسرب مياه من ماسورة</h3>
+ <table><tr><th>المرحلة</th><th>في المثال</th></tr>
+  <tr><td>التحضير</td><td class="l">تجهّز أدوات السباكة وتعرف مكان المحبس مسبقًا</td></tr>
+  <tr><td>الاكتشاف</td><td class="l">تلاحظ التسرب وتتأكد منه</td></tr>
+  <tr><td>الاحتواء</td><td class="l">تغلق المحبس أولًا</td></tr>
+  <tr><td>الاستئصال</td><td class="l">تصلح الماسورة</td></tr>
+  <tr><td>الاستعادة</td><td class="l">تعيد المياه للعمل</td></tr>
+  <tr><td>الدروس المستفادة</td><td class="l">تتعلم كيف تمنع تكرار المشكلة</td></tr></table>
+ <div class="card warn"><h3>⚠️ قاعدتان ذهبيتان</h3><p><b>الاحتواء قبل الاستئصال دائمًا</b>، و<b>الاستئصال قبل الاستعادة دائمًا</b>.</p></div>
+ <div class="card tip"><h3>💡 حتة زيادة</h3><ul>
+  <li>لو بدأنا بالاستعادة <b>قبل</b> إزالة السبب: قد تبقى البرمجية الخبيثة أو الثغرة، فيعود الحادث ويصاب النظام المستعاد من جديد.</li>
+  <li><b>النسخ الاحتياطية السليمة والمجرَّبة</b> من أهم ما يُجهَّز في مرحلة التحضير، لأنها تُسرّع الاستعادة.</li></ul></div>
+</section>
+
+<!-- 9 تقييم المخاطر -->
+<section class="slide">
+ <h2>3️⃣ مفهوم تقييم المخاطر 📊</h2>
+ <div class="card hl"><h3>(1) الخطر</h3><p>احتمال أن يقع حدث يسبب ضررًا، مع مراعاة <b>احتمال وقوعه</b> و<b>حجم أثره</b>.</p></div>
+ <div class="card gold center"><h3>(2) المعادلة المبسطة</h3>
+  <p style="font-size:clamp(20px,3vw,40px)" class="acc">درجة الخطر = درجة التأثير × درجة الاحتمالية</p></div>
+ <div class="grid">
+  <div class="card"><h3>① التأثير 💥</h3><p>حجم الضرر إذا وقع الحدث.</p></div>
+  <div class="card"><h3>② الاحتمالية 🎲</h3><p>مدى احتمال وقوع الحدث.</p></div>
+ </div>
+ <div class="card tip"><h3>💡 حتة زيادة</h3><p>المؤسسة لا تستطيع معالجة كل المخاطر في الوقت نفسه (موارد ووقت وميزانية محدودة)، ولهذا نرتّبها بتقييم المخاطر <b>لنبدأ بالأخطر</b>.</p></div>
+</section>
+
+<!-- 10 المصفوفة -->
+<section class="slide">
+ <h2>🟥 مصفوفة تقييم المخاطر</h2>
+ <div class="svgbox" id="svg-matrix" style="max-width:760px;margin-inline:auto"></div>
+ <p class="cap">الشكل 2.3.2 – المخاطرة = التأثير × الاحتمالية · يجب معالجة المخاطر ذات التأثير المرتفع والاحتمالية المرتفعة أولًا</p>
+ <div class="card hl"><p>(3) المخاطر ذات التأثير العالي والاحتمالية العالية من <b>أعلى الأولويات</b> في هذا النموذج المبسط. أما ترتيب الحالات الأخرى فيعتمد على درجات المصفوفة والسياق والضوابط المتاحة.</p></div>
+ <div class="card"><h3>✨ أمثلة بسيطة</h3>
+ <table><tr><th>الخطر</th><th>التأثير</th><th>الاحتمالية</th><th>الدرجة</th></tr>
+  <tr><td>🌍 زلزال مدمّر</td><td>مرتفع</td><td>منخفضة</td><td><b>متوسط</b></td></tr>
+  <tr><td>🔌 انقطاع كهرباء قصير</td><td>منخفض</td><td>متوسطة</td><td><b>منخفض</b></td></tr>
+  <tr><td>🔐 هجوم فدية متكرر</td><td>مرتفع</td><td>مرتفعة</td><td><b class="no">مرتفع جدًا (أولوية قصوى)</b></td></tr></table></div>
+ <div class="card warn"><h3>⚠️ لا تكتفِ بعامل واحد</h3><p>خطر تأثيره ضخم لكن احتمال حدوثه ضعيف جدًا ≠ خطر تأثيره ضخم واحتمال حدوثه عالٍ. لازم تضرب العاملين معًا. ولو خانتان لهما <b>نفس الدرجة</b> (مثل "متوسط" و"متوسط") فالمصفوفة وحدها لا تكفي للترتيب بينهما، ونرجع للسياق والضوابط المتاحة.</p></div>
+</section>
+
+<!-- 11 فكرة رئيسية + إجابة السؤال -->
+<section class="slide">
+ <h2>🎯 الفكرة الرئيسية وإجابة السؤال الرئيسي</h2>
+ <div class="card gold"><h3>🎯 الفكرة الرئيسية</h3><p>تعامل مع الحوادث وفق التسلسل العام: <b>احتوِ، ثم أزل السبب، ثم استعد، ثم استخلص الدروس</b> وحسّن الضوابط لتقليل احتمال التكرار. وحدد أولويات المخاطر بناءً على <b>التأثير × الاحتمالية</b>، بحيث يظل الضرر صغيرًا ولا تتكرر المشكلات.</p></div>
+ <div class="card hl"><h3>💬 إجابة السؤال الرئيسي</h3>
+  <p>الحادث الأمني يؤثر في سرية المعلومات أو سلامتها أو توافرها، أو يهددها بجدية، أو يخالف سياسة أمنية. ويعرض الدرس نموذجًا مبسطًا من ست مراحل: التحضير، والاكتشاف، والاحتواء، وإزالة التهديد (الاستئصال)، والاستعادة، ثم الدروس المستفادة والتحسين. يساعد هذا التسلسل على الفهم، لكن بعض الأنشطة قد تتداخل أو تتكرر. ولتحديد الأولويات، نقدّر درجة الخطر من درجتي التأثير والاحتمالية، ثم نبدأ بالمخاطر الأعلى أولوية بهدف تقليل الضرر واحتمال تكرار المشكلة.</p></div>
+</section>
+
+<!-- 12 ملخص -->
+<section class="slide">
+ <h2>🧠 ملخص سريع للمراجعة</h2>
+ <div class="grid">
+  <div class="card hl"><h3>الحادث الأمني</h3><p>حدث يؤثر في السرية أو السلامة أو التوافر، أو يهددها بجدية، أو يخالف سياسة أمنية. (تسرب – تلاعب – انقطاع)</p></div>
+  <div class="card hl"><h3>المراحل الست</h3><p>التحضير ← الاكتشاف ← الاحتواء ← الاستئصال ← الاستعادة ← الدروس المستفادة والتحسين.</p></div>
+  <div class="card hl"><h3>قاعدتان</h3><p>الاحتواء قبل الاستئصال، والاستئصال قبل الاستعادة. ويمكن العودة لمرحلة سابقة.</p></div>
+  <div class="card hl"><h3>المخاطر</h3><p>الخطر = احتمال وقوع حدث يسبب ضررًا. الدرجة = التأثير × الاحتمالية. الأولوية الأولى: تأثير عالٍ + احتمالية عالية.</p></div>
+ </div>
+ <div class="card"><h3>🧠 فكّر وتحدَّ نفسك</h3>
+  <p><b>تأمل:</b> ما المرحلة التي تعتقد أنها الأصعب تنفيذًا تحت الضغط ولماذا؟</p>
+  <button class="show-btn" data-a="ap2">إظهار الإجابة</button><div class="ans" id="ap2">الاحتواء، لأنه يحتاج قرارًا سريعًا بعزل الأجهزة قبل فهم الحادث بالكامل، وأي تأخير قد يزيد الضرر.</div>
+  <p style="margin-top:10px"><b>التحدي:</b> اقترح شيئًا واحدًا يمكن لمؤسسة أن تُعدّه مسبقًا (المرحلة 1) يجعل المراحل الأخرى أسرع.</p>
+  <button class="show-btn" data-a="ap3">إظهار الإجابة</button><div class="ans" id="ap3">خطة استجابة مكتوبة بأسماء الفريق وأرقام التواصل، أو نسخ احتياطية سليمة ومجرَّبة تُسرّع الاستعادة.</div></div>
+</section>
+
+<!-- الأسئلة -->
+<section class="slide" id="q1"><h2>📝 أولًا: مثال محلول</h2><div class="qbox"></div></section>
+<section class="slide" id="q2"><h2>🏆 سؤال على نمط الامتحان (6 درجات)</h2><div class="qbox"></div></section>
+<section class="slide" id="q3"><h2>✏️ تدرّب</h2><div class="qbox"></div></section>
+<section class="slide" id="q4"><h2>🧰 فكّر كمهندس: ابحث ثم قرر</h2><div class="qbox"></div></section>
+<section class="slide" id="q5"><h2>🌍 طبّق ما تعلمته</h2><div class="qbox"></div></section>
+<section class="slide" id="q6"><h2>📚 تمارين</h2><div class="qbox"></div></section>
+
+</main>
+
+<nav>
+ <button class="ic" id="prev">▶ سابق</button>
+ <div class="dots" id="dots"></div><span class="cnt" id="cnt"></span>
+ <button class="ic" id="next">تالي ◀</button>
+</nav>
+
+<script>
+const PN=['التحضير','الاكتشاف','الاحتواء','إزالة التهديد','الاستعادة','الدروس المستفادة'];
+const PL=['التحضير','الاكتشاف','الاحتواء','إزالة التهديد (الاستئصال)','الاستعادة','الدروس المستفادة والتحسين'];
+const PC=['#6366f1','#0ea5e9','#f59e0b','#ef4444','#10b981','#8b5cf6'];
+const PE=['🧰','🔍','🧱','🧹','🔄','🎓'];
+const ph=i=>'<span class="chip" style="background:'+PC[i]+'">'+PL[i]+'</span>';
+const T='<span class="ok">(○) صحيحة</span>',X='<span class="no">(×) خاطئة</span>';
+
+/* المراحل الست */
+function stages(){
+ let s='<svg viewBox="0 0 920 270" xmlns="http://www.w3.org/2000/svg"><defs><marker id="sa" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9z" fill="#1e1b4b"/></marker><marker id="sb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9z" fill="#dc2626"/></marker></defs>';
+ s+='<text x="460" y="26" text-anchor="middle" font-size="22" font-weight="900" fill="#1e1b4b">الاستجابة للحوادث: 6 مراحل</text>';
+ for(let i=0;i<6;i++){const x=780-146*i;
+  s+='<rect x="'+x+'" y="45" width="130" height="130" rx="16" fill="#fff" stroke="'+PC[i]+'" stroke-width="4"/>';
+  s+='<circle cx="'+(x+65)+'" cy="72" r="16" fill="'+PC[i]+'"/><text x="'+(x+65)+'" y="79" text-anchor="middle" font-size="19" font-weight="900" fill="#fff">'+(i+1)+'</text>';
+  s+='<text x="'+(x+65)+'" y="117" text-anchor="middle" font-size="32">'+PE[i]+'</text>';
+  s+='<text x="'+(x+65)+'" y="150" text-anchor="middle" font-size="'+(i==5?13:16)+'" font-weight="900" fill="'+PC[i]+'">'+PN[i]+'</text>';
+  if(i<5)s+='<line x1="'+(x-2)+'" y1="110" x2="'+(x-14)+'" y2="110" stroke="#1e1b4b" stroke-width="3" marker-end="url(#sa)"/>';}
+ s+='<path d="M 350 185 Q 350 235 495 235 Q 640 235 640 185" fill="none" stroke="#dc2626" stroke-width="3" stroke-dasharray="7 6" marker-end="url(#sb)"/>';
+ s+='<text x="495" y="262" text-anchor="middle" font-size="16" font-weight="700" fill="#dc2626">قد نعود لمرحلة سابقة إذا ظهرت بقايا للتهديد</text></svg>';
+ return s;
+}
+document.getElementById('svg-stages').innerHTML=stages();
+
+/* حلقة التسلسل مقابل الواقع */
+document.getElementById('svg-loop').innerHTML='<svg viewBox="0 0 900 230" xmlns="http://www.w3.org/2000/svg"><defs><marker id="la" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9z" fill="#1e1b4b"/></marker><marker id="lb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9z" fill="#dc2626"/></marker></defs><g font-size="17" font-weight="900" text-anchor="middle"><rect x="740" y="30" width="140" height="60" rx="30" fill="#f59e0b"/><text x="810" y="67" fill="#fff">③ الاحتواء</text><rect x="490" y="30" width="150" height="60" rx="30" fill="#ef4444"/><text x="565" y="67" fill="#fff">④ الاستئصال</text><rect x="250" y="30" width="140" height="60" rx="30" fill="#10b981"/><text x="320" y="67" fill="#fff">⑤ الاستعادة</text><rect x="20" y="30" width="170" height="60" rx="30" fill="#8b5cf6"/><text x="105" y="67" fill="#fff">⑥ الدروس</text></g><g stroke="#1e1b4b" stroke-width="3" marker-end="url(#la)"><line x1="738" y1="60" x2="644" y2="60"/><line x1="488" y1="60" x2="394" y2="60"/><line x1="248" y1="60" x2="194" y2="60"/></g><path d="M 320 95 Q 320 175 565 150 Q 650 140 810 95" fill="none" stroke="#dc2626" stroke-width="3.5" stroke-dasharray="8 6" marker-end="url(#lb)"/><text x="560" y="205" text-anchor="middle" font-size="17" font-weight="700" fill="#dc2626">🔁 الاسترداد كشف بقايا للتهديد ← العودة إلى الاحتواء أو إزالة التهديد</text></svg>';
+
+/* CIA */
+document.getElementById('svg-cia').innerHTML='<svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg"><g text-anchor="middle" font-weight="900"><circle cx="450" cy="130" r="44" fill="#4f46e5"/><text x="450" y="122" font-size="16" fill="#fff">الحادث</text><text x="450" y="146" font-size="16" fill="#fff">الأمني</text><g stroke="#4f46e5" stroke-width="3"><line x1="410" y1="112" x2="260" y2="70"/><line x1="450" y1="174" x2="450" y2="205"/><line x1="490" y1="112" x2="640" y2="70"/></g><rect x="620" y="20" width="250" height="100" rx="16" fill="#eceeff" stroke="#4f46e5" stroke-width="3"/><text x="745" y="55" font-size="22" fill="#4f46e5">🤫 السرية</text><text x="745" y="85" font-size="16" fill="#1e1b4b">ألا يطلع إلا المصرح له</text><text x="745" y="107" font-size="15" fill="#dc2626">مثال: تسرب المعلومات</text><rect x="30" y="20" width="250" height="100" rx="16" fill="#ecfdf5" stroke="#10b981" stroke-width="3"/><text x="155" y="55" font-size="22" fill="#047857">🟢 التوافر</text><text x="155" y="85" font-size="16" fill="#1e1b4b">تظل الخدمة متاحة وقت الحاجة</text><text x="155" y="107" font-size="15" fill="#dc2626">مثال: انقطاع الخدمة</text><rect x="300" y="205" width="300" height="50" rx="16" fill="#fff8e6" stroke="#f59e0b" stroke-width="3"/><text x="450" y="228" font-size="20" fill="#b45309">🛡️ السلامة</text><text x="450" y="248" font-size="14" fill="#1e1b4b">لا تتغير المعلومة دون تصريح · مثال: التلاعب بالبيانات</text></g></svg>';
+
+/* الاحتواء */
+document.getElementById('svg-contain').innerHTML='<svg viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg"><g stroke="#38bdf8" stroke-width="3"><line x1="130" y1="150" x2="270" y2="80"/><line x1="130" y1="150" x2="270" y2="150"/><line x1="130" y1="150" x2="270" y2="225"/></g><rect x="20" y="75" width="120" height="150" rx="14" fill="#e0f2fe" stroke="#0284c7" stroke-width="4" stroke-dasharray="9 5"/><text x="80" y="95" text-anchor="middle" font-size="12" font-weight="900" fill="#0284c7">حاجز العزل 🧱</text><rect x="42" y="115" width="76" height="54" rx="8" fill="#1e1b4b"/><rect x="48" y="121" width="64" height="38" rx="4" fill="#ef4444"/><text x="80" y="148" text-anchor="middle" font-size="24">🦠</text><rect x="66" y="169" width="28" height="10" fill="#1e1b4b"/><text x="80" y="205" text-anchor="middle" font-size="13" font-weight="900" fill="#dc2626">جهاز مصاب</text><g font-size="30" text-anchor="middle"><text x="305" y="90">💻</text><text x="305" y="160">📱</text><text x="305" y="235">🗄️</text></g><g font-size="13" font-weight="900" text-anchor="middle" fill="#16a34a"><text x="370" y="85">سليم ✔</text><text x="370" y="155">سليم ✔</text><text x="370" y="230">سليم ✔</text></g><text x="220" y="280" text-anchor="middle" font-size="16" font-weight="900" fill="#1e1b4b">اعزل الجزء المتأثر لمنع الانتشار</text></svg>';
+
+/* الاستعادة */
+document.getElementById('svg-recover').innerHTML='<svg viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ra" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9z" fill="#10b981"/></marker></defs><rect x="285" y="40" width="130" height="100" rx="16" fill="#ecfdf5" stroke="#10b981" stroke-width="4"/><text x="350" y="85" text-anchor="middle" font-size="38">☁️🛡️</text><text x="350" y="115" text-anchor="middle" font-size="14" font-weight="900" fill="#047857">نسخة احتياطية</text><text x="350" y="132" text-anchor="middle" font-size="14" font-weight="900" fill="#047857">سليمة</text><line x1="283" y1="90" x2="170" y2="150" stroke="#10b981" stroke-width="4" marker-end="url(#ra)"/><rect x="20" y="130" width="150" height="110" rx="16" fill="#fff" stroke="#10b981" stroke-width="4"/><g font-size="30" text-anchor="middle"><text x="60" y="180">🗄️</text><text x="100" y="180">💻</text><text x="140" y="180">🌐</text></g><text x="95" y="215" text-anchor="middle" font-size="14" font-weight="900" fill="#16a34a">أنظمة وخدمات تعمل ✔</text><text x="220" y="280" text-anchor="middle" font-size="16" font-weight="900" fill="#1e1b4b">تشغيل آمن وطبيعي من جديد</text></svg>';
+
+/* مصفوفة المخاطر؛ pts: [[impactRow(0 high..2 low),probCol(0 low..2 high),letter]] */
+function matrix(pts){
+ const lab=[['متوسط','مرتفع','مرتفع جدًا'],['منخفض','متوسط','مرتفع'],['منخفض جدًا','منخفض','متوسط']];
+ const col={'منخفض جدًا':'#bbf7d0','منخفض':'#d9f99d','متوسط':'#fde68a','مرتفع':'#fdba74','مرتفع جدًا':'#f87171'};
+ let s='<svg viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg"><defs><marker id="xa" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#1e1b4b"/></marker></defs>';
+ s+='<text x="350" y="24" text-anchor="middle" font-size="19" font-weight="900" fill="#1e1b4b">مصفوفة تقييم المخاطر: المخاطرة = التأثير × الاحتمالية</text>';
+ const X0=130,Y0=40,W=150,H=90;
+ for(let r=0;r<3;r++)for(let c=0;c<3;c++){const t=lab[r][c];
+  s+='<rect x="'+(X0+c*W)+'" y="'+(Y0+r*H)+'" width="'+W+'" height="'+H+'" fill="'+col[t]+'" stroke="#fff" stroke-width="4" rx="8"/><text x="'+(X0+c*W+W/2)+'" y="'+(Y0+r*H+H/2+6)+'" text-anchor="middle" font-size="19" font-weight="900" fill="#1e1b4b">'+t+'</text>';}
+ ['مرتفع','متوسط','منخفض'].forEach((t,r)=>{s+='<text x="'+(X0-10)+'" y="'+(Y0+r*H+H/2+6)+'" text-anchor="end" font-size="16" font-weight="700" fill="#1e1b4b">'+t+'</text>'});
+ ['منخفض','متوسط','مرتفع'].forEach((t,c)=>{s+='<text x="'+(X0+c*W+W/2)+'" y="'+(Y0+3*H+22)+'" text-anchor="middle" font-size="16" font-weight="700" fill="#1e1b4b">'+t+'</text>'});
+ s+='<text x="34" y="'+(Y0+135)+'" text-anchor="middle" font-size="18" font-weight="900" fill="#4f46e5" transform="rotate(-90 34 '+(Y0+135)+')">التأثير ↑</text>';
+ s+='<text x="'+(X0+225)+'" y="'+(Y0+3*H+48)+'" text-anchor="middle" font-size="18" font-weight="900" fill="#4f46e5">الاحتمالية ←</text>';
+ s+='<text x="'+(X0+225)+'" y="'+(Y0+3*H+70)+'" text-anchor="middle" font-size="14" font-weight="700" fill="#dc2626">يجب معالجة المخاطر ذات التأثير المرتفع والاحتمالية المرتفعة أولًا</text>';
+ (pts||[]).forEach(p=>{const cx=X0+p[1]*W+W/2,cy=Y0+p[0]*H+H-22;s+='<circle cx="'+cx+'" cy="'+cy+'" r="15" fill="#1e1b4b" stroke="#fff" stroke-width="2"/><text x="'+cx+'" y="'+(cy+6)+'" text-anchor="middle" font-size="17" font-weight="900" fill="#fff">'+p[2]+'</text>'});
+ return s+'</svg>';
+}
+document.getElementById('svg-matrix').innerHTML=matrix();
+
+/* بناء الأسئلة */
+let n=0;
+function render(id,blocks){let h='';
+ blocks.forEach(b=>{
+  if(b.h)h+='<div class="qh">'+b.h+(b.e?' <em>— '+b.e+'</em>':'')+'</div>';
+  else if(b.s)h+='<p class="qs">'+b.s+'</p>';
+  else if(b.raw)h+=b.raw;
+  else if(b.q){n++;h+='<div class="card q"><div class="t">'+b.q+(b.o?'<div class="opts">'+b.o.map(x=>'<span>'+x+'</span>').join('')+'</div>':'')+'</div><button class="show-btn" data-a="a'+n+'">إظهار الإجابة</button><div class="ans" id="a'+n+'">'+b.a+'</div></div>'}});
+ document.querySelector('#'+id+' .qbox').innerHTML=h;}
+
+render('q1',[
+ {h:'(1) ضع علامة ○ أو ×',e:'أمام كل عبارة'},
+ {q:'أ. الحادث الأمني حدث يؤثر في سرية المعلومات أو سلامتها أو توافرها، أو يهددها بجدية، أو يخالف سياسة أمنية',a:T+' — تعريف صحيح.'},
+ {q:'ب. في الاستجابة للحوادث من المهم أولًا منع انتشار الضرر قبل إزالة السبب',a:T+' — يُجرى الاحتواء قبل الاستئصال.'},
+ {q:'ج. يمكن تحديد حجم المخاطرة بالتأثير وحده',a:X+' — يُحدَّد بالتأثير <b>والاحتمالية معًا</b>.'},
+ {q:'د. المرحلة الأخيرة من الاستجابة هي الدروس المستفادة والتحسين',a:T+' — هي المرحلة السادسة والأخيرة.'},
+ {h:'(2) بيّن أي مرحلة تنتمي إليها كل حالة',e:'الخيارات: أ التحضير، ب الاحتواء، ج الاستئصال، د الدروس المستفادة والتحسين'},
+ {q:'أ. إنشاء إجراءات استجابة مسبقًا استعدادًا للحوادث',a:ph(0)},
+ {q:'ب. فصل حاسوب مصاب بالبرمجيات الخبيثة عن الشبكة',a:ph(2)+'<br>(الفصل لمنع انتشار الضرر)'},
+ {q:'ج. إزالة إصابة البرمجيات الخبيثة',a:ph(3)},
+ {q:'د. تحليل السبب واتخاذ تدابير لعدم تكرار الحادث',a:ph(5)}
+]);
+
+render('q2',[
+ {raw:'<div class="card hl"><p><b>السؤال [6 درجات]:</b> اشرح أهمية التسلسل العام لمراحل الاستجابة للحوادث مستخدمًا الاحتواء والاستئصال والاستعادة كمثال، ووضّح لماذا قد تحتاج الاستجابة الفعلية إلى العودة إلى مرحلة سابقة. <i>(استعن بـ: ما يحدث إذا بدأت الاستعادة قبل إزالة السبب)</i></p></div><div class="svgbox">'+stages()+'</div>'},
+ {q:'اكتب إجابتك ثم قارنها بالنموذجية',a:'<p>التسلسل العام يساعد المؤسسة على <b>تنظيم الاستجابة</b> وعدم التصرف عشوائيًا. يأتي <b>الاحتواء</b> أولًا لإيقاف انتشار الضرر وتحديد نطاقه. ثم يأتي <b>الاستئصال</b> لإزالة التهديد ومسبباته، مثل حذف البرمجيات الخبيثة ومعالجة الثغرة المستغلة. وبعد التأكد من إزالة السبب تأتي <b>الاستعادة</b> لإعادة الأنظمة والخدمات إلى حالة تشغيل آمنة وطبيعية.</p><p>ولو بدأت الاستعادة قبل إزالة السبب، فقد تبقى البرمجية الخبيثة أو الثغرة المستغلة، فيعود الحادث ويصاب النظام المستعاد من جديد.</p><p>وقد تحتاج الاستجابة الفعلية إلى العودة إلى مرحلة سابقة لأن المراحل قد تتداخل أو تتكرر؛ فمثلًا قد يكشف الاسترداد عن بقايا للتهديد تستلزم العودة إلى الاحتواء أو إزالة التهديد.</p>'}
+]);
+
+render('q3',[
+ {h:'السؤال 1',e:'أجب عن الأسئلة التالية'},
+ {q:'1. ما المصطلح الذي يُطلق على حدث يؤثر في سرية المعلومات أو سلامتها أو توافرها، أو يهددها بجدية؟',a:'<b>الحادث الأمني.</b>'},
+ {q:'2. اذكر المراحل الست للاستجابة للحوادث حسب تسلسلها العام.',a:PL.map((_,i)=>ph(i)).join(' ← ')},
+ {q:'3. ما العاملان المستخدمان لتحديد حجم المخاطرة؟',a:'<b>التأثير والاحتمالية</b> (المخاطرة = التأثير × الاحتمالية).'},
+ {h:'السؤال 2',e:'أجب عن الأسئلة التالية'},
+ {q:'(1) اختر الخيار الذي <b>لا</b> يمثل مثالًا مناسبًا لحادث أمني:',o:['أ. تم تشفير البيانات بسبب إصابة ببرنامج فدية.','ب. تسربت معلومات العملاء إلى الخارج عبر وصول غير مصرح به.','ج. تم إجراء تحديث للبرنامج لإضافة ميزات جديدة.','د. أصبحت خدمة ويب غير متاحة بسبب هجوم على الخادم.'],a:'<b>الإجابة: ج.</b><br>السبب: تحديث البرنامج لإضافة ميزات عملية عادية، ولا تؤثر في السرية أو السلامة أو التوافر ولا تخالف سياسة أمنية. أما الباقي فهي حوادث أمنية.'},
+ {q:'(2) اختر الخيار الذي يصف مفهوم تقييم المخاطر بأنسب طريقة:',o:['أ. يكفي معالجة المخاطر ذات التأثير الكبير فقط.','ب. يكفي معالجة المخاطر ذات الاحتمالية العالية فقط.','ج. ينبغي معالجة المخاطر ذات التأثير العالي والاحتمالية العالية أولًا.','د. يجب معالجة جميع المخاطر في آن واحد.'],a:'<b>الإجابة: ج.</b>'}
+]);
+
+render('q4',[
+ {raw:'<div class="card hl"><h3>📋 السيناريو</h3><p>تعرّض نظام سجلات الطلاب في إحدى المدارس لهجوم ببرمجية فدية: شُفِّرت الملفات، ولم يعد الموظفون قادرين على تسجيل الدخول. أنت تقود الاستجابة.</p></div>'},
+ {h:'1 · استجب من هنا',e:'مرحلتا التحضير والاكتشاف انتهتا، والمراحل المتبقية أربع'},
+ {q:'ما تعنيه مرحلة <b>الاحتواء</b> في هذا الحادث',a:'عزل الأجهزة والخوادم المصابة عن الشبكة لمنع انتشار التشفير إلى باقي الأجهزة.'},
+ {q:'ما تعنيه مرحلة <b>الاستئصال</b> في هذا الحادث',a:'إزالة برمجية الفدية ومعالجة الثغرة التي دخلت منها.'},
+ {q:'ما تعنيه مرحلة <b>الاستعادة</b> في هذا الحادث',a:'استعادة سجلات الطلاب من نسخة احتياطية سليمة وإعادة تشغيل النظام بشكل آمن.'},
+ {q:'ما تعنيه مرحلة <b>الدروس المستفادة والتحسين</b> في هذا الحادث',a:'تحليل كيف حدث الهجوم، وتوثيق الدروس، وتحسين الضوابط (مثل تحديث الأنظمة والتدريب والنسخ الاحتياطي).'},
+ {h:'2 · قيّم المخاطر',e:'(i) هجوم فدية آخر، (ii) انقطاع كهربائي قصير'},
+ {q:'قدّر التأثير والاحتمالية ودرجة كل خطر، ثم حدّد أيهما يُعالج أولًا',a:'<table><tr><th>الخطر</th><th>التأثير</th><th>الاحتمالية</th><th>الدرجة</th></tr><tr><td>(i) هجوم فدية آخر</td><td>مرتفع (تشفير السجلات وتعطل العمل)</td><td>متوسطة إلى مرتفعة (الثغرة قد تكون قائمة)</td><td>مرتفع إلى مرتفع جدًا</td></tr><tr><td>(ii) انقطاع كهربائي قصير</td><td>منخفض</td><td>متوسطة</td><td>منخفض</td></tr></table><b>الأولى بالمعالجة: (i) هجوم الفدية</b>، لأن درجة خطره أعلى (تأثير مرتفع × احتمالية أعلى).'},
+ {h:'3 · قرّر',e:'أول ثلاثة إجراءات وسبب أهمية الترتيب'},
+ {q:'ما أول ثلاثة إجراءات؟ ولماذا الترتيب مهم؟',a:'<ol><li>احتواء الحادث بعزل الأجهزة المصابة عن الشبكة.</li><li>إزالة البرمجية الخبيثة ومعالجة الثغرة (الاستئصال).</li><li>استعادة البيانات من نسخة احتياطية سليمة.</li></ol><b>السبب:</b> لو بدأنا بالاستعادة قبل الاحتواء والاستئصال فقد يُعاد تشفير الملفات المستعادة من جديد.<br><b>الخطوة الأولى الأهم: الاحتواء.</b>'},
+ {q:'<b>قدّم دليلًا على إجابتك:</b><div class="opts"><span>☐ الاستعادة من النسخة الاحتياطية فورًا</span><span>☐ اتباع الاستجابة ذات المراحل الست بالترتيب</span></div>',a:'<b>☑ الخيار الثاني: اتباع الاستجابة ذات المراحل الست بالترتيب.</b><br>الدليل: إذا بدأت الاستعادة قبل إزالة التهديد فقد تبقى البرمجية الخبيثة أو الثغرة المستغلة.'},
+ {raw:'<div class="card warn"><h3>💡 هل تواجه صعوبة؟</h3><p>إذا بدأت الاستعادة قبل إزالة التهديد، فقد تبقى البرمجية الخبيثة أو الثغرة المستغلة، وقد يلزم الرجوع إلى الاحتواء وإزالة التهديد.</p></div>'}
+]);
+
+render('q5',[
+ {raw:'<div class="card hl"><p>اكتشف متجر إلكتروني للتو أن بيانات العملاء قد <b>تسرّبت</b>. باستخدام مراحل الاستجابة الست وتقييم المخاطر، حدد المرحلتين التاليتين اللتين يجب على المتجر تنفيذهما، وسبب ذلك، وحدد خطرًا واحدًا ينبغي إعطاؤه الأولوية بعد ذلك.</p></div><div class="svgbox">'+stages()+'</div>'},
+ {q:'ما المرحلتان التاليتان؟ ولماذا؟',a:'تم <b>الاكتشاف</b> بالفعل، فالمرحلتان التاليتان:<ul><li>'+ph(2)+': لإيقاف التسرب ومنع وصول المهاجم إلى بيانات أكثر (مثل تعطيل الحساب أو المسار المخترق وعزل النظام المتأثر).</li><li>'+ph(3)+': لإزالة سبب التسرب ومعالجة الثغرة التي استُغلت.</li></ul>'},
+ {q:'ما الخطر الذي له الأولوية بعد ذلك؟',a:'<b>استغلال البيانات المسرّبة، أو تكرار اختراق النظام نفسه عبر الثغرة.</b> تأثيره مرتفع (ضرر للعملاء وسمعة المتجر)، واحتماليته مرتفعة ما لم تُعالَج الثغرة.'}
+]);
+
+render('q6',[
+ {h:'التمرين 1: اختبر فهمك',e:'أجب دون الرجوع إلى الشرح ثم راجع'},
+ {q:'عرّف الحادث الأمني',a:'حدث يؤثر في السرية أو السلامة أو التوافر، أو يهددها بجدية، أو يخالف سياسة أمنية.'},
+ {q:'اذكر ثلاثة أمثلة على الحوادث الأمنية',a:'تسرب المعلومات، التلاعب بالبيانات، انقطاع الخدمة.'},
+ {q:'ما أول مرحلة وما آخر مرحلة؟',a:'أولها <b>التحضير</b>، وآخرها <b>الدروس المستفادة والتحسين</b>.'},
+ {q:'لماذا يسبق الاحتواء الاستئصال؟',a:'لمنع انتشار الضرر أثناء إزالة السبب.'},
+ {q:'ما معادلة درجة الخطر؟',a:'<b>التأثير × الاحتمالية</b>.'},
+ {q:'أي خطر يُعالج أولًا؟',a:'ذو <b>التأثير العالي والاحتمالية العالية</b>.'},
+ {q:'هل يمكن العودة لمرحلة سابقة؟',a:'<b>نعم</b>، المراحل قد تتداخل أو تتكرر (مثل أن يكشف الاسترداد بقايا للتهديد).'},
+ {h:'التمرين 2: اقرأ الفقرة وأجب',e:'املأ الفراغات'},
+ {q:'<i>يُسمى الحدث الذي يؤثر في سرية المعلومات أو سلامتها أو توافرها، أو يهددها بجدية: <b>( أ )</b>. وفي نموذج الدرس يُستخدم <b>( ب )</b> للحد من انتشار الضرر، ثم تُنفذ <b>( ج )</b> لإزالة التهديد ومسبباته، وتليها <b>( د )</b> لإعادة الأنظمة والخدمات، ثم تأتي <b>( هـ )</b> لتحليل ما حدث وتحسين الحماية.</i>',a:'( أ ) الحادث الأمني<br>( ب ) الاحتواء<br>( ج ) إزالة التهديد (الاستئصال)<br>( د ) الاستعادة<br>( هـ ) الدروس المستفادة والتحسين'},
+ {h:'التمرين 3',e:'أجب عن الأسئلة التالية'},
+ {raw:'<p class="qs">(1) استخدم مصفوفة الدرس لتحديد أولوية المخاطر (أ-د). إذا تساوت درجتان أو لم تكف المعلومات للترتيب، فاذكر ذلك وفسّر.</p><table><tr><th>الخطر</th><th>التأثير</th><th>الاحتمالية</th></tr><tr><td>أ</td><td>كبير</td><td>عالية</td></tr><tr><td>ب</td><td>صغير</td><td>عالية</td></tr><tr><td>ج</td><td>كبير</td><td>منخفضة</td></tr><tr><td>د</td><td>صغير</td><td>منخفضة</td></tr></table>'},
+ {q:'رتّب المخاطر الأربعة',a:'<div class="svgbox" style="max-width:560px;margin-inline:auto">'+matrix([[0,2,'أ'],[2,2,'ب'],[0,0,'ج'],[2,0,'د']])+'</div><table><tr><th>الخطر</th><th>الدرجة من المصفوفة</th><th>الأولوية</th></tr><tr><td>أ</td><td>مرتفع جدًا</td><td>الأولى</td></tr><tr><td>ب</td><td>متوسط</td><td>ثانية (مشتركة مع ج)</td></tr><tr><td>ج</td><td>متوسط</td><td>ثانية (مشتركة مع ب)</td></tr><tr><td>د</td><td>منخفض</td><td>الأخيرة</td></tr></table><b>الترتيب:</b> أ أولًا، ثم ب وج، ثم د أخيرًا.<br><b>تساوي الدرجتين:</b> (ب) و(ج) متساويتان في المصفوفة (كلتاهما "متوسط")، فلا تكفي المصفوفة وحدها للترتيب بينهما، ويعتمد ذلك على السياق والضوابط المتاحة، وهو ما ينص عليه الدرس.'},
+ {q:'(2) اختر الوصف الأدق للتسلسل العام في نموذج الاستجابة للحوادث (مع مراعاة أن بعض الأنشطة قد تتداخل أو تتكرر):',o:['أ. الاكتشاف ← الاستئصال ← الاحتواء ← الاستعادة','ب. التحضير ← الاكتشاف ← الاحتواء ← الاستئصال ← الاستعادة ← الدروس المستفادة والتحسين','ج. الاكتشاف ← الاستعادة ← الاحتواء ← الدروس المستفادة والتحسين','د. الاحتواء ← الاكتشاف ← الاستئصال ← الاستعادة ← التحضير'],a:'<b>الإجابة: ب.</b>'}
+]);
+
+document.getElementById('deck').addEventListener('click',e=>{const b=e.target.closest('.show-btn');if(!b)return;
+ const a=document.getElementById(b.dataset.a);const o=a.classList.toggle('show');
+ b.textContent=o?'إخفاء الإجابة':'إظهار الإجابة';b.classList.toggle('open',o)});
+
+const S=[...document.querySelectorAll('.slide')],dots=document.getElementById('dots'),cnt=document.getElementById('cnt'),bar=document.getElementById('bar');
+let cur=0,timer=null;
+S.forEach((_,i)=>{const d=document.createElement('b');d.onclick=()=>go(i);dots.appendChild(d)});
+function go(i){cur=Math.max(0,Math.min(S.length-1,i));
+ S.forEach((s,k)=>s.classList.toggle('act',k===cur));
+ [...dots.children].forEach((d,k)=>d.classList.toggle('act',k===cur));
+ S[cur].scrollTop=0;cnt.textContent=(cur+1)+' / '+S.length;
+ bar.style.width=((cur+1)/S.length*100)+'%';
+ if(timer&&cur===S.length-1)toggleAuto()}
+const next=()=>go(cur+1),prev=()=>go(cur-1);
+function toggleAuto(){const b=document.getElementById('auto');
+ if(timer){clearInterval(timer);timer=null;b.classList.remove('on');b.textContent='▶ تشغيل تلقائي'}
+ else{if(cur===S.length-1)go(0);timer=setInterval(next,6000);b.classList.add('on');b.textContent='⏸ إيقاف'}}
+function toggleFS(){try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}}
+document.getElementById('next').onclick=next;document.getElementById('prev').onclick=prev;
+document.getElementById('auto').onclick=toggleAuto;document.getElementById('fs').onclick=toggleFS;
+document.addEventListener('keydown',e=>{
+ if(e.key==='ArrowLeft'){next()}else if(e.key==='ArrowRight'){prev()}
+ else if(e.key===' '&&!e.target.closest('button')){e.preventDefault();next()}
+ else if(e.key==='f'||e.key==='F'){toggleFS()}});
+go(0);
+</script>
+</body>
+</html>

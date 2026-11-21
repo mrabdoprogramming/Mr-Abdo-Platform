@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>طرق اتصال تطبيقات الويب – مستر عبدو برمجة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a2e;
+  --accent:#0b8f84;
+  --accent-dark:#087268;
+  --accent-soft:#e6f6f4;
+  --accent-line:#b7e2dd;
+  --amber:#f59e0b;
+  --amber-soft:#fff6e0;
+  --amber-line:#f5d98f;
+  --blue:#2563eb;
+  --blue-soft:#eaf1ff;
+  --blue-line:#bcd0f8;
+  --red:#e5484d;
+  --green:#1f9d6b;
+  --muted:#5b5b73;
+  --line:#e7ecee;
+  --bg:#ffffff;
+  --shadow:0 6px 24px rgba(26,26,46,.08);
+  --shadow-lg:0 14px 40px rgba(26,26,46,.12);
+}
+*{box-sizing:border-box}
+html{font-size:clamp(14px, calc(0.5vw + 0.95vh + 8px), 30px)}
+html,body{margin:0;height:100%}
+body{
+  font-family:'Cairo','Segoe UI',Tahoma,Arial,sans-serif;
+  background:var(--bg);color:var(--ink);overflow:hidden;line-height:1.7;-webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;cursor:pointer}
+.num{unicode-bidi:isolate}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+sub,sup{line-height:0;font-size:.62em}
+
+/* ---------- layout ---------- */
+#app{display:flex;flex-direction:column;height:100vh;height:100dvh;position:relative}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.45rem 1.4rem;border-bottom:1px solid var(--line);background:#fff;position:relative;z-index:5;gap:1rem;
+}
+.brand{display:flex;flex-direction:column;line-height:1.25}
+.brand b{font-size:1.25rem;font-weight:900}
+.brand b span{color:var(--accent)}
+.brand small{font-size:.72rem;color:var(--muted);font-weight:600}
+.lesson-chip{font-size:.8rem;font-weight:700;background:var(--accent-soft);color:var(--accent-dark);border:1px solid var(--accent-line);padding:.2rem .8rem;border-radius:99px;white-space:nowrap}
+.counter{font-weight:800;font-size:.9rem;color:var(--muted)}
+#progress{position:absolute;bottom:-2px;right:0;height:3px;background:var(--accent);width:0;z-index:6}
+#progress.run{animation:fill 6s linear forwards}
+@keyframes fill{from{width:0}to{width:100%}}
+
+#stage{flex:1;position:relative;overflow:hidden}
+.deco{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.deco .c1{position:absolute;width:30rem;height:30rem;border-radius:50%;background:radial-gradient(circle,rgba(11,143,132,.12),transparent 68%);top:-10rem;left:-9rem}
+.deco .c2{position:absolute;width:26rem;height:26rem;border-radius:50%;background:radial-gradient(circle,rgba(26,26,46,.06),transparent 68%);bottom:-9rem;right:-8rem}
+.deco .bin{position:absolute;font-weight:900;color:var(--ink);opacity:.05;letter-spacing:.2em;direction:ltr;white-space:nowrap}
+.deco .b1{font-size:3.4rem;top:12%;right:3%;transform:rotate(-8deg)}
+.deco .b2{font-size:2.6rem;bottom:9%;left:4%;transform:rotate(6deg)}
+
+.slide{
+  position:absolute;inset:0;z-index:1;overflow-y:auto;overflow-x:hidden;padding:1.2rem 1.6rem;
+  opacity:0;visibility:hidden;transform:translateX(2.5%);
+  transition:opacity .45s ease,transform .45s ease,visibility .45s;
+}
+.slide.active{opacity:1;visibility:visible;transform:none}
+.inner{max-width:92rem;margin:0 auto;min-height:100%;display:flex;flex-direction:column;justify-content:center;gap:1rem}
+.inner.center{align-items:center;text-align:center}
+
+.stitle{display:flex;align-items:center;gap:.8rem;margin:0}
+.stitle .ico{width:2.8rem;height:2.8rem;border-radius:.9rem;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:1.5rem;box-shadow:0 6px 16px rgba(11,143,132,.35);flex:none}
+.stitle h2{margin:0;font-size:2rem;font-weight:900;line-height:1.3}
+.stitle h2 small{display:block;font-size:.9rem;font-weight:700;color:var(--accent)}
+.bar{height:.28rem;width:6rem;background:var(--accent);border-radius:9px;margin:-.3rem 0 .2rem}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:1.1rem;padding:1rem 1.3rem;box-shadow:var(--shadow)}
+.card.accent{background:var(--accent-soft);border-color:var(--accent-line)}
+.card.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.card h3{margin:0 0 .4rem;font-size:1.25rem;font-weight:800}
+.card p{margin:.2rem 0}
+.lead{font-size:1.4rem;font-weight:700;line-height:1.85}
+.lead b,.hl{color:var(--accent)}
+.card.dark .hl,.card.dark .lead b{color:#6fe3d6}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(21rem,1fr))}
+.grid.three{grid-template-columns:repeat(auto-fit,minmax(17rem,1fr))}
+.note{font-size:1rem;color:var(--muted);font-weight:600}
+.center-t{text-align:center}
+.tag-en{display:inline-block;background:var(--ink);color:#fff;border-radius:.5rem;padding:0 .7rem;font-weight:800;direction:ltr;unicode-bidi:isolate}
+.tag-acc{display:inline-block;background:var(--accent);color:#fff;border-radius:.5rem;padding:0 .7rem;font-weight:800;direction:ltr;unicode-bidi:isolate}
+.badge-extra{display:inline-block;background:var(--amber-soft);color:#9a6a00;border:1px solid var(--amber-line);font-size:.75rem;font-weight:800;padding:.1rem .7rem;border-radius:99px;margin-inline-start:.5rem;vertical-align:middle}
+
+/* callouts */
+.callout{border-radius:1rem;padding:.7rem 1.2rem;border:2px dashed;position:relative}
+.callout h4{margin:0 0 .25rem;font-size:1.1rem;font-weight:900}
+.callout ul{margin:.1rem 0;padding-inline-start:1.2rem}
+.callout li{margin:.15rem 0;font-weight:600}
+.nafha{background:var(--accent-soft);border-color:var(--accent);} .nafha h4{color:var(--accent-dark)}
+.extra{background:var(--amber-soft);border-color:var(--amber)} .extra h4{color:#9a6a00}
+.linkc{background:var(--blue-soft);border-color:var(--blue)} .linkc h4{color:var(--blue)}
+.think{background:#fff;border:2px solid var(--ink);border-radius:1rem;padding:.7rem 1.2rem;box-shadow:0 5px 0 var(--ink);display:grid;grid-template-columns:1fr auto;gap:.5rem 1rem;align-items:start}
+.think h4{margin:0;font-size:1.1rem;font-weight:900;grid-column:1/-1}
+.think .tq{font-weight:700;font-size:1.1rem}
+
+/* ---------- title slide ---------- */
+.pill{background:var(--accent-soft);color:var(--accent-dark);border:1px solid var(--accent-line);padding:.3rem 1.1rem;border-radius:99px;font-weight:800;font-size:1rem}
+.hero-title{font-size:3.3rem;font-weight:900;line-height:1.25;margin:.2rem 0}
+.hero-title span{color:var(--accent)}
+.sub{font-size:1.3rem;font-weight:700;color:var(--muted);margin:0}
+.map{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.5rem .4rem;margin:.8rem 0}
+.node{background:#fff;border:2px solid var(--accent-line);border-radius:1rem;padding:.6rem .9rem;min-width:8.2rem;box-shadow:var(--shadow);position:relative;text-align:center}
+.node .e{font-size:1.8rem;line-height:1.2}
+.node .t{font-weight:800;font-size:1rem;line-height:1.3}
+.node .n{position:absolute;top:-.7rem;right:-.5rem;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--accent);color:#fff;font-size:.75rem;font-weight:800;display:grid;place-items:center}
+.arrow{color:var(--accent);font-size:1.5rem;font-weight:900}
+.presenter{font-size:1.25rem;font-weight:700;background:var(--ink);color:#fff;padding:.5rem 1.6rem;border-radius:99px;box-shadow:var(--shadow-lg)}
+.presenter b{color:#6fe3d6}
+
+/* goals */
+.goal{display:flex;gap:1rem;align-items:center}
+.goal .gn{flex:none;width:3.2rem;height:3.2rem;border-radius:1rem;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:1.6rem;font-weight:900;box-shadow:0 6px 16px rgba(11,143,132,.3)}
+.goal .gt{font-weight:800;font-size:1.25rem;line-height:1.6}
+.goal .gt small{display:block;color:var(--accent);font-weight:800;font-size:.8rem}
+
+/* tables */
+.dt{width:100%;border-collapse:separate;border-spacing:0;border-radius:1rem;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);background:#fff}
+.dt th{background:var(--ink);color:#fff;padding:.5rem 1rem;font-weight:800;text-align:start;font-size:1.05rem}
+.dt td{padding:.45rem 1rem;border-top:1px solid var(--line);font-weight:600;font-size:1.05rem;vertical-align:top}
+.dt tr:nth-child(even) td{background:#f8fbfb}
+.dt td:first-child{font-weight:900;color:var(--accent-dark);white-space:nowrap}
+.dt.plain td:first-child{color:inherit;white-space:normal}
+.ok{color:var(--green);font-weight:900;font-size:1.2rem}
+.no{color:var(--red);font-weight:900;font-size:1.2rem}
+
+/* flow */
+.flow{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;align-items:center}
+.flow .fs{background:#fff;border:2px solid var(--accent-line);border-radius:1rem;padding:.4rem 1rem;font-weight:800;text-align:center;box-shadow:var(--shadow)}
+.flow .fs.k{background:var(--ink);color:#fff;border-color:var(--ink)}
+.flow .fa{color:var(--accent);font-weight:900;font-size:1.4rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:99px;padding:.15rem .9rem;font-weight:800;color:var(--accent-dark)}
+
+/* svg */
+.svgbox{background:#fff;border:1px solid var(--line);border-radius:1.2rem;padding:.6rem;box-shadow:var(--shadow);text-align:center}
+.svgbox svg{width:100%;height:auto;max-height:26rem;display:block;margin:0 auto}
+.svgbox figcaption,.cap{font-weight:800;color:var(--muted);font-size:.95rem;margin-top:.3rem}
+figure{margin:0}
+svg text{font-family:'Cairo','Segoe UI',Tahoma,sans-serif;font-weight:800;text-anchor:middle}
+.f-ink{fill:var(--ink)} .f-acc{fill:var(--accent)} .f-soft{fill:var(--accent-soft)} .f-w{fill:#fff}
+.f-amb{fill:var(--amber)} .f-amb-s{fill:var(--amber-soft)} .f-red{fill:var(--red)} .f-red-s{fill:#fdeaea}
+.f-grn{fill:var(--green)} .f-grn-s{fill:#e5f6ee} .f-gray{fill:#eef2f4} .f-blue{fill:var(--blue)} .f-blue-s{fill:var(--blue-soft)}
+.s-ink{stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.s-acc{stroke:var(--accent);fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.s-gray{stroke:#c9d3d8;fill:none;stroke-width:2.5;stroke-dasharray:7 6}
+.s-red{stroke:var(--red);fill:none;stroke-width:4;stroke-linecap:round}
+.st-ink{stroke:var(--ink);stroke-width:3}
+.t-w{fill:#fff} .t-ink{fill:var(--ink)} .t-acc{fill:var(--accent-dark)} .t-mut{fill:var(--muted)} .t-red{fill:var(--red)} .t-grn{fill:var(--green)} .t-amb{fill:#9a6a00} .t-blue{fill:var(--blue)}
+
+/* json */
+.json{direction:ltr;text-align:left;background:var(--ink);color:#fff;border-radius:1rem;padding:1rem 1.6rem;font-family:Consolas,'Courier New',monospace;font-size:1.5rem;line-height:1.9;margin:0;box-shadow:var(--shadow-lg);unicode-bidi:isolate}
+.json .br{color:#fbbf24} .json .k{color:#6fe3d6} .json .v{color:#fda4af} .json .n{color:#a5b4fc}
+.leg{display:flex;flex-wrap:wrap;gap:.5rem}
+.leg span{padding:.1rem .8rem;border-radius:.6rem;font-weight:800;font-size:1rem}
+.leg .l-k{background:#d6f5f1;color:#075e56} .leg .l-v{background:#ffe4e8;color:#a32041} .leg .l-n{background:#e3e7ff;color:#3541a8} .leg .l-b{background:#fff0c7;color:#8a5b00}
+
+/* steps */
+.steps{margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;display:flex;gap:.7rem;align-items:flex-start;margin:.4rem 0;font-weight:700;font-size:1.1rem}
+.steps li::before{content:counter(s);flex:none;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.95rem;margin-top:.1rem}
+
+/* code cards */
+.status{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem}
+.scard{border-radius:1.1rem;padding:.8rem 1rem;border:2px solid;text-align:center;box-shadow:var(--shadow);background:#fff}
+.scard .code{font-size:3rem;font-weight:900;line-height:1.1;direction:ltr}
+.scard.s2{border-color:var(--green)} .scard.s2 .code{color:var(--green)}
+.scard.s4{border-color:var(--amber)} .scard.s4 .code{color:#c27d00}
+.scard.s5{border-color:var(--red)} .scard.s5 .code{color:var(--red)}
+.scard p{margin:.2rem 0;font-weight:700}
+
+/* ---------- questions ---------- */
+.qhead-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.btn-all{background:var(--ink);color:#fff;border:none;border-radius:.8rem;padding:.4rem 1.1rem;font-weight:800;font-size:.95rem;box-shadow:var(--shadow)}
+.qsec{background:var(--accent);color:#fff;border-radius:.9rem;padding:.35rem 1.1rem;font-weight:900;font-size:1.3rem;margin-top:.6rem;box-shadow:0 6px 16px rgba(11,143,132,.3)}
+.qsec small{font-weight:600;opacity:.92;font-size:.85rem;margin-inline-start:.5rem}
+.qlist{display:flex;flex-direction:column;gap:.9rem}
+.q{display:grid;grid-template-columns:1fr auto;gap:.6rem 1rem;align-items:start;background:#fff;border:1px solid var(--line);border-radius:1.1rem;padding:.9rem 1.2rem;box-shadow:var(--shadow)}
+.qmeta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.3rem}
+.qn{width:1.9rem;height:1.9rem;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.9rem}
+.tag{font-size:.78rem;font-weight:800;padding:.05rem .7rem;border-radius:99px;border:1px solid}
+.t-direct{color:#1f5fd6;background:#eaf2ff;border-color:#bcd5f8}
+.t-mc{color:#a15c00;background:#fff4de;border-color:#f1d49a}
+.t-fill{color:#6b3fc9;background:#f2ecff;border-color:#d4c3f5}
+.t-match{color:#12805a;background:#e6f7f0;border-color:#b5e3d1}
+.t-class{color:#b4234a;background:#ffeaf0;border-color:#f5c2cf}
+.t-tf{color:#3a3fc0;background:#ebecff;border-color:#c5c8f5}
+.t-case{color:#087268;background:#e6f6f4;border-color:#b7e2dd}
+.t-exam{color:#fff;background:var(--ink);border-color:var(--ink)}
+.src{font-size:.78rem;color:var(--muted);font-weight:700}
+.qtext{font-size:1.12rem;font-weight:700;line-height:1.9}
+.qtext .blank{display:inline-block;min-width:2.8rem;border-bottom:3px solid var(--accent);text-align:center;color:var(--accent);font-weight:900;margin:0 .15rem;direction:ltr}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:.4rem .8rem;margin-top:.5rem}
+.opt{background:#f8fbfb;border:1px solid var(--line);border-radius:.7rem;padding:.1rem .8rem;font-weight:700}
+.opt b{color:var(--accent);margin-inline-end:.3rem}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:.5rem}
+.cols .col{display:flex;flex-direction:column;gap:.4rem}
+.cols .it{background:#f8fbfb;border:1px solid var(--line);border-radius:.7rem;padding:.15rem .8rem;font-weight:700;display:flex;gap:.5rem;align-items:center}
+.cols .it i{font-style:normal;background:var(--accent);color:#fff;border-radius:.4rem;min-width:1.5rem;text-align:center;font-weight:800;font-size:.85rem;flex:none}
+.cols h4{margin:0;font-size:.9rem;color:var(--muted)}
+.ans-btn{align-self:start;background:var(--accent);color:#fff;border:none;border-radius:.8rem;padding:.45rem 1.1rem;font-weight:800;font-size:1rem;white-space:nowrap;box-shadow:0 6px 16px rgba(11,143,132,.3);transition:transform .15s,background .2s}
+.ans-btn:hover{transform:translateY(-2px)}
+.ans-btn.open{background:#fff;color:var(--accent);border:2px solid var(--accent);box-shadow:none}
+.ans{grid-column:1/-1;display:none;background:var(--accent-soft);border-right:.35rem solid var(--accent);border-radius:.8rem;padding:.6rem 1rem;font-weight:600;font-size:1.05rem;animation:pop .3s ease}
+.ans.show{display:block}
+.ans .lbl{display:inline-block;background:var(--accent);color:#fff;border-radius:.5rem;padding:0 .7rem;font-weight:800;margin-bottom:.3rem;font-size:.85rem}
+.ans ul,.ans ol{margin:.2rem 0;padding-inline-start:1.4rem}
+.ans li{margin:.1rem 0}
+.ans .final{font-weight:900;color:var(--accent-dark)}
+.ans .dt{box-shadow:none;margin:.3rem 0}
+.ans .dt th{background:var(--accent-dark);font-size:.95rem;padding:.3rem .8rem}
+.ans .dt td{font-size:.98rem;padding:.3rem .8rem}
+@keyframes pop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+/* quick review */
+.qr{display:grid;grid-template-columns:repeat(auto-fit,minmax(19rem,1fr));gap:.7rem}
+.qr .card{padding:.5rem 1rem}
+.qr .card b{color:var(--accent-dark)}
+
+/* ---------- controls ---------- */
+.controls{display:flex;align-items:center;gap:.7rem;padding:.5rem 1.2rem;border-top:1px solid var(--line);background:#fff;position:relative;z-index:5}
+.cbtn{background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:.8rem;padding:.3rem 1rem;font-weight:800;font-size:1rem;display:flex;align-items:center;gap:.4rem;transition:all .15s;white-space:nowrap}
+.cbtn:hover:not(:disabled){background:var(--ink);color:#fff}
+.cbtn.primary{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 6px 16px rgba(11,143,132,.3)}
+.cbtn.primary:hover:not(:disabled){background:var(--accent-dark);border-color:var(--accent-dark)}
+.cbtn:disabled{opacity:.35;cursor:not-allowed}
+.cbtn.on{background:var(--ink);color:#fff}
+.dots{flex:1;display:flex;justify-content:center;align-items:center;gap:.45rem;flex-wrap:wrap}
+.dot{width:.8rem;height:.8rem;border-radius:50%;border:2px solid var(--ink);background:#fff;padding:0;transition:all .25s}
+.dot.active{background:var(--accent);border-color:var(--accent);transform:scale(1.5);box-shadow:0 0 0 4px rgba(11,143,132,.2)}
+.hint{font-size:.72rem;color:var(--muted);font-weight:600}
+
+@media (max-width:900px){
+  .slide{padding:.9rem 1rem}
+  .hero-title{font-size:2.3rem}
+  .q,.think{grid-template-columns:1fr}
+  .ans-btn{width:100%}
+  .cols{grid-template-columns:1fr}
+  .lesson-chip,.hint{display:none}
+  .cbtn span.lbl-t{display:none}
+  .stitle h2{font-size:1.5rem}
+  .json{font-size:1.1rem}
+}
+@media (max-width:520px){
+  .dots{gap:.25rem}
+  .dot{width:.55rem;height:.55rem}
+  .dt th,.dt td{padding:.35rem .5rem;font-size:.9rem}
+}
+@media (prefers-reduced-motion:reduce){.slide{transition:none}.ans{animation:none}}
+</style>
+</head>
+<body>
+
+<!-- shared SVG markers -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="arA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0b8f84"/></marker>
+    <marker id="arI" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1a1a2e"/></marker>
+    <marker id="arR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#e5484d"/></marker>
+    <marker id="arG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1f9d6b"/></marker>
+  </defs>
+</svg>
+
+<div id="app">
+  <header class="topbar">
+    <div class="brand">
+      <b>مستر <span>عبدو</span> برمجة</b>
+      <small>يرى مالا يُكتب، يبحث عما لا يظهر</small>
+    </div>
+    <div class="lesson-chip">الصف الثاني الثانوي · الوحدة الثالثة · الدرس الثاني (3-2)</div>
+    <div class="counter" id="counter">1 / 15</div>
+    <div id="progress"></div>
+  </header>
+
+  <main id="stage">
+    <div class="deco">
+      <div class="c1"></div><div class="c2"></div>
+      <div class="bin b1">GET · POST · 200 · 404</div>
+      <div class="bin b2">{ "key": "value" }</div>
+    </div>
+
+    <!-- 1: البداية -->
+    <section class="slide active">
+      <div class="inner center">
+        <div class="pill">الوحدة الثالثة &nbsp;|&nbsp; الدرس الثاني (3-2)</div>
+        <h1 class="hero-title">طرق اتصال<br><span>تطبيقات الويب</span></h1>
+        <p class="sub">البرمجة والذكاء الاصطناعي · الصف الثاني الثانوي</p>
+
+        <div class="map">
+          <div class="node"><span class="n">1</span><div class="e">🖥️</div><div class="t">العميل<br>والخادم</div></div>
+          <span class="arrow">←</span>
+          <div class="node"><span class="n">2</span><div class="e">🔒</div><div class="t">HTTP<br>و HTTPS</div></div>
+          <span class="arrow">←</span>
+          <div class="node"><span class="n">3</span><div class="e">📨</div><div class="t">طلبات HTTP<br>GET / POST</div></div>
+          <span class="arrow">←</span>
+          <div class="node"><span class="n">4</span><div class="e">🚦</div><div class="t">رموز الحالة<br>200 · 404 · 500</div></div>
+          <span class="arrow">←</span>
+          <div class="node"><span class="n">5</span><div class="e">🔌</div><div class="t">API<br>و JSON</div></div>
+        </div>
+
+        <div class="presenter">🎓 المقدم: <b>مستر عبدو برمجة</b></div>
+      </div>
+    </section>
+
+    <!-- 2: أهداف التعلم -->
+    <section class="slide">
+      <div class="inner">
+        <div class="stitle"><div class="ico">🎯</div><h2><small>في نهاية الدرس ستكون قادرًا على أن</small>أهداف التعلم</h2></div>
+        <div class="bar"></div>
+        <div class="grid two">
+          <div class="card goal"><div class="gn">1</div><div class="gt"><small>اشرح</small>نموذج العميل والخادم ودورة الطلب والاستجابة.</div></div>
+          <div class="card goal"><div class="gn">2</div><div class="gt"><small>ميّز واستخدم</small>بين HTTP وHTTPS، واستخدم GET وPOST في سياقات مناسبة.</div></div>
+          <div class="card goal"><div class="gn">3</div><div class="gt"><small>فسّر واشرح</small>رموز حالة HTTP الشائعة، ودور API وJSON في تبادل البيانات.</div></div>
+          <div class="card goal"><div class="gn">4</div><div class="gt"><small>صمّم وبرّر</small>طريقة اتصال مناسبة لمهمة في تطبيق ويب، وبرّر اختيارك.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3: خريطة الدرس والمصطلحات -->
+    <section class="slide">
+      <div class="inner">
+        <div class="stitle"><div class="ico">🗺️</div><h2><small>نظرة شاملة</small>خريطة الدرس ومصطلحات أساسية</h2></div>
+        <div class="bar"></div>
+
+        <div class="card accent">
+          <div class="lead" style="font-size:1.25rem"><b>الفكرة الأساسية:</b> تعمل تطبيقات الويب من خلال إرسال العميل للطلبات وإرجاع الخادم للاستجابات، باستخدام بروتوكولات (HTTP/HTTPS) وغالبًا واجهات برمجة تطبيقات تتبادل البيانات بصيغ مثل JSON.</div>
+          <div class="chips" style="margin-top:.5rem">
+            <span class="chip">العميل / الخادم</span><span class="chip">HTTP / HTTPS</span><span class="chip">طريقة طلب HTTP</span><span class="chip">رمز حالة HTTP</span><span class="chip">API / JSON</span>
+          </div>
+        </div>
+
+        <h3 style="margin:.2rem 0 0">📌 مصطلحات أساسية</h3>
+        <table class="dt">
+          <tr><th style="width:30%">المصطلح</th><th>المعنى</th></tr>
+          <tr><td>العميل</td><td>الجانب الذي يطلب البيانات أو المعالجة</td></tr>
+          <tr><td>الخادم</td><td>الجانب الذي يعالج الطلبات ويعيد الاستجابات</td></tr>
+          <tr><td>طريقة طلب HTTP</td><td>توضح ما هو مطلوب (GET، POST)</td></tr>
+          <tr><td>رمز حالة HTTP</td><td>يبلغ عن النتيجة (200، 404، 500)</td></tr>
+          <tr><td>API</td><td>تتيح لبرمجيات مختلفة تبادل البيانات</td></tr>
+          <tr><td>JSON</td><td>صيغة بيانات قابلة للقراءة</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4: المقدمة -->
+    <section class="slide">
+      <div class="inner">
+        <div class="stitle"><div class="ico">📖</div><h2><small>تمهيد</small>المقدمة</h2></div>
+        <div class="bar"></div>
+
+        <div class="card">
+          <p class="lead" style="font-size:1.2rem">في الدرس السابق تعلمت أن <b>الواجهة الأمامية</b> و<b>الواجهة الخلفية</b> تتعاونان لتنفيذ طلب المستخدم. في هذا الدرس ستتعلم <b>كيف تنتقل الطلبات والاستجابات</b> بين العميل والخادم.</p>
+        </div>
+
+        <div class="flow">
+          <div class="fs">🖱️ تنقر على رابط<br>أو تبدأ بحثًا</div><span class="fa">←</span>
+          <div class="fs">🌐 المتصفح (عميل)<br>يرسل <b class="hl">طلبًا</b></div><span class="fa">←</span>
+          <div class="fs k">🖥️ الخادم<br>يعيد <b class="hl">استجابة</b></div><span class="fa">←</span>
+          <div class="fs">📄 تظهر<br>الصفحة</div>
+        </div>
+
+        <div class="card">
+          <p>عندما تنقر على رابط أو تبدأ بحثًا، يطلب المتصفح غالبًا البيانات التي يحتاجها من خدمة على خادم عبر الشبكة. المتصفح هنا <b class="hl">عميل (client)</b> يرسل طلبًا، ويعيد <b class="hl">الخادم (server)</b> استجابة. وتحدد بروتوكولات مثل <span class="tag-en">HTTP</span> قواعد هذا التبادل. ويُعد نموذج الطلب والاستجابة أساسيًا في كثير من تطبيقات الويب، مع وجود وسائل اتصال أخرى عند الحاجة.</p>
+        </div>
+
+        <div class="card dark">
+          <div class="lead" style="font-size:1.4rem">❓ السؤال الرئيسي: كيف يتواصل العميل والخادم لتشغيل تطبيق الويب، وما القواعد والرسائل التي يستخدمانها؟</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5: العميل والخادم -->
+    <section class="slide">
+      <div class="inner">
+        <div class="stitle"><div class="ico">1️⃣</div><h2><small>الجزء الأول</small>العميل والخادم</h2></div>
+        <div class="bar"></div>
+
+        <div class="grid two">
+          <div class="card accent"><h3>(1) العميل <span class="tag-en">Client</span></h3><p>برنامج أو جهاز يرسل طلبًا إلى خدمة أخرى؛ ومن أمثلته <b>متصفح الويب</b> و<b>تطبيق الهاتف</b>.</p></div>
+          <div class="card"><h3>(2) الخادم <span class="tag-en">Server</span></h3><p>الجانب الذي يستقبل الطلبات من العملاء، ويعالجها، ويعيد الاستجابات.</p></div>
+        </div>
+        <div class="card"><p>(3) تعتمد كثير من تطبيقات الويب على إرسال العميل طلبًا وإعادة الخادم استجابة.</p></div>
+
+        <figure class="svgbox">
+          <svg viewBox="0 0 760 330" role="img" aria-label="اتصال عدة عملاء بخادم">
+            <!-- clients -->
+            <g>
+              <rect x="570" y="15" width="170" height="85" rx="16" class="f-w st-ink"/>
+              <rect x="570" y="15" width="170" height="24" rx="12" class="f-ink"/><circle cx="586" cy="27" r="4" class="f-acc"/><circle cx="600" cy="27" r="4" class="f-amb"/>
+              <text x="655" y="72" class="t-ink" font-size="19">🌐 المتصفح</text>
+              <rect x="570" y="125" width="170" height="85" rx="16" class="f-w st-ink"/>
+              <text x="655" y="175" class="t-ink" font-size="19">📱 تطبيق الهاتف</text>
+              <rect x="570" y="235" width="170" height="85" rx="16" class="f-w st-ink"/>
+              <text x="655" y="285" class="t-ink" font-size="19">💻 عميل آخر</text>
+            </g>
+            <!-- server -->
+            <rect x="20" y="90" width="190" height="150" rx="18" class="f-ink"/>
+            <rect x="38" y="106" width="154" height="28" rx="8" class="f-acc"/><circle cx="52" cy="120" r="4" class="f-w"/>
+            <rect x="38" y="142" width="154" height="28" rx="8" class="f-acc"/><circle cx="52" cy="156" r="4" class="f-w"/>
+            <rect x="38" y="178" width="154" height="28" rx="8" class="f-acc"/><circle cx="52" cy="192" r="4" class="f-w"/>
+            <text x="115" y="228" class="t-w" font-size="17">الخادم</text>
+            <!-- requests -->
+            <path d="M565 52 L220 125" class="s-acc" marker-end="url(#arA)"/>
+            <path d="M565 160 L220 165" class="s-acc" marker-end="url(#arA)"/>
+            <path d="M565 268 L220 205" class="s-acc" marker-end="url(#arA)"/>
+            <!-- responses -->
+            <path d="M220 140 L565 76" stroke-dasharray="9 7" class="s-ink" marker-end="url(#arI)"/>
+            <path d="M220 182 L565 184" stroke-dasharray="9 7" class="s-ink" marker-end="url(#arI)"/>
+            <path d="M220 218 L565 288" stroke-dasharray="9 7" class="s-ink" marker-end="url(#arI)"/>
+            <rect x="262" y="38" width="210" height="34" rx="17" class="f-acc"/><text x="367" y="61" class="t-w" font-size="16">طلب: "أرني هذه الصفحة"</text>
+            <rect x="262" y="278" width="210" height="34" rx="17" class="f-ink"/><text x="367" y="301" class="t-w" font-size="16">استجابة: البيانات المطلوبة</text>
+          </svg>
+          <figcaption>🖼️ الشكل 3.2.1: اتصال العميل بالخادم — خطوط متصلة = طلب، وخطوط متقطعة = استجابة</figcaption>
+        </figure>
+
+        <div class="grid two">
+          <div class="card"><h3>🙋 العميل (المتصفح / تطبيق الهاتف)</h3><p>يرسل الطلب: "أرني هذه الصفحة".</p></div>
+          <div class="card"><h3>🖥️ الخادم (خادم الويب / خادم التطبيقات)</h3><p>يرسل الاستجابة: إعادة البيانات المطلوبة.</p></div>
+        </div>
+        <div class="card accent center-t"><b>يطلب العميل البيانات أو المعالجة؛ ويعالج الخادم الطلب ويعيد استجابةً.</b></div>
+
+        <div class="grid two">
+          <div class="callout nafha"><h4>✨ نفحات مستر عبدو</h4><ul>
+            <li>العميل = الزبون اللي بيطلب، والخادم = اللي بيخدم الطلب ويرد.</li>
+            <li>مثال: كتابتك لعنوان موقع في المتصفح = طلب، وظهور الصفحة = استجابة.</li></ul></div>
+          <div class="callout extra"><h4>💡 حتة زيادة</h4>
+            <p style="margin:0;font-weight:600">العميل مش بس المتصفح! تطبيق الهاتف كمان عميل. والخادم نفسه ممكن يبقى عميل لخدمة تانية لو طلب منها بيانات. المهم الدور: مين اللي بيطلب ومين اللي بيرد.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6: HTTP / HTTPS -->
+    <section class="slide">
+      <div class="inner">
+        <div class="stitle"><div class="ico">2️⃣</div><h2><small>الجزء الثاني</small>HTTP وHTTPS</h2></div>
+        <div class="bar"></div>
+
+        <div class="grid two">
+          <div class="card"><h3>(1) <span class="tag-en">HTTP</span> بروتوكول نقل النص التشعبي</h3><p>بروتوكول يُستخدم لتبادل الرسائل بين عميل وخادم على الويب.</p></div>
+          <div class="card accent"><h3>(2) <span class="tag-acc">HTTPS</span></h3><p>استخدام HTTP عبر اتصال <b>TLS (Transport Layer Security)</b> آمن. يساعد TLS على حماية سرية الاتصال وسلامته، وعلى مصادقة الخادم، بحيث لا يستطيع المتجسس قراءة المحتوى أو تعديله بسهولة أثناء النقل.</p></div>
+        </div>
+        <div class="card"><p>(3) المواقع التي تبدأ عناوينها بـ <span class="tag-acc">https://</span> تستخدم اتصال HTTPS.</p></div>
+
+        <figure class="svgbox">
+          <svg viewBox="0 0 760 310" role="img" aria-label="مقارنة بين HTTP وHTTPS">
+            <!-- HTTP panel (right) -->
+            <rect x="395" y="10" width="355" height="290" rx="20" class="f-red-s"/>
+            <rect x="395" y="10" width="355" height="44" rx="20" class="f-red"/><rect x="395" y="34" width="355" height="20" class="f-red"/>
+            <text x="572" y="40" class="t-w" font-size="21">HTTP — رسالة مكشوفة</text>
+            <rect x="470" y="105" width="205" height="115" rx="10" class="f-w st-ink"/>
+            <path d="M470 115 L572 175 L675 115" class="s-ink"/>
+            <rect x="490" y="72" width="165" height="62" rx="8" class="f-amb-s st-ink" style="stroke-width:2"/>
+            <text x="572" y="96" class="t-ink" font-size="14">اسم المستخدم: sara</text>
+            <text x="572" y="120" class="t-ink" font-size="14">كلمة المرور: 1234</text>
+            <text x="572" y="252" font-size="40">🕵️</text>
+            <text x="572" y="287" class="t-red" font-size="16">المتجسس يقرأ ويعدّل بسهولة</text>
+            <!-- HTTPS panel (left) -->
+            <rect x="10" y="10" width="355" height="290" rx="20" class="f-grn-s"/>
+            <rect x="10" y="10" width="355" height="44" rx="20" class="f-grn"/><rect x="10" y="34" width="355" height="20" class="f-grn"/>
+            <text x="187" y="40" class="t-w" font-size="21">HTTPS — ظرف مغلق ومشفّر (TLS)</text>
+            <rect x="85" y="95" width="205" height="125" rx="10" class="f-w st-ink"/>
+            <path d="M85 105 L187 170 L290 105" class="s-ink"/>
+            <circle cx="187" cy="165" r="26" class="f-grn"/>
+            <text x="187" y="176" font-size="30">🔒</text>
+            <text x="187" y="80" class="t-ink" font-size="15" style="direction:ltr">x9#Qa!7$k2@Lp</text>
+            <text x="187" y="252" font-size="40">🕵️</text>
+            <text x="187" y="287" class="t-grn" font-size="16">المتجسس لا يفهم شيئًا</text>
+          </svg>
+          <figcaption>HTTP = لغة الحديث · HTTPS = نفس اللغة لكن داخل ظرف مغلق</figcaption>
+        </figure>
+
+        <div class="grid two">
+          <div class="callout nafha"><h4>✨ نفحات مستر عبدو</h4><ul>
+            <li>HTTP = لغة الحديث بين العميل والخادم.</li>
+            <li>HTTPS = نفس اللغة لكن داخل "ظرف مغلق ومشفّر" (TLS).</li>
+            <li>الحرف S في HTTPS يعني Secure (آمن).</li></ul></div>
+          <div class="callout linkc"><h4>🔗 حتة زيادة: ربط بالوحدة الثانية</h4>
+            <p style="margin:0;font-weight:600">HTTPS و TLS هما نفسهم اللي اتعلمناهم في درس التشفير والمصادقة: مصافحة TLS، والشهادة الرقمية، والتشفير بالمفتاح العام ثم المتماثل. يعني السؤال ممكن يجمع الدرسين.</p></div>
+        </div>
+
+        <div class="think">
+          <h4>🛑 توقّف وفكّر</h4>
+          <div class="tq">لماذا يجب أن تستخدم صفحة تسجيل الدخول HTTPS بدلًا من HTTP العادي؟</div>
+          <button class="ans-btn" type="button">إظهار الإجابة</button>
+          <div class="ans"><span class="lbl">الإجابة</span><br>لأن صفحة تسجيل الدخول تنقل بيانات حساسة (اسم المستخدم وكلمة المرور)، ويحمي HTTPS سرية الاتصال وسلامته عبر TLS، فلا يستطيع المتجسس قراءة هذه البيانات أو تعديلها بسهولة أثناء النقل.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7: GET / POST -->
+    <section class="slide">
+      <div class="inner">
+        <div class="stitle"><div class="ico">3️⃣</div><h2><small>الجزء الثالث · (1)</small>طلبات HTTP والاستجابات: طريقة طلب HTTP</h2></div>
+        <div class="bar"></div>
+
+        <div class="card accent"><p class="lead" style="font-size:1.2rem">تتضمن الطلبات المرسلة من العميل إلى الخادم معلومات تسمى <b>طريقة طلب HTTP</b> توضح "<b>نوع العملية المطلوبة</b>".</p></div>
+
+        <figure class="svgbox">
+          <svg viewBox="0 0 760 300" role="img" aria-label="الفرق بين GET وPOST">
+            <!-- GET panel (right) -->
+            <rect x="395" y="8" width="357" height="284" rx="20" class="f-blue-s"/>
+            <rect x="395" y="8" width="357" height="42" rx="20" class="f-blue"/><rect x="395" y="30" width="357" height="20" class="f-blue"/>
+            <text x="573" y="37" class="t-w" font-size="21">GET = "هات" 📥</text>
+            <rect x="660" y="95" width="80" height="90" rx="14" class="f-w st-ink"/><text x="700" y="148" class="t-ink" font-size="16">العميل</text>
+            <rect x="410" y="95" width="80" height="90" rx="14" class="f-ink"/><text x="450" y="148" class="t-w" font-size="16">الخادم</text>
+            <path d="M652 115 L498 115" class="s-ink" marker-end="url(#arI)"/>
+            <text x="575" y="104" class="t-ink" font-size="14">أريد بيانات</text>
+            <path d="M498 165 L652 165" class="s-acc" style="stroke-width:7" marker-end="url(#arA)"/>
+            <rect x="535" y="170" width="80" height="26" rx="8" class="f-amb-s st-ink" style="stroke-width:2"/><text x="575" y="189" class="t-ink" font-size="13">البيانات</text>
+            <text x="573" y="228" class="t-ink" font-size="15">عرض صفحة · نتائج بحث</text>
+            <text x="573" y="258" class="t-blue" font-size="14">آخذ بيانات من الخادم</text>
+            <!-- POST panel (left) -->
+            <rect x="8" y="8" width="357" height="284" rx="20" class="f-grn-s"/>
+            <rect x="8" y="8" width="357" height="42" rx="20" class="f-grn"/><rect x="8" y="30" width="357" height="20" class="f-grn"/>
+            <text x="187" y="37" class="t-w" font-size="21">POST = "خُذ" 📤</text>
+            <rect x="272" y="95" width="80" height="90" rx="14" class="f-w st-ink"/><text x="312" y="148" class="t-ink" font-size="16">العميل</text>
+            <rect x="22" y="95" width="80" height="90" rx="14" class="f-ink"/><text x="62" y="148" class="t-w" font-size="16">الخادم</text>
+            <path d="M264 130 L110 130" class="s-acc" style="stroke-width:7" marker-end="url(#arA)"/>
+            <rect x="147" y="95" width="80" height="26" rx="8" class="f-amb-s st-ink" style="stroke-width:2"/><text x="187" y="114" class="t-ink" font-size="13">بيانات</text>
+            <path d="M110 170 L264 170" class="s-ink" marker-end="url(#arI)"/>
+            <text x="187" y="190" class="t-ink" font-size="14">تمت المعالجة</text>
+            <text x="187" y="228" class="t-ink" font-size="15">تسجيل دخول · نموذج</text>
+            <text x="187" y="258" class="t-grn" font-size="14">أرسل بيانات ليعالجها الخادم</text>
+          </svg>
+          <figcaption>سهم عريض = بيانات كثيرة تنتقل · الاتجاه يبين من يرسل ومن يستقبل</figcaption>
+        </figure>
+
+        <table class="dt">
+          <tr><th style="width:15%">الأسلوب</th><th style="width:45%">الدور</th><th>أمثلة</th></tr>
+          <tr><td><span class="tag-en">GET</span></td><td>يُستخدم عادةً لطلب مورد أو بيانات من الخادم</td><td>عرض صفحة ويب، استرجاع نتائج البحث</td></tr>
+          <tr><td><span class="tag-en">POST</span></td><td>يُستخدم عادةً لإرسال بيانات ليعالجها الخادم</td><td>إرسال معلومات تسجيل الدخول، إرسال محتويات نموذج</td></tr>
+        </table>
+
+        <div class="grid two">
+          <div class="callout nafha"><h4>✨ نفحات مستر عبدو</h4><ul>
+            <li>GET = "هات" (أريد أن آخذ بيانات).</li>
+            <li>POST = "خُذ" (أريد أن أرسل بيانات لتعالجها).</li></ul></div>
+          <div class="callout extra"><h4>💡 حتة زيادة</h4><ul>
+            <li>في GET بيانات الطلب بتظهر غالبًا في العنوان (الرابط) نفسه، علشان كده ما نستخدمهاش لإرسال كلمة المرور. نستخدم POST لإرسالها (مع HTTPS طبعًا).</li>
+            <li>كلمة "عادةً" مهمة: GET و POST ليهم استخدامات أخرى، لكن دي الاستخدامات المعتادة اللي المنهج يركز عليها.</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8: رموز الحالة -->
+    <section class="slide">
+      <div class="inner">
+        <div class="stitle"><div class="ico">🚦</div><h2><small>الجزء الثالث · (2)</small>رمز حالة HTTP</h2></div>
+        <div class="bar"></div>
+
+        <div class="card accent"><p class="lead" style="font-size:1.2rem">تتضمن الاستجابات المرسلة من الخادم إلى العميل <b>رقمًا</b> يشير إلى نتيجة المعالجة، يسمى <b>رمز حالة HTTP</b>.</p></div>
+
+        <figure class="svgbox">
+          <svg viewBox="0 0 760 250" role="img" aria-label="رموز الحالة 200 و404 و500">
+            <!-- 200 -->
+            <rect x="520" y="10" width="230" height="230" rx="16" class="f-w st-ink"/>
+            <rect x="520" y="10" width="230" height="34" rx="16" class="f-grn"/><rect x="520" y="28" width="230" height="16" class="f-grn"/>
+            <text x="635" y="34" class="t-w" font-size="20" style="direction:ltr">200 OK</text>
+            <rect x="545" y="62" width="180" height="20" rx="6" class="f-gray"/>
+            <rect x="545" y="92" width="130" height="14" rx="6" class="f-gray"/>
+            <rect x="545" y="114" width="160" height="14" rx="6" class="f-gray"/>
+            <circle cx="635" cy="182" r="34" class="f-grn"/>
+            <path d="M617 182 L630 196 L655 168" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="635" y="234" class="t-grn" font-size="15">نجاح ✅ وصلت الصفحة</text>
+            <!-- 404 -->
+            <rect x="265" y="10" width="230" height="230" rx="16" class="f-w st-ink"/>
+            <rect x="265" y="10" width="230" height="34" rx="16" class="f-amb"/><rect x="265" y="28" width="230" height="16" class="f-amb"/>
+            <text x="380" y="34" class="t-ink" font-size="20" style="direction:ltr">404 Not Found</text>
+            <rect x="290" y="62" width="180" height="20" rx="6" class="f-gray" stroke-dasharray="5 4"/>
+            <text x="380" y="150" font-size="64" class="t-amb">؟</text>
+            <text x="380" y="195" font-size="34">🔍</text>
+            <text x="380" y="234" class="t-amb" font-size="15">المورد غير موجود بهذا العنوان</text>
+            <!-- 500 -->
+            <rect x="10" y="10" width="230" height="230" rx="16" class="f-w st-ink"/>
+            <rect x="10" y="10" width="230" height="34" rx="16" class="f-red"/><rect x="10" y="28" width="230" height="16" class="f-red"/>
+            <text x="125" y="34" class="t-w" font-size="20" style="direction:ltr">500 Server Error</text>
+            <rect x="75" y="62" width="100" height="105" rx="10" class="f-ink"/>
+            <rect x="85" y="72" width="80" height="20" rx="5" class="f-red"/><rect x="85" y="98" width="80" height="20" rx="5" class="f-acc"/><rect x="85" y="124" width="80" height="20" rx="5" class="f-acc"/>
+            <text x="190" y="108" font-size="34">⚡</text>
+            <text x="125" y="205" font-size="30">⚠️</text>
+            <text x="125" y="234" class="t-red" font-size="15">خطأ داخلي في الخادم</text>
+          </svg>
+          <figcaption>ثلاثة رموز لازم تحفظها: 200 نجاح · 404 غير موجود · 500 خطأ في الخادم</figcaption>
+        </figure>
+
+        <table class="dt">
+          <tr><th style="width:20%">رمز الحالة</th><th>المعنى</th></tr>
+          <tr><td><span class="tag-en">200</span></td><td>نجاح (تمت معالجة الطلب بنجاح)</td></tr>
+          <tr><td><span class="tag-en">404</span></td><td>المورد المطلوب غير موجود بهذا العنوان</td></tr>
+          <tr><td><span class="tag-en">500</span></td><td>خطأ داخلي في الخادم منعه من إكمال الطلب؛ ولا يحدد الرمز وحده السبب التفصيلي</td></tr>
+        </table>
+
+        <div class="grid two">
+          <div class="callout nafha"><h4>✨ نفحات مستر عبدو</h4><ul>
+            <li>200 = تمام، وصلت الصفحة ✅</li>
+            <li>404 = العنوان مفيهوش حاجة (الصفحة غير موجودة) ❓</li>
+            <li>500 = حصلت مشكلة جوه الخادم نفسه ⚠️</li></ul></div>
+          <div class="callout extra"><h4>💡 حتة زيادة: التصنيف العام للأرقام (معلومة خارج الجدول)</h4>
+            <table class="dt plain" style="margin:.3rem 0">
+              <tr><th>أول رقم</th><th>المعنى العام</th></tr>
+              <tr><td><span class="tag-en">2xx</span></td><td>نجاح</td></tr>
+              <tr><td><span class="tag-en">4xx</span></td><td>مشكلة في الطلب (زي العنوان الخاطئ)</td></tr>
+              <tr><td><span class="tag-en">5xx</span></td><td>مشكلة في الخادم</td></tr>
+            </table>
+            <p style="margin:0;font-weight:600">يعني 404 مشكلتها في العنوان المطلوب، و500 مشكلتها داخل الخادم.</p></div>
+        </div>
+
+        <div class="think">
+          <h4>🛑 توقّف وفكّر</h4>
+          <div class="tq">إذا استقبل المتصفح رمز حالة 404 HTTP، ماذا يجب أن يخبر المستخدم، وأي جانب كانت به المشكلة؟</div>
+          <button class="ans-btn" type="button">إظهار الإجابة</button>
+          <div class="ans"><span class="lbl">الإجابة</span><br>يخبره أن المورد (الصفحة) المطلوب غير موجود بهذا العنوان. الخادم عمل وردّ، لكنه لم يجد المورد المطلوب، فالمشكلة في العنوان المطلوب (كأن تكون الصفحة مفقودة أو العنوان خاطئًا)، وليست خطأ داخليًا في الخادم كما في الرمز 500.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9: رحلة الطلب -->
+    <section class="slide">
+      <div class="inner">
+        <div class="stitle"><div class="ico">🔄</div><h2><small>تلخيص بصري</small>رحلة الطلب والاستجابة خطوة بخطوة</h2></div>
+        <div class="bar"></div>
+
+        <figure class="svgbox">
+          <svg viewBox="0 0 760 430" role="img" aria-label="مخطط تسلسل الطلب والاستجابة">
+            <!-- headers -->
+            <rect x="540" y="8" width="190" height="52" rx="14" class="f-ink"/><text x="635" y="41" class="t-w" font-size="20">🌐 العميل (المتصفح)</text>
+            <rect x="30" y="8" width="190" height="52" rx="14" class="f-acc"/><text x="125" y="41" class="t-w" font-size="20">🖥️ الخادم</text>
+            <path d="M635 62 L635 420" class="s-gray"/><path d="M125 62 L125 420" class="s-gray"/>
+            <!-- step 1 -->
+            <circle cx="700" cy="95" r="15" class="f-amb"/><text x="700" y="101" class="t-ink" font-size="16">1</text>
+            <text x="560" y="101" class="t-ink" font-size="15" text-anchor="end" style="text-anchor:end">🖱️ المستخدم ينقر على رابط</text>
+            <!-- step 2/3 request -->
+            <path d="M628 150 L132 150" class="s-acc" marker-end="url(#arA)"/>
+            <circle cx="600" cy="150" r="15" class="f-amb"/><text x="600" y="156" class="t-ink" font-size="16">2</text>
+            <rect x="260" y="112" width="250" height="32" rx="16" class="f-acc"/><text x="385" y="134" class="t-w" font-size="15" style="direction:ltr">GET /page  (HTTP / HTTPS)</text>
+            <circle cx="185" cy="185" r="15" class="f-amb"/><text x="185" y="191" class="t-ink" font-size="16">3</text>
+            <text x="385" y="191" class="t-ink" font-size="14">الطلب يتضمن طريقة طلب HTTP = GET</text>
+            <!-- step 4 -->
+            <rect x="30" y="215" width="190" height="52" rx="12" class="f-soft st-ink" style="stroke-width:2"/>
+            <circle cx="205" cy="241" r="15" class="f-amb"/><text x="205" y="247" class="t-ink" font-size="16">4</text>
+            <text x="110" y="246" class="t-ink" font-size="15">يعالج ويبحث عن الصفحة</text>
+            <!-- step 5 response -->
+            <path d="M132 320 L628 320" stroke-dasharray="9 7" class="s-ink" marker-end="url(#arI)"/>
+            <circle cx="160" cy="320" r="15" class="f-amb"/><text x="160" y="326" class="t-ink" font-size="16">5</text>
+            <rect x="215" y="282" width="320" height="32" rx="16" class="f-ink"/><text x="375" y="304" class="t-w" font-size="15">استجابة: الصفحة + رمز الحالة</text>
+            <rect x="280" y="335" width="60" height="26" rx="8" class="f-grn"/><text x="310" y="354" class="t-w" font-size="14" style="direction:ltr">200</text>
+            <rect x="350" y="335" width="60" height="26" rx="8" class="f-amb"/><text x="380" y="354" class="t-ink" font-size="14" style="direction:ltr">404</text>
+            <rect x="420" y="335" width="60" height="26" rx="8" class="f-red"/><text x="450" y="354" class="t-w" font-size="14" style="direction:ltr">500</text>
+            <!-- step 6 -->
+            <circle cx="700" cy="395" r="15" class="f-amb"/><text x="700" y="401" class="t-ink" font-size="16">6</text>
+            <text x="560" y="401" class="t-ink" font-size="15" style="text-anchor:end">📄 المتصفح يعرض الصفحة عند النجاح</text>
+          </svg>
+          <figcaption>العميل ← الطلب ← GET ← الخادم يعالج ← الاستجابة + رمز الحالة ← عرض الصفحة</figcaption>
+        </figure>
+
+        <div class="grid three">
+          <div class="card" style="text-align:center"><div style="font-size:2rem">🙋</div><b>العميل يطلب</b></div>
+          <div class="card" style="text-align:center"><div style="font-size:2rem">⚙️</div><b>الخادم يعالج</b></div>
+          <div class="card" style="text-align:center"><div style="font-size:2rem">📬</div><b>الخادم يرد برمز حالة</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10: API -->
+    <section class="slide">
+      <div class="inner">
+        <div class="stitle"><div class="ico">4️⃣</div><h2><small>الجزء الرابع</small>واجهة برمجة التطبيقات (API)</h2></div>
+        <div class="bar"></div>
+
+        <div class="grid two">
+          <div class="card accent"><h3>(1) <span class="tag-acc">API</span> Application Programming Interface</h3><p>مجموعة قواعد واضحة تسمح لبرنامج بطلب بيانات أو وظائف من برنامج آخر. وهي واجهة أو <b>عقد محدد</b> للتواصل بين البرمجيات.</p></div>
+          <div class="card"><h3>(2) الواجهة الأمامية والخدمة الخلفية</h3><p>قد ترسل الواجهة الأمامية طلبات إلى خدمة خلفية عبر API وتستقبل منها البيانات.</p></div>
+        </div>
+
+        <figure class="svgbox">
+          <svg viewBox="0 0 760 270" role="img" aria-label="تشبيه API بقائمة الطلبات في المطعم">
+            <!-- customer -->
+            <rect x="560" y="40" width="180" height="170" rx="18" class="f-w st-ink"/>
+            <text x="650" y="105" font-size="48">🧑‍💻</text>
+            <text x="650" y="150" class="t-ink" font-size="18">الواجهة الأمامية</text>
+            <text x="650" y="175" class="t-mut" font-size="14">= الزبون</text>
+            <!-- API -->
+            <rect x="290" y="20" width="180" height="210" rx="18" class="f-acc"/>
+            <rect x="315" y="45" width="130" height="95" rx="10" class="f-w"/>
+            <text x="380" y="72" class="t-acc" font-size="15">📋 قائمة الطلبات</text>
+            <text x="380" y="95" class="t-ink" font-size="13" style="direction:ltr">GET /weather</text>
+            <text x="380" y="115" class="t-ink" font-size="13" style="direction:ltr">POST /login</text>
+            <text x="380" y="135" class="t-ink" font-size="12">قواعد واضحة</text>
+            <text x="380" y="180" class="t-w" font-size="20">API</text>
+            <text x="380" y="206" class="t-w" font-size="14">= القائمة / النادل</text>
+            <!-- kitchen -->
+            <rect x="20" y="40" width="180" height="170" rx="18" class="f-ink"/>
+            <text x="110" y="105" font-size="48">🍳</text>
+            <text x="110" y="150" class="t-w" font-size="18">الخدمة الخلفية</text>
+            <text x="110" y="175" font-size="14" style="fill:#9fb0b8">= المطبخ</text>
+            <!-- arrows -->
+            <path d="M552 100 L478 100" class="s-acc" marker-end="url(#arA)"/>
+            <path d="M282 100 L208 100" class="s-acc" marker-end="url(#arA)"/>
+            <path d="M208 160 L282 160" stroke-dasharray="9 7" class="s-ink" marker-end="url(#arI)"/>
+            <path d="M478 160 L552 160" stroke-dasharray="9 7" class="s-ink" marker-end="url(#arI)"/>
+            <text x="515" y="88" class="t-acc" font-size="13">طلب</text>
+            <text x="515" y="188" class="t-ink" font-size="13">JSON</text>
+            <text x="245" y="88" class="t-acc" font-size="13">طلب</text>
+            <text x="245" y="188" class="t-ink" font-size="13">بيانات</text>
+            <text x="380" y="258" class="t-mut" font-size="14">لا تدخل المطبخ! تتعامل مع القائمة فقط</text>
+          </svg>
+          <figcaption>تشبيه الـ API بقائمة الطلبات في المطعم</figcaption>
+        </figure>
+
+        <div class="grid two">
+          <div class="callout nafha"><h4>✨ نفحات مستر عبدو</h4><ul>
+            <li>الـ API مثل "قائمة الطلبات" في المطعم: تحدد ما يمكنك طلبه وبأي شكل، من غير ما تدخل المطبخ.</li>
+            <li>JSON هو الشكل اللي بيتقدم بيه الرد: أزواج "مفتاح: قيمة" مثل "city": "Cairo".</li></ul></div>
+          <div class="card"><h3>(3) صيغة <span class="tag-en">JSON</span></h3><p>قد تعيد API بيانات بصيغة <b>JSON (JavaScript Object Notation)</b>، وهي صيغة نصية شائعة لتمثيل وتبادل البيانات المهيكلة باستخدام كائنات ومصفوفات وقيم بسيطة، وتدعمها لغات وأدوات برمجية كثيرة.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11: JSON -->
+    <section class="slide">
+      <div class="inner">
+        <div class="stitle"><div class="ico">{ }</div><h2><small>الجزء الرابع · تكملة</small>تفاصيل JSON وقراءة البيانات</h2></div>
+        <div class="bar"></div>
+
+        <div class="grid two">
+          <div>
+            <pre class="json"><span class="br">{</span>
+  <span class="k">"city"</span>: <span class="v">"Cairo"</span>,
+  <span class="k">"temperature"</span>: <span class="n">31</span>
+<span class="br">}</span></pre>
+            <div class="leg" style="margin-top:.6rem">
+              <span class="l-b">{ } أقواس معقوصة</span><span class="l-k">المفتاح key</span><span class="l-v">قيمة نصية</span><span class="l-n">قيمة رقمية</span>
+            </div>
+          </div>
+          <div class="callout extra"><h4>💡 حتة زيادة: قواعد JSON</h4><ul>
+            <li>JSON بيتكتب بين أقواس معقوصة <span class="ltr">{ }</span>، وكل عنصر بشكل <span class="ltr">"المفتاح": القيمة</span>، وبين العناصر فاصلة.</li>
+            <li>النص بيتحط بين علامتي تنصيص <span class="ltr">"Cairo"</span>، أما الرقم فبدون علامات <span class="ltr">31</span>.</li>
+            <li>ميزة JSON: مقروء للبشر ومهيكل وبتدعمه لغات كتير، فسهل تبادل البيانات بين برامج مختلفة.</li></ul></div>
+        </div>
+
+        <div class="think">
+          <h4>📖 اقرأ البيانات (JSON)</h4>
+          <div class="tq">تأمّل البيانات أعلاه، ثم حدّد مفتاحًا (key) واحدًا والقيمة (value) المقابلة له.</div>
+          <button class="ans-btn" type="button">إظهار الإجابة</button>
+          <div class="ans"><span class="lbl">الإجابة</span><br>المفتاح <span class="ltr">"city"</span> وقيمته <span class="ltr">"Cairo"</span>. (ويمكن أيضًا: المفتاح <span class="ltr">"temperature"</span> وقيمته <span class="ltr">31</span>).</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12: الفكرة الرئيسية -->
+    <section class="slide">
+      <div class="inner">
+        <div class="stitle"><div class="ico">🎯</div><h2><small>خلاصة الدرس</small>الفكرة الرئيسية وإجابة السؤال الرئيسي</h2></div>
+        <div class="bar"></div>
+
+        <div class="card accent">
+          <h3>🎯 الفكرة الرئيسية</h3>
+          <p class="lead" style="font-size:1.2rem">يتواصل تطبيق الويب كتبادل منظم: <b>يطلب العميل ويستجيب الخادم</b>، باستخدام بروتوكول (HTTP/HTTPS)، وطريقة طلب HTTP (GET/POST)، ورمز حالة، وغالبًا واجهة برمجة تطبيقات تعيد البيانات بصيغة JSON.</p>
+        </div>
+
+        <div class="flow">
+          <div class="fs">🙋 العميل</div><span class="fa">←</span>
+          <div class="fs k">HTTP / HTTPS</div><span class="fa">←</span>
+          <div class="fs">GET / POST</div><span class="fa">←</span>
+          <div class="fs">🖥️ الخادم</div><span class="fa">←</span>
+          <div class="fs k">رمز الحالة</div><span class="fa">+</span>
+          <div class="fs">API / JSON</div>
+        </div>
+
+        <div class="card">
+          <h3>💬 إجابة السؤال الرئيسي</h3>
+          <p>في كثير من الحالات يرسل العميل طلبًا ويعيد الخادم استجابة وفق قواعد HTTP، وقد تستخدم التطبيقات وسائل أخرى عند الحاجة. يحدد HTTP طريقة تبادل الرسائل، ويستخدم HTTPS اتصال TLS آمنًا. وتوضح طريقة HTTP الغرض من الطلب؛ فيستخدم GET عادةً لطلب مورد أو بيانات، وPOST لإرسال بيانات ليعالجها الخادم. وتبين رموز الحالة نتيجة معالجة الطلب. وقد تستخدم التطبيقات API وقواعد واضحة لتبادل البيانات، وربما تمثلها بصيغة JSON النصية المهيكلة.</p>
+        </div>
+
+        <div class="card dark">
+          <div class="lead" style="font-size:1.25rem">✅ الخلاصة: تذكّر: العميل <b>يطلب</b>، والخادم <b>يستجيب</b>، عبر HTTPS/HTTP، بأسلوب (GET/POST)، ورمز حالة، وغالبًا واجهة برمجة تطبيقات تعيد بيانات JSON.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13: فكر وتحدَّ نفسك -->
+    <section class="slide">
+      <div class="inner">
+        <div class="stitle"><div class="ico">🧠</div><h2><small>فكّر وتحدَّ نفسك</small>تأمل وتحدٍّ</h2></div>
+        <div class="bar"></div>
+
+        <div class="think">
+          <h4>💭 تأمل</h4>
+          <div class="tq">عندما تفشل صفحة في التحميل، أي رمز حالة سيساعدك أكثر على فهم السبب، وماذا سيخبرك؟</div>
+          <button class="ans-btn" type="button">إظهار الإجابة</button>
+          <div class="ans"><span class="lbl">إجابة مقترحة</span><br>الرمز <span class="ltr">404</span> يخبرني أن الصفحة أو المورد غير موجود بهذا العنوان، والرمز <span class="ltr">500</span> يخبرني أن الخادم نفسه واجه خطأ داخليًا منعه من إكمال الطلب (دون تحديد السبب التفصيلي).</div>
+        </div>
+
+        <div class="think">
+          <h4>🚀 التحدي</h4>
+          <div class="tq">اذكر تطبيقًا واحدًا تستخدمه وصف طلبًا واحدًا يرسله والاستجابة التي يتوقعها.</div>
+          <button class="ans-btn" type="button">إظهار الإجابة</button>
+          <div class="ans"><span class="lbl">إجابة مقترحة (تطبيق طقس)</span><br>يرسل طلب <span class="ltr">GET</span> يطلب توقعات القاهرة، ويتوقع استجابة برمز <span class="ltr">200</span> تحمل بيانات التوقعات بصيغة JSON.</div>
+        </div>
+
+        <div class="card accent center-t"><b>جرّب بنفسك:</b> فكّر في تطبيق على هاتفك: ماذا يطلب؟ بأي أسلوب (GET أم POST)؟ وبأي رمز حالة يتوقع أن يردّ الخادم؟</div>
+      </div>
+    </section>
+
+    <!-- 14: ملخص المراجعة -->
+    <section class="slide">
+      <div class="inner">
+        <div class="stitle"><div class="ico">📚</div><h2><small>قبل الأسئلة</small>ملخص سريع للمراجعة (الدرس 3-2)</h2></div>
+        <div class="bar"></div>
+
+        <div class="grid three">
+          <div class="card" style="text-align:center"><div class="tag-en" style="font-size:1.6rem">200</div><p><b>نجاح</b> ✅</p></div>
+          <div class="card" style="text-align:center"><div class="tag-en" style="font-size:1.6rem">404</div><p><b>غير موجود</b> ❓</p></div>
+          <div class="card" style="text-align:center"><div class="tag-en" style="font-size:1.6rem">500</div><p><b>خطأ في الخادم</b> ⚠️</p></div>
+          <div class="card" style="text-align:center"><div class="tag-acc" style="font-size:1.6rem">GET</div><p><b>يطلب</b> 📥</p></div>
+          <div class="card" style="text-align:center"><div class="tag-acc" style="font-size:1.6rem">POST</div><p><b>يرسل</b> 📤</p></div>
+          <div class="card" style="text-align:center"><div class="tag-acc" style="font-size:1.6rem">HTTPS</div><p><b>HTTP + TLS</b> 🔒</p></div>
+        </div>
+
+        <h3 style="margin:.2rem 0">🔑 ملخص الإجابات</h3>
+        <div class="qr">
+          <div class="card"><b>مثال محلول:</b> (1) أ ○ – ب ○ – ج × – د ○ &nbsp;|&nbsp; (2) 1 أ – 2 ب – 3 ج</div>
+          <div class="card"><b>تدرّب 1:</b> 1 العميل – 2 الخادم – 3 HTTPS – 4 GET – 5 API</div>
+          <div class="card"><b>تدرّب 2:</b> (1) ج &nbsp;|&nbsp; (2) ب</div>
+          <div class="card"><b>فكّر كمهندس:</b> GET للدرجات، POST لتسجيل الدخول، GET + API للجدول من مدرسة أخرى – HTTPS – الخيار الثاني</div>
+          <div class="card"><b>اقرأ البيانات:</b> المفتاح "city" قيمته "Cairo"</div>
+          <div class="card"><b>طبّق ما تعلمته:</b> GET – HTTPS لحماية الاتصال – JSON صيغة مهيكلة مقروءة</div>
+          <div class="card"><b>تمارين 2:</b> (1) العميل – (2) الخادم – (3) HTTP – (4) HTTPS</div>
+          <div class="card"><b>تمارين 3:</b> (1) 1 أ – 2 ب – 3 أ – 4 ب &nbsp;|&nbsp; (2) ج</div>
+        </div>
+
+        <div class="card dark center-t"><b class="hl">حفظ سريع:</b> 200 نجاح – 404 غير موجود – 500 خطأ في الخادم – GET يطلب – POST يرسل</div>
+      </div>
+    </section>
+
+    <!-- 15: الأسئلة -->
+    <section class="slide" id="qslide">
+      <div class="inner" style="justify-content:flex-start">
+        <div class="qhead-bar">
+          <div class="stitle"><div class="ico">❓</div><h2><small>اختبر نفسك</small>الأسئلة والتمارين</h2></div>
+          <button class="btn-all" id="toggleAll" type="button">إظهار كل الإجابات</button>
+        </div>
+        <div class="bar"></div>
+        <div class="qlist" id="qlist"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="controls">
+    <button class="cbtn" id="prev" aria-label="السابق">→ <span class="lbl-t">سابق</span></button>
+    <button class="cbtn" id="play" aria-label="تشغيل تلقائي">▶ <span class="lbl-t">تشغيل تلقائي</span></button>
+    <button class="cbtn" id="fs" aria-label="ملء الشاشة">⛶ <span class="lbl-t">ملء الشاشة</span></button>
+    <div class="dots" id="dots"></div>
+    <span class="hint">← → Space · F</span>
+    <button class="cbtn primary" id="next" aria-label="التالي"><span class="lbl-t">تالي</span> ←</button>
+  </footer>
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+const E = s => `<bdi dir="ltr" class="num">${s}</bdi>`;
+const ans = html => `<span class="lbl">الإجابة</span><br>${html}`;
+const blank = n => `<span class="blank">( ${n} )</span>`;
+const ok = '<span class="ok">○</span>', no = '<span class="no">×</span>';
+
+const TYPES = {
+  direct:['t-direct','سؤال مباشر'],
+  mc:['t-mc','اختيار من متعدد'],
+  fill:['t-fill','إكمال'],
+  match:['t-match','مطابقة'],
+  cls:['t-class','تصنيف'],
+  tf:['t-tf','صح أو خطأ'],
+  case:['t-case','سيناريو'],
+  exam:['t-exam','نمط الامتحان']
+};
+
+const SECTIONS = [
+ {
+  title:'أولًا: مثال محلول', sub:'',
+  items:[
+   { t:'tf', src:'(1)',
+     q:`ضع علامة ○ (صح) أو × (خطأ):
+        <div class="opts" style="grid-template-columns:1fr">
+          <div class="opt"><b>أ.</b> العميل هو الجانب الذي يطلب البيانات أو المعالجة من الخادم، والخادم هو الجانب الذي يعيد الاستجابة</div>
+          <div class="opt"><b>ب.</b> HTTPS هو استخدام HTTP عبر اتصال محمي بـ TLS</div>
+          <div class="opt"><b>ج.</b> أسلوب GET مخصص لإرسال البيانات إلى الخادم</div>
+          <div class="opt"><b>د.</b> رمز حالة 404 HTTP يشير إلى أن المورد المطلوب غير موجود</div>
+        </div>`,
+     a: ans(`<table class="dt plain"><tr><th>العبارة</th><th>الإجابة</th><th>التعليل</th></tr>
+        <tr><td>أ</td><td>${ok}</td><td>وصف صحيح لأدوار العميل والخادم</td></tr>
+        <tr><td>ب</td><td>${ok}</td><td>تعريف صحيح</td></tr>
+        <tr><td>ج</td><td>${no}</td><td>يُستخدم GET عادةً لطلب مورد أو بيانات، ويُستخدم POST عادةً لإرسال بيانات إلى الخادم لمعالجتها</td></tr>
+        <tr><td>د</td><td>${ok}</td><td>وقد تكون صفحة مفقودة مثلًا</td></tr></table>`)},
+   { t:'match', src:'(2)',
+     q:`طابق كل وصف بالمصطلح الأنسب (أ: HTTP، ب: API، ج: HTTPS):
+        <div class="cols">
+          <div class="col"><h4>الوصف</h4>
+            <div class="it"><i>1</i>بروتوكول اتصال لتبادل البيانات بين متصفحات الويب والخوادم</div>
+            <div class="it"><i>2</i>واجهة أو مجموعة قواعد محددة تتيح لبرنامج طلب بيانات أو وظائف من برنامج أو خدمة أخرى</div>
+            <div class="it"><i>3</i>بروتوكول اتصال يضيف تشفيرًا إلى HTTP</div></div>
+          <div class="col"><h4>المصطلح</h4>
+            <div class="it"><i>أ</i>${E('HTTP')}</div>
+            <div class="it"><i>ب</i>${E('API')}</div>
+            <div class="it"><i>ج</i>${E('HTTPS')}</div></div>
+        </div>`,
+     a: ans(`<ul><li>1 ← أ (${E('HTTP')})</li><li>2 ← ب (${E('API')})</li><li>3 ← ج (${E('HTTPS')})</li></ul>`)}
+  ]
+ },
+ {
+  title:'سؤال على نمط الامتحان', sub:'6 درجات',
+  items:[
+   { t:'exam', src:'[6 درجات]',
+     q:`اشرح خطوة بخطوة ما يحدث عندما يطلب المتصفح صفحة ويب ويستجيب الخادم.<br><span class="note">(أشِر إلى: العميل، الطلب، طريقة طلب HTTP، الاستجابة، رمز حالة HTTP)</span>`,
+     a: ans(`<ol>
+        <li>المتصفح هو <b>العميل</b>، وعندما ينقر المستخدم على رابط أو يكتب عنوان صفحة يبدأ الاتصال.</li>
+        <li>يرسل العميل <b>طلبًا</b> عبر الشبكة إلى الخادم باستخدام بروتوكول HTTP (أو HTTPS إذا كان الاتصال آمنًا).</li>
+        <li>يتضمن الطلب <b>طريقة طلب HTTP</b> توضح نوع العملية المطلوبة، وهنا تكون <b>GET</b> لأن العميل يطلب صفحة (مورد) من الخادم.</li>
+        <li>يستقبل الخادم الطلب ويعالجه ويبحث عن الصفحة المطلوبة.</li>
+        <li>يعيد الخادم <b>استجابة</b> إلى العميل تحتوي على البيانات المطلوبة (الصفحة)، ومعها <b>رمز حالة HTTP</b> يبين نتيجة المعالجة: 200 عند النجاح، أو 404 إذا لم توجد الصفحة، أو 500 إذا حدث خطأ داخلي في الخادم.</li>
+        <li>يعرض المتصفح الصفحة للمستخدم عند النجاح.</li></ol>
+        <div class="callout nafha" style="margin-top:.4rem"><h4>✨ نفحات مستر عبدو</h4>الكلمات الخمس المطلوبة في السؤال = خمس نقاط لازم تظهر في إجابتك: <b>العميل ← الطلب ← GET ← الاستجابة ← رمز الحالة</b>. لو ذكرتهم بالترتيب تكون ضمنت أغلب الدرجات.</div>`)}
+  ]
+ },
+ {
+  title:'تدرّب', sub:'',
+  items:[
+   { t:'direct', src:'السؤال 1 · (1)', q:`ما المصطلح الخاص بالجانب الذي يطلب البيانات أو المعالجة من الخادم (مثل متصفح الويب)؟`, a: ans(`<b class="final">العميل</b>`)},
+   { t:'direct', src:'السؤال 1 · (2)', q:`ما المصطلح الخاص بالجانب الذي يستقبل الطلبات من العملاء، ويعالجها، ويعيد الاستجابات؟`, a: ans(`<b class="final">الخادم</b>`)},
+   { t:'direct', src:'السؤال 1 · (3)', q:`ما البروتوكول المستخدم للوصول إلى الويب عبر اتصال TLS آمن؟`, a: ans(`<b class="final">${E('HTTPS')}</b>`)},
+   { t:'direct', src:'السؤال 1 · (4)', q:`ما المصطلح الخاص بطريقة طلب HTTP لاسترجاع البيانات من الخادم؟`, a: ans(`<b class="final">${E('GET')}</b>`)},
+   { t:'direct', src:'السؤال 1 · (5)', q:`ما المصطلح الخاص بنظام تبادل البيانات بين برمجيات مختلفة؟`, a: ans(`<b class="final">${E('API')}</b> (واجهة برمجة التطبيقات)`)},
+   { t:'mc', src:'السؤال 2 · (1)',
+     q:`اختر التركيبة <b>غير المناسبة</b> بين رمز حالة HTTP والمعنى:
+        <div class="opts" style="grid-template-columns:1fr">
+          <div class="opt"><b>أ.</b> 200 — تمت معالجة الطلب بنجاح</div>
+          <div class="opt"><b>ب.</b> 404 — المورد المطلوب غير موجود</div>
+          <div class="opt"><b>ج.</b> 500 — تمت معالجة الطلب بنجاح</div>
+          <div class="opt"><b>د.</b> 500 — حدثت مشكلة في جانب الخادم</div>
+        </div>`,
+     a: ans(`<b class="final">ج</b><br>السبب: الرمز 500 يعني خطأ داخليًا في الخادم، أما النجاح فرمزه 200.`)},
+   { t:'mc', src:'السؤال 2 · (2)',
+     q:`اختر الخيار الذي يصف واجهة برمجة التطبيقات (API) بأنسب شكل:
+        <div class="opts" style="grid-template-columns:1fr">
+          <div class="opt"><b>أ.</b> تقنية لتعديل مظهر صفحات الويب</div>
+          <div class="opt"><b>ب.</b> نظام لتبادل البيانات بين برمجيات مختلفة</div>
+          <div class="opt"><b>ج.</b> تقنية لتشفير البيانات وإرسالها بأمان</div>
+          <div class="opt"><b>د.</b> طريقة طلب HTTP لاسترجاع البيانات من الخادم</div>
+        </div>`,
+     a: ans(`<b class="final">ب</b><br>السبب: أ تصف CSS، وج تصف HTTPS/TLS، ود تصف GET.`)}
+  ]
+ },
+ {
+  title:'فكّر كمهندس: ابحث ثم قرر', sub:'سيناريو',
+  items:[
+   { t:'case', src:'سيناريو',
+     q:`<b>السيناريو:</b> تريد مدرسة في مدينتك تطبيق ويب يسجّل فيه الطلاب الدخول، ويعرضون جدولهم الدراسي، ويحمّلون ملف PDF. أنت تخطط لكيفية تواصل العميل والخادم.
+        <br><br><b>1 · اختر الأسلوب</b> (GET أم POST) لكل إجراء:
+        <div class="opts" style="grid-template-columns:1fr">
+          <div class="opt"><b>•</b> تحميل سجل درجات الطالب</div>
+          <div class="opt"><b>•</b> إرسال نموذج تسجيل الدخول</div>
+          <div class="opt"><b>•</b> طلب الجدول الدراسي لليوم من نظام مدرسة أخرى</div>
+        </div>
+        <b>2 · اختر البروتوكول.</b><br>
+        <b>3 · قرّر:</b> ☐ إرسال كل شيء عبر HTTP العادي &nbsp; ☐ استخدام HTTPS والأسلوب المناسب لكل إجراء<br>
+        مع ذكر سببين للدليل، وتحديد الإجراء الذي يجب أن يستخدم POST.
+        <div class="callout nafha" style="margin-top:.5rem"><h4>✨ اختبار سريع لاختيار GET أو POST</h4>اسأل نفسك: "أنا باخد حاجة ولا ببعت حاجة؟" — باخد (درجات، جدول، صفحة، نتائج بحث) ← GET · ببعت (تسجيل دخول، نموذج، رسالة تواصل) ← POST</div>
+        <div class="callout extra" style="margin-top:.5rem"><h4>💡 هل تواجه صعوبة؟ (تلميح)</h4>يُستخدم GET عادةً لطلب مورد أو بيانات، وPOST لإرسال بيانات ليعالجها الخادم. ويحمي HTTPS محتوى الاتصال عبر TLS أثناء النقل.</div>`,
+     a: ans(`<b>1 · الأسلوب:</b>
+        <table class="dt plain"><tr><th>الإجراء</th><th>الأسلوب</th><th>السبب</th></tr>
+        <tr><td>تحميل سجل درجات الطالب</td><td>${E('GET')}</td><td>طلب مورد من الخادم</td></tr>
+        <tr><td>إرسال نموذج تسجيل الدخول</td><td>${E('POST')}</td><td>إرسال بيانات ليعالجها الخادم</td></tr>
+        <tr><td>طلب الجدول الدراسي لليوم من نظام مدرسة أخرى</td><td>${E('GET')} + تتضمن API</td><td>طلب بيانات، والـ API لأن تبادل البيانات يتم بين نظامين مختلفين عبر قواعد واضحة</td></tr></table>
+        <b>2 · البروتوكول:</b> HTTPS، لأنه يحمي محتوى الاتصال (اسم المستخدم وكلمة المرور) عبر TLS أثناء النقل فلا يقرؤه المتجسس أو يعدله بسهولة، ويساعد في التحقق من هوية الخادم.<br>
+        <b>3 · القرار:</b> ☑ استخدام HTTPS والأسلوب المناسب لكل إجراء.<br>
+        <b>الدليل (سببان):</b>
+        <ol><li>HTTPS يحمي سرية بيانات الطلاب وسلامتها أثناء النقل.</li>
+        <li>اختيار GET أو POST المناسب يوضح الغرض من كل طلب (طلب بيانات أو إرسال بيانات للمعالجة).</li></ol>
+        <b class="final">الإجراء الذي يجب أن يستخدم POST: إرسال نموذج تسجيل الدخول.</b><br>
+        <span class="note">(في أزواج: قارنوا اختياراتكم للأسلوب واتفقوا معًا على الإجراء الذي يجب أن يستخدم POST.)</span>`)}
+  ]
+ },
+ {
+  title:'طبّق ما تعلمته', sub:'',
+  items:[
+   { t:'direct', src:'تطبيق',
+     q:`تقدم خدمة الطقس واجهة برمجة تطبيقات تعيد توقعات اليوم عندما يرسل العميل طلبًا. باستخدام ما تعلمته، اذكر طريقة طلب HTTP التي سيستخدمها العميل لاسترجاع التوقعات، ولماذا يجب أن تستخدم الخدمة HTTPS، ووضّح ميزة واحدة لاستقبال البيانات بصيغة JSON.`,
+     a: ans(`<ul>
+        <li><b>طريقة الطلب:</b> ${E('GET')}، لأن العميل يطلب بيانات (التوقعات) من الخادم.</li>
+        <li><b>سبب HTTPS:</b> لحماية سرية الاتصال وسلامته أثناء النقل عبر TLS، فلا يستطيع المتجسس قراءة البيانات أو تعديلها بسهولة، ولأنه يساعد في التحقق من هوية الخادم.</li>
+        <li><b>ميزة JSON:</b> صيغة نصية قابلة للقراءة ومهيكلة، وتدعمها لغات وأدوات برمجية كثيرة، فيسهل تبادل البيانات بين البرمجيات.</li></ul>`)}
+  ]
+ },
+ {
+  title:'تمارين', sub:'',
+  items:[
+   { t:'direct', src:'1 · اختبر فهمك', q:`ما الفرق بين العميل والخادم؟`, a: ans(`العميل يطلب، والخادم يعالج ويعيد الاستجابة.`)},
+   { t:'direct', src:'1 · اختبر فهمك', q:`ما معنى HTTPS؟`, a: ans(`استخدام HTTP عبر اتصال TLS آمن.`)},
+   { t:'direct', src:'1 · اختبر فهمك', q:`متى نستخدم GET؟`, a: ans(`لطلب مورد أو بيانات من الخادم.`)},
+   { t:'direct', src:'1 · اختبر فهمك', q:`متى نستخدم POST؟`, a: ans(`لإرسال بيانات ليعالجها الخادم.`)},
+   { t:'direct', src:'1 · اختبر فهمك', q:`ماذا يعني الرمز 200؟`, a: ans(`نجاح معالجة الطلب.`)},
+   { t:'direct', src:'1 · اختبر فهمك', q:`ماذا يعني الرمز 404؟`, a: ans(`المورد المطلوب غير موجود بهذا العنوان.`)},
+   { t:'direct', src:'1 · اختبر فهمك', q:`ماذا يعني الرمز 500؟`, a: ans(`خطأ داخلي في الخادم.`)},
+   { t:'direct', src:'1 · اختبر فهمك', q:`ما اسم صيغة تبادل البيانات النصية المهيكلة؟`, a: ans(`${E('JSON')}`)},
+   { t:'fill', src:'2 · اقرأ الفقرة وأجب',
+     q:`املأ الفراغات:<br><b>"يعتمد كثير من تطبيقات الويب على الاتصال بين ${blank(1)}، الذي يرسل طلبًا، و${blank(2)}، الذي يستقبل الطلب ويعالجه ويعيد استجابة. ويستخدم الويب بروتوكولًا يسمى ${blank(3)} لتبادل الرسائل. ويسمى استخدام ${blank(3)} عبر اتصال TLS آمن ${blank(4)}."</b>`,
+     a: ans(`<ul><li>( 1 ) <b>العميل</b></li><li>( 2 ) <b>الخادم</b></li><li>( 3 ) <b>${E('HTTP')}</b></li><li>( 4 ) <b>${E('HTTPS')}</b></li></ul>`)},
+   { t:'cls', src:'3 · (1)',
+     q:`لكل من العمليات، حدد طريقة طلب HTTP المستخدمة (أ: GET، ب: POST):
+        <div class="opts" style="grid-template-columns:1fr 1fr">
+          <div class="opt"><b>1.</b> عرض صفحة ويب</div>
+          <div class="opt"><b>2.</b> إدخال معرّف وكلمة مرور في نموذج تسجيل الدخول وإرسالهما</div>
+          <div class="opt"><b>3.</b> عرض نتائج البحث</div>
+          <div class="opt"><b>4.</b> إرسال محتويات نموذج التواصل</div>
+        </div>`,
+     a: ans(`<ul><li>1 ← أ (${E('GET')})</li><li>2 ← ب (${E('POST')})</li><li>3 ← أ (${E('GET')})</li><li>4 ← ب (${E('POST')})</li></ul>`)},
+   { t:'mc', src:'3 · (2)',
+     q:`اختر الخيار الذي يصف HTTPS بأنسب شكل:
+        <div class="opts" style="grid-template-columns:1fr">
+          <div class="opt"><b>أ.</b> أسلوب لاسترجاع البيانات من الخادم</div>
+          <div class="opt"><b>ب.</b> نظام لتبادل البيانات بين برمجيات مختلفة</div>
+          <div class="opt"><b>ج.</b> بروتوكول يستخدم HTTP عبر اتصال محمي بـ TLS</div>
+          <div class="opt"><b>د.</b> رمز حالة يشير إلى حدوث مشكلة في جانب الخادم</div>
+        </div>`,
+     a: ans(`<b class="final">ج</b><br>السبب: أ تصف GET، وب تصف API، ود تصف الرمز 500.`)}
+  ]
+ }
+];
+
+/* ---------- render questions ---------- */
+(function(){
+  const list = document.getElementById('qlist');
+  let n = 0;
+  SECTIONS.forEach(sec=>{
+    const h = document.createElement('div');
+    h.className = 'qsec';
+    h.innerHTML = `${sec.title}${sec.sub ? `<small>${sec.sub}</small>` : ''}`;
+    list.appendChild(h);
+    sec.items.forEach(it=>{
+      n++;
+      const [cls,label] = TYPES[it.t];
+      const card = document.createElement('div');
+      card.className = 'q';
+      card.innerHTML = `
+        <div class="qbody">
+          <div class="qmeta"><span class="qn">${n}</span><span class="tag ${cls}">${label}</span><span class="src">${sec.title} · ${it.src}</span></div>
+          <div class="qtext">${it.q}</div>
+        </div>
+        <button class="ans-btn" type="button" aria-expanded="false">إظهار الإجابة</button>
+        <div class="ans">${it.a}</div>`;
+      list.appendChild(card);
+    });
+  });
+})();
+
+/* ---------- show / hide answers (works for question cards and in-lesson "think" boxes) ---------- */
+function setAnswer(box, open){
+  const btn = box.querySelector('.ans-btn');
+  box.querySelector('.ans').classList.toggle('show', open);
+  btn.classList.toggle('open', open);
+  btn.textContent = open ? 'إخفاء الإجابة' : 'إظهار الإجابة';
+  btn.setAttribute('aria-expanded', open);
+}
+const allBtn = document.getElementById('toggleAll');
+const qCards = () => [...document.querySelectorAll('#qlist .q')];
+function syncAllBtn(){
+  const allOpen = qCards().every(c=>c.querySelector('.ans').classList.contains('show'));
+  allBtn.textContent = allOpen ? 'إخفاء كل الإجابات' : 'إظهار كل الإجابات';
+}
+document.addEventListener('click', e=>{
+  const btn = e.target.closest('.ans-btn');
+  if(!btn) return;
+  const box = btn.closest('.q, .think');
+  if(!box) return;
+  setAnswer(box, !box.querySelector('.ans').classList.contains('show'));
+  btn.blur();
+  syncAllBtn();
+});
+allBtn.addEventListener('click', ()=>{
+  const allOpen = qCards().every(c=>c.querySelector('.ans').classList.contains('show'));
+  qCards().forEach(c=>setAnswer(c, !allOpen));
+  syncAllBtn(); allBtn.blur();
+});
+
+/* ---------- slide navigation ---------- */
+const slides  = [...document.querySelectorAll('.slide')];
+const N       = slides.length;
+const dotsEl  = document.getElementById('dots');
+const counter = document.getElementById('counter');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const playBtn = document.getElementById('play');
+const fsBtn   = document.getElementById('fs');
+const prog    = document.getElementById('progress');
+const AUTO_MS = 6000;
+let cur = 0, playing = false, timer = null;
+
+const titles = ['البداية','أهداف التعلم','خريطة الدرس','المقدمة','العميل والخادم','HTTP وHTTPS','GET و POST','رموز الحالة','رحلة الطلب','API','JSON','الفكرة الرئيسية','فكّر وتحدَّ','ملخص المراجعة','الأسئلة'];
+slides.forEach((_,i)=>{
+  const d = document.createElement('button');
+  d.className = 'dot'; d.type = 'button';
+  d.setAttribute('aria-label', `الانتقال إلى المشهد ${i+1}: ${titles[i]||''}`);
+  d.title = titles[i] || '';
+  d.addEventListener('click', ()=>{ go(i); d.blur(); });
+  dotsEl.appendChild(d);
+});
+const dots = [...dotsEl.children];
+
+function restartProgress(){
+  prog.classList.remove('run');
+  void prog.offsetWidth;
+  if(playing && cur < N-1) prog.classList.add('run');
+}
+function schedule(){
+  clearTimeout(timer);
+  restartProgress();
+  if(!playing) return;
+  if(cur >= N-1){ stopAuto(); return; }
+  timer = setTimeout(()=>go(cur+1), AUTO_MS);
+}
+function go(i){
+  i = Math.max(0, Math.min(N-1, i));
+  slides[cur].classList.remove('active');
+  dots[cur].classList.remove('active');
+  cur = i;
+  slides[cur].classList.add('active');
+  slides[cur].scrollTop = 0;
+  dots[cur].classList.add('active');
+  counter.textContent = `${cur+1} / ${N}`;
+  prevBtn.disabled = cur === 0;
+  nextBtn.disabled = cur === N-1;
+  schedule();
+}
+function startAuto(){
+  playing = true;
+  playBtn.classList.add('on');
+  playBtn.innerHTML = '⏸ <span class="lbl-t">إيقاف</span>';
+  if(cur >= N-1){ go(0); } else { schedule(); }
+}
+function stopAuto(){
+  playing = false;
+  clearTimeout(timer);
+  prog.classList.remove('run');
+  playBtn.classList.remove('on');
+  playBtn.innerHTML = '▶ <span class="lbl-t">تشغيل تلقائي</span>';
+}
+function toggleFS(){
+  const el = document.documentElement;
+  if(!document.fullscreenElement){
+    (el.requestFullscreen || el.webkitRequestFullscreen || (()=>{})).call(el);
+  } else {
+    (document.exitFullscreen || document.webkitExitFullscreen || (()=>{})).call(document);
+  }
+}
+document.addEventListener('fullscreenchange', ()=>{
+  fsBtn.innerHTML = document.fullscreenElement ? '⛶ <span class="lbl-t">خروج</span>' : '⛶ <span class="lbl-t">ملء الشاشة</span>';
+});
+
+prevBtn.addEventListener('click', e=>{ go(cur-1); e.currentTarget.blur(); });
+nextBtn.addEventListener('click', e=>{ go(cur+1); e.currentTarget.blur(); });
+playBtn.addEventListener('click', e=>{ playing ? stopAuto() : startAuto(); e.currentTarget.blur(); });
+fsBtn.addEventListener('click',   e=>{ toggleFS(); e.currentTarget.blur(); });
+
+document.addEventListener('keydown', e=>{
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  switch(e.code){
+    case 'ArrowLeft':  e.preventDefault(); go(cur+1); break;   // الواجهة عربية: السهم الأيسر = التالي
+    case 'ArrowRight': e.preventDefault(); go(cur-1); break;   // السهم الأيمن = السابق
+    case 'Space':      e.preventDefault(); go(cur+1); break;
+    case 'KeyF':       e.preventDefault(); toggleFS(); break;
+  }
+});
+document.addEventListener('keyup', e=>{ if(e.code==='Space') e.preventDefault(); });
+
+let sx = null, sy = null;
+const stage = document.getElementById('stage');
+stage.addEventListener('touchstart', e=>{ sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive:true});
+stage.addEventListener('touchend', e=>{
+  if(sx === null) return;
+  const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+  if(Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy)*1.5){ dx < 0 ? go(cur+1) : go(cur-1); }
+  sx = sy = null;
+}, {passive:true});
+
+go(0);
+</script>
+</body>
+</html>
