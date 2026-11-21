@@ -107,7 +107,7 @@ const students = [
     name: " محمود احمد سرور",
     phone: "01157026803",
     grade: "secondSecondary",
-    active: true
+    active: false
   },
   {
     id: "student003",
@@ -645,21 +645,24 @@ const courses = {
               title: "البنية العامة لتطبيقات الويب",
               description: "التعرف على المكونات والبنية العامة لتطبيقات الويب.",
               duration: "",
-              driveUrl: ""
+              driveUrl: "https://drive.google.com/drive/folders/1R_m4rT0UGmQEMcVQL23viS2UBBER2JxY?usp=sharing",
+               htmlUrl: "2-3-1.html"
             },
             {
               id: "lesson2",
               title: "طرق الاتصال في تطبيقات الويب",
               description: "التعرف على طرق الاتصال المستخدمة في تطبيقات الويب.",
               duration: "",
-              driveUrl: ""
+              driveUrl: "https://drive.google.com/drive/folders/1yR2FgUXEUbrIxobe2okq4JJ5mFZHCnPE?usp=sharing",
+               htmlUrl: "2-3-2.html"
             },
             {
               id: "lesson3",
               title: "أساسيات تكنولوجيا الواجهة الأمامية",
               description: "التعرف على أساسيات تقنيات الواجهة الأمامية المستخدمة في تطوير الويب.",
               duration: "",
-              driveUrl: ""
+              driveUrl: "https://drive.google.com/drive/folders/19W1Ayxt5WelyYdjN_xPBoJlQF9yBoarb?usp=sharing",
+               htmlUrl: "2-3-3.html"
             }
           ]
         },
